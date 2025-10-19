@@ -12,7 +12,7 @@ export default {
         'arc-gray': '#1a1a1a',
       },
       fontFamily: {
-        sans: ['Michroma', 'system-ui', 'sans-serif'],
+        sans: ['Montserrat', 'system-ui', 'sans-serif'],
       },
     },
   },
