@@ -8,7 +8,7 @@ A modern website for ARC AI Labs featuring sleek animations, responsive design, 
 - **Backend**: FastAPI + Uvicorn (Python)
 - **Database**: SQLite
 - **Styling**: Tailwind CSS with custom animations
-- **Typography**: Montserrat font (Google Fonts)
+- **Typography**: Inter font (Google Fonts)
 
 ## Project Structure
 ```
@@ -56,7 +56,7 @@ ARC AI Labs designs speech recognition systems that return agency, dignity, and 
 - Set up SQLite database for form submissions
 - Integrated ARC AI Labs branding and logo
 - Updated logo to larger, clearer ARC design (80px height) - Oct 19, 2025
-- Changed typography to Montserrat font family for sleek, breathable design - Oct 19, 2025
+- Changed typography to Inter font family for clean, tech-forward aesthetic - Oct 19, 2025
 - Updated philosophy and messaging to reflect speech recognition mission and patient-first approach - Oct 19, 2025
 
 ## API Endpoints
