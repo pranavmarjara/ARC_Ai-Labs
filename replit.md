@@ -8,6 +8,7 @@ A modern, Neuralink-inspired website for ARC AI Labs featuring sleek animations,
 - **Backend**: FastAPI + Uvicorn (Python)
 - **Database**: SQLite
 - **Styling**: Tailwind CSS with custom animations
+- **Typography**: Orbitron font (Google Fonts)
 
 ## Project Structure
 ```
@@ -49,6 +50,8 @@ A modern, Neuralink-inspired website for ARC AI Labs featuring sleek animations,
 - Configured FastAPI backend with contact form endpoint
 - Set up SQLite database for form submissions
 - Integrated ARC AI Labs branding and logo
+- Updated logo to larger, clearer ARC design (80px height) - Oct 19, 2025
+- Changed typography to Orbitron font family for futuristic aesthetic - Oct 19, 2025
 
 ## API Endpoints
 - `GET /` - API status check
