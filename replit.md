@@ -1,7 +1,7 @@
 # ARC AI Labs Website
 
 ## Overview
-A modern, Neuralink-inspired website for ARC AI Labs featuring sleek animations, responsive design, and a clean black-and-white aesthetic. Built with React, TypeScript, Tailwind CSS on the frontend and FastAPI on the backend.
+A modern website for ARC AI Labs featuring sleek animations, responsive design, and a clean black-and-white aesthetic. ARC AI Labs designs speech recognition systems that empower people who struggle to be heard, built on a patient-first philosophy and the principle that machines should adapt to people. Built with React, TypeScript, Tailwind CSS on the frontend and FastAPI on the backend.
 
 ## Tech Stack
 - **Frontend**: React + TypeScript + Vite + Tailwind CSS + Framer Motion
@@ -35,7 +35,8 @@ A modern, Neuralink-inspired website for ARC AI Labs featuring sleek animations,
 ```
 
 ## Features
-- Hero section with animated headlines
+- Hero section with powerful messaging: "From fractured words, a voice rises"
+- Company philosophy section emphasizing speech recognition and patient-first approach
 - Smooth scroll animations using Framer Motion
 - Testimonials showcase with profile cards
 - Call-to-action tiles for different audiences
@@ -43,15 +44,20 @@ A modern, Neuralink-inspired website for ARC AI Labs featuring sleek animations,
 - Cookie consent banner
 - Fully responsive design
 - Black and white theme matching ARC logo
+- "Persevere and Pioneer" company motto
+
+## Company Philosophy
+ARC AI Labs designs speech recognition systems that return agency, dignity, and freedom to those who fight to be heard. The company believes in building machines that adapt to people, not the other way around. With a patient-first, technology-uncompromised approach, every line of code serves a human purpose.
 
 ## Recent Changes
 - Initial project setup (Oct 19, 2025)
-- Created all frontend components with Neuralink-inspired design
+- Created all frontend components with modern design
 - Configured FastAPI backend with contact form endpoint
 - Set up SQLite database for form submissions
 - Integrated ARC AI Labs branding and logo
 - Updated logo to larger, clearer ARC design (80px height) - Oct 19, 2025
 - Changed typography to Orbitron font family for futuristic aesthetic - Oct 19, 2025
+- Updated philosophy and messaging to reflect speech recognition mission and patient-first approach - Oct 19, 2025
 
 ## API Endpoints
 - `GET /` - API status check
