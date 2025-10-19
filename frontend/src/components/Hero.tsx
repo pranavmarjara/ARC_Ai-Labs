@@ -25,7 +25,7 @@ export default function Hero() {
         >
           From fractured words,
           <br />
-          a voice rises
+          a voice that rises
         </motion.h1>
         
         <motion.div
