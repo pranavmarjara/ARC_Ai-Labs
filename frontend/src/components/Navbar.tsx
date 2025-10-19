@@ -24,7 +24,7 @@ export default function Navbar() {
             <img
               src={arcLogo}
               alt="ARC AI Labs"
-              className="h-20 w-auto object-contain"
+              className="h-40 w-auto object-contain"
             />
           </div>
           <div className="hidden md:flex items-center space-x-8">
