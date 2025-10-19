@@ -24,19 +24,19 @@ export default function Mission() {
               systems that return agency, dignity, and freedom to those who fight to be heard.
             </p>
             <p>
-              We believe the failure was never human — it was technological. The world has asked patients 
+              We believe the failure was never human: it was technological. The world has asked patients 
               to adapt to machines; <span className="text-white font-semibold">we build machines that adapt to people.</span>
             </p>
             <p>
-              Our design has intention — every line of code, every model, every interface serves a human purpose. 
+              Our design has intention: every line of code, every model, every interface serves a human purpose. 
               We build not for scale alone, but for impact, empathy, and precision.
             </p>
             <p>
               Our focus is clear: <span className="text-white font-semibold">patient first, technology uncompromised.</span>
             </p>
             <p>
-              Progress, for us, is not born of comfort but of perseverance — not from imitation, but from will. 
-              Born of struggle, refined by innovation, and guided by purpose — we exist to push the boundaries 
+              Progress, for us, is not born of comfort but of perseverance, not from imitation, but from will. 
+              Born of struggle, refined by innovation, and guided by purpose, we exist to push the boundaries 
               of what's possible.
             </p>
             <p className="text-2xl md:text-3xl font-bold text-white mt-8">
