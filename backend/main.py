@@ -48,6 +48,7 @@ async def root():
 
 @app.post("/api/contact")
 async def submit_contact(form: ContactForm):
+    conn = None
     try:
         conn = sqlite3.connect(DATABASE_PATH)
         cursor = conn.cursor()
@@ -57,7 +58,6 @@ async def submit_contact(form: ContactForm):
         )
         conn.commit()
         submission_id = cursor.lastrowid
-        conn.close()
         
         return {
             "success": True,
@@ -65,7 +65,12 @@ async def submit_contact(form: ContactForm):
             "submission_id": submission_id
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        import logging
+        logging.error(f"Contact form submission error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to submit contact form")
+    finally:
+        if conn:
+            conn.close()
 
 @app.get("/api/health")
 async def health_check():
