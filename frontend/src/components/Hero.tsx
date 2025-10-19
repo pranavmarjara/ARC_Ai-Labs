@@ -23,9 +23,9 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.2 }}
           className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
         >
-          From neural signals
+          From fractured words,
           <br />
-          to life-changing impact
+          a voice rises
         </motion.h1>
         
         <motion.div
@@ -38,7 +38,7 @@ export default function Hero() {
             href="#about"
             className="inline-block bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-200 transition-all hover:scale-105"
           >
-            Explore Our Research
+            Explore Our Mission
           </a>
         </motion.div>
       </div>

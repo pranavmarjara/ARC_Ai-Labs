@@ -15,19 +15,32 @@ export default function Mission() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
-            Building brain interfaces
-            <br />
-            to restore autonomy_
+            Our Philosophy_
           </h2>
           
           <div className="mt-12 text-lg md:text-xl text-gray-300 leading-relaxed max-w-4xl space-y-6">
             <p>
-              Our brain-computer interface translates neural signals into actions. In our research trials, 
-              participants are using ARC AI Labs devices to control computers and robotic systems with their thoughts.
+              Built on code and defiance, our work challenges silence itself. We design speech recognition 
+              systems that return agency, dignity, and freedom to those who fight to be heard.
             </p>
             <p>
-              This technology will restore autonomy to those with unmet medical needs and unlock 
-              new dimensions of human potential.
+              We believe the failure was never human — it was technological. The world has asked patients 
+              to adapt to machines; <span className="text-white font-semibold">we build machines that adapt to people.</span>
+            </p>
+            <p>
+              Our design has intention — every line of code, every model, every interface serves a human purpose. 
+              We build not for scale alone, but for impact, empathy, and precision.
+            </p>
+            <p>
+              Our focus is clear: <span className="text-white font-semibold">patient first, technology uncompromised.</span>
+            </p>
+            <p>
+              Progress, for us, is not born of comfort but of perseverance — not from imitation, but from will. 
+              Born of struggle, refined by innovation, and guided by purpose — we exist to push the boundaries 
+              of what's possible.
+            </p>
+            <p className="text-2xl md:text-3xl font-bold text-white mt-8">
+              Persevere and Pioneer.
             </p>
           </div>
         </motion.div>
