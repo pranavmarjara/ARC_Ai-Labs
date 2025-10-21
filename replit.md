@@ -58,6 +58,9 @@ ARC AI Labs designs speech recognition systems that return agency, dignity, and 
 - Updated logo to larger, clearer ARC design (80px height) - Oct 19, 2025
 - Changed typography to Inter font family for clean, tech-forward aesthetic - Oct 19, 2025
 - Updated philosophy and messaging to reflect speech recognition mission and patient-first approach - Oct 19, 2025
+- Prepared project for Netlify deployment via GitHub (Oct 21, 2025)
+- Added environment variable support for API endpoints
+- Created deployment configuration and documentation
 
 ## API Endpoints
 - `GET /` - API status check
@@ -66,3 +69,26 @@ ARC AI Labs designs speech recognition systems that return agency, dignity, and 
 
 ## Development
 The frontend runs on port 5000 with Vite dev server. The backend API is served through the same port via proxy configuration.
+
+## Deployment
+
+### Frontend (Netlify)
+The project is configured for Netlify deployment via GitHub:
+- Build configuration: `netlify.toml`
+- Build command: `npm run build`
+- Publish directory: `frontend/dist`
+- Environment variables: `VITE_API_URL` (points to deployed backend)
+- See `DEPLOYMENT.md` for detailed instructions
+
+### Backend (Render/Railway/Fly.io)
+The FastAPI backend needs to be deployed separately:
+- Requirements file: `backend/requirements.txt`
+- Start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+- Database: SQLite (consider PostgreSQL for production)
+- CORS: Configured to allow all origins
+- See `DEPLOYMENT.md` for detailed instructions
+
+### Environment Variables
+- Local development: `frontend/.env` (git-ignored)
+- Template: `frontend/.env.example`
+- Production: Set `VITE_API_URL` in Netlify dashboard to your deployed backend URL
