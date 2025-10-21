@@ -15,18 +15,6 @@ const pioneers = [
     quote: 'It allows me to be creative',
     date: 'Mar. 2024',
   },
-  {
-    name: 'David',
-    condition: 'Spinal cord injury',
-    quote: 'I wrote this with my brain!',
-    date: 'Jun. 2024',
-  },
-  {
-    name: 'Emma',
-    condition: 'Paralysis',
-    quote: 'Game changer',
-    date: 'Sep. 2024',
-  },
 ];
 
 export default function Testimonials() {
@@ -45,7 +33,7 @@ export default function Testimonials() {
           Meet our pioneers
         </motion.h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {pioneers.map((pioneer, index) => (
             <motion.div
               key={index}
