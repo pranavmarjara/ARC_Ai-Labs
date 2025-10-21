@@ -46,8 +46,10 @@ git push origin main
    - Root Directory: `backend`
    - Build Command: `pip install -r requirements.txt`
    - Start Command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-5. (Optional) Add environment variable:
-   - `ALLOWED_ORIGINS` = `https://your-site.netlify.app`
+5. **Add environment variable** (Required for production):
+   - Key: `ALLOWED_ORIGINS`
+   - Value: `https://your-site.netlify.app`
+   - (For multiple domains: `https://site1.com,https://site2.com` - no spaces!)
 6. Deploy
 7. Copy your backend URL and add to Netlify (step above)
 

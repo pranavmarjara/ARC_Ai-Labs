@@ -11,12 +11,20 @@ app = FastAPI(title="ARC AI Labs API")
 # Get allowed origins from environment variable
 # For production, set ALLOWED_ORIGINS to your Netlify domain
 # Example: "https://your-site.netlify.app,https://www.yourdomain.com"
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
+allowed_origins_env = os.getenv("ALLOWED_ORIGINS", "")
+
+if allowed_origins_env:
+    allowed_origins = [origin.strip() for origin in allowed_origins_env.split(",")]
+    allow_credentials = True
+else:
+    # Development fallback: allow all origins but disable credentials
+    allowed_origins = ["*"]
+    allow_credentials = False
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
-    allow_credentials=True,
+    allow_credentials=allow_credentials,
     allow_methods=["*"],
     allow_headers=["*"],
 )

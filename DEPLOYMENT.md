@@ -46,9 +46,10 @@ Your FastAPI backend needs to be deployed separately. Here are some options:
    - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
    - **Environment**: Python 3
 
-4. **Add Environment Variables** (Optional but recommended for production):
+4. **Add Environment Variables** (Required for production):
    - `ALLOWED_ORIGINS`: Your Netlify URL (e.g., `https://your-site.netlify.app`)
    - This restricts CORS to only your frontend domain for better security
+   - **Important**: Use comma-separated URLs for multiple domains (no spaces)
 
 5. After deployment, copy the API URL and add it to Netlify's environment variables
 
@@ -77,11 +78,16 @@ VITE_API_URL=https://your-backend-url.com/api
 ```
 
 ### Backend Production (Render/Railway)
-Optional environment variables:
+**Required** environment variable for production:
 ```
 ALLOWED_ORIGINS=https://your-site.netlify.app
 ```
-(If not set, defaults to allowing all origins with `*`)
+
+**Important Notes:**
+- This variable is **required** for production deployment
+- For multiple domains, use comma-separated values (no spaces):
+  `https://your-site.netlify.app,https://www.yourdomain.com`
+- Without this variable, the backend runs in development mode (allows all origins, no credentials)
 
 ---
 
