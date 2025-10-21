@@ -46,18 +46,11 @@ Your FastAPI backend needs to be deployed separately. Here are some options:
    - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
    - **Environment**: Python 3
 
-4. Create `backend/requirements.txt`:
-   ```txt
-   fastapi
-   uvicorn[standard]
-   pydantic
-   email-validator
-   python-multipart
-   ```
+4. **Add Environment Variables** (Optional but recommended for production):
+   - `ALLOWED_ORIGINS`: Your Netlify URL (e.g., `https://your-site.netlify.app`)
+   - This restricts CORS to only your frontend domain for better security
 
-5. Add environment variables if needed
-
-6. After deployment, copy the API URL and add it to Netlify's environment variables
+5. After deployment, copy the API URL and add it to Netlify's environment variables
 
 ### Option 2: Railway
 
@@ -83,6 +76,13 @@ In Netlify environment variables:
 VITE_API_URL=https://your-backend-url.com/api
 ```
 
+### Backend Production (Render/Railway)
+Optional environment variables:
+```
+ALLOWED_ORIGINS=https://your-site.netlify.app
+```
+(If not set, defaults to allowing all origins with `*`)
+
 ---
 
 ## Testing Your Deployment
@@ -94,9 +94,23 @@ VITE_API_URL=https://your-backend-url.com/api
 
 ---
 
-## Notes
+## Production Optimizations
 
-- The frontend build is optimized for production
-- SPA routing is configured with redirects
-- CORS needs to be enabled on your backend for your Netlify domain
-- Update `backend/main.py` to add your Netlify URL to allowed origins
+The code is optimized for production deployment:
+
+### Frontend:
+- ✅ Code splitting for faster load times (React, Framer Motion chunks)
+- ✅ Minified and optimized builds
+- ✅ SPA routing with proper redirects
+- ✅ Environment variable support for API URL
+
+### Backend:
+- ✅ Environment-based CORS configuration
+- ✅ Proper error handling and logging
+- ✅ Production-ready requirements file
+- ✅ SQLite database (upgrade to PostgreSQL for production if needed)
+
+### Security:
+- Set `ALLOWED_ORIGINS` on your backend to restrict CORS to your domain
+- All environment files are git-ignored
+- No console logs or debug code in production
