@@ -4,16 +4,16 @@ import { useRef } from 'react';
 
 const pioneers = [
   {
-    name: 'Sarah',
-    condition: 'Spinal cord injury',
-    quote: "It's given me the ability to do things on my own again",
-    date: 'Jan. 2024',
+    name: 'Pranav Marjara',
+    condition: 'The Tech Head',
+    quote: "Code.Create.Conquer",
+    date: 'Oct,2025',
   },
   {
-    name: 'Michael',
-    condition: 'Amyotrophic lateral sclerosis',
-    quote: 'It allows me to be creative',
-    date: 'Mar. 2024',
+    name: 'Aditya Minhas',
+    condition: 'The Buisness Head',
+    quote: 'Take Where the Maps dont Take you',
+    date: 'Oct,2025',
   },
 ];
 
@@ -49,7 +49,7 @@ export default function Testimonials() {
               <p className="text-gray-400 text-sm mb-4">
                 {pioneer.condition}
                 <br />
-                Received implant in {pioneer.date}
+                {pioneer.date}
               </p>
               <p className="text-lg italic text-gray-300">"{pioneer.quote}"</p>
             </motion.div>
