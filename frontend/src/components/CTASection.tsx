@@ -7,7 +7,7 @@ export default function CTASection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="technology" className="py-32 bg-black" ref={ref}>
+    <section id="technology" className="py-32 bg-gradient-to-b from-zinc-950 via-slate-950 to-zinc-950" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}

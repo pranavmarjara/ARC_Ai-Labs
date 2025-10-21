@@ -7,7 +7,7 @@ export default function Mission() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="about" className="py-32 bg-black" ref={ref}>
+    <section id="about" className="py-32 bg-gradient-to-b from-black via-zinc-950 to-black" ref={ref}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
