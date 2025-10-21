@@ -23,7 +23,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.2 }}
           className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
         >
-          From fractured words,
+          From fractured words,to
           <br />
           a voice that rises
         </motion.h1>
