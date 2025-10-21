@@ -22,7 +22,7 @@ export default function Testimonials() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="pioneers" className="py-32 bg-gradient-to-b from-black to-gray-900" ref={ref}>
+    <section id="pioneers" className="py-32 bg-gradient-to-b from-black via-gray-900 to-black" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
