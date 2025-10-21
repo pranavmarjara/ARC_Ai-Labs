@@ -47,7 +47,7 @@ export default function ContactForm() {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">Get in Touch</h2>
           <p className="text-xl text-gray-300 mb-12 text-center">
-            Interested in learning more about ARC AI Labs? We'd love to hear from you.
+            Interested in learning more about ARC Ai Labs? We'd love to hear from you.
           </p>
           
           <form onSubmit={handleSubmit} className="space-y-6">

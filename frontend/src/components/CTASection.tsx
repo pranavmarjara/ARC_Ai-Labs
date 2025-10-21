@@ -15,7 +15,7 @@ export default function CTASection() {
           transition={{ duration: 0.8 }}
           className="text-4xl md:text-5xl font-bold mb-16 text-center"
         >
-          Pioneers Wanted
+          Pioneer's Endevours
         </motion.h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
