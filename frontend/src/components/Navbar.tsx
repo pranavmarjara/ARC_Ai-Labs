@@ -22,7 +22,9 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-24">
           <div className="flex items-center">
-            <img src={arcLogo} alt="ARC AI Labs" className="h-16 w-auto" />
+            <Link to="/" className="cursor-pointer hover:opacity-80 transition-opacity">
+              <img src={arcLogo} alt="ARC AI Labs" className="h-16 w-auto" />
+            </Link>
           </div>
           <div className="hidden md:flex items-center space-x-8">
             <a href="#about" className="text-white hover:text-gray-300 transition-colors">
