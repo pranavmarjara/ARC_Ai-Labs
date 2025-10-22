@@ -23,9 +23,15 @@ A modern website for ARC AI Labs featuring sleek animations, responsive design, 
 │   │   │   ├── CTASection.tsx
 │   │   │   ├── ContactForm.tsx
 │   │   │   ├── Footer.tsx
-│   │   │   └── CookieConsent.tsx
+│   │   │   ├── CookieConsent.tsx
+│   │   │   └── ScrollToTop.tsx
+│   │   ├── pages/          # Page components
+│   │   │   ├── HomePage.tsx
+│   │   │   ├── ResearchDevelopment.tsx
+│   │   │   ├── ClinicalTrials.tsx
+│   │   │   └── GetInvolved.tsx
 │   │   ├── assets/         # Images and static assets
-│   │   ├── App.tsx         # Main app component
+│   │   ├── App.tsx         # Main app component with routing
 │   │   └── index.css       # Global styles with Tailwind
 │   ├── vite.config.ts      # Vite configuration
 │   └── tailwind.config.js  # Tailwind CSS configuration
@@ -65,6 +71,10 @@ ARC AI Labs designs speech recognition systems that return agency, dignity, and 
 - Implemented React Router for multi-page navigation - Oct 22, 2025
 - Created Research & Development page showcasing 3-phase data pipeline (Collection → Training → Validation) - Oct 22, 2025
 - Created Clinical Trials page highlighting patient-first methodology and collaboration approach - Oct 22, 2025
+- Fixed scroll-to-top behavior on page navigation with ScrollToTop component - Oct 22, 2025
+- Created stunning "Get Involved" page (/get-involved) with animated gradients, multiple sections, and prominent "Join Us!" CTA - Oct 22, 2025
+- Connected "Get Involved" buttons in Navbar and Clinical Trials page to new contributor applications page - Oct 22, 2025
+- Integrated Google Form for contributor applications (https://forms.gle/UWVjRFVK4foqz3Lv9) - Oct 22, 2025
 
 ## API Endpoints
 - `GET /` - API status check
