@@ -30,10 +30,10 @@ export default function CTASection() {
             <div className="relative h-full flex flex-col justify-end p-8 text-white">
               <div className="mb-4">
                 <span className="text-sm font-semibold tracking-wider uppercase opacity-80">
-                  Patients & Caregivers
+                  Reasearcher & Development
                 </span>
               </div>
-              <h3 className="text-3xl font-bold mb-2">Learn about research trials</h3>
+              <h3 className="text-3xl font-bold mb-2">Learn about research & trials</h3>
               <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
                 <span className="text-sm flex items-center">
                   Learn more
@@ -56,10 +56,10 @@ export default function CTASection() {
             <div className="relative h-full flex flex-col justify-end p-8 text-white">
               <div className="mb-4">
                 <span className="text-sm font-semibold tracking-wider uppercase opacity-80">
-                  Engineers & Researchers
+                  Engineering Vision
                 </span>
               </div>
-              <h3 className="text-3xl font-bold mb-2">Explore our technology</h3>
+              <h3 className="text-3xl font-bold mb-2">A peek into our vision</h3>
               <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
                 <span className="text-sm flex items-center">
                   Learn more
