@@ -214,7 +214,7 @@ export default function ClinicalTrials() {
               Whether you're a patient, researcher, clinician, or just believe in our mission we want to hear from you.
             </p>
             <Link
-              to="/#contact"
+              to="/get-involved"
               className="inline-block px-8 py-4 bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-500 hover:to-teal-500 rounded-full font-semibold text-lg transition-all transform hover:scale-105"
             >
               Get Involved

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import arcLogo from '../assets/arc-logo-new.png';
 
 export default function Navbar() {
@@ -36,9 +37,11 @@ export default function Navbar() {
             <a href="#contact" className="text-white hover:text-gray-300 transition-colors">
               Contact
             </a>
-            <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition-colors font-medium">
-              Get Involved
-            </button>
+            <Link to="/get-involved">
+              <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition-colors font-medium">
+                Get Involved
+              </button>
+            </Link>
           </div>
         </div>
       </div>
