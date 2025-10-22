@@ -61,6 +61,10 @@ ARC AI Labs designs speech recognition systems that return agency, dignity, and 
 - Prepared project for Netlify deployment via GitHub (Oct 21, 2025)
 - Added environment variable support for API endpoints
 - Created deployment configuration and documentation
+- Added high-quality stock images to CTA cards: sound waves (research) and robotic eye (vision) - Oct 22, 2025
+- Implemented React Router for multi-page navigation - Oct 22, 2025
+- Created Research & Development page showcasing 3-phase data pipeline (Collection → Training → Validation) - Oct 22, 2025
+- Created Clinical Trials page highlighting patient-first methodology and collaboration approach - Oct 22, 2025
 
 ## API Endpoints
 - `GET /` - API status check
