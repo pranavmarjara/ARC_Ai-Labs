@@ -27,18 +27,18 @@ export default function Navbar() {
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#about" className="text-white hover:text-gray-300 transition-colors">
+            <Link to="/#about" className="text-white hover:text-gray-300 transition-colors">
               About
-            </a>
-            <a href="#technology" className="text-white hover:text-gray-300 transition-colors">
+            </Link>
+            <Link to="/#technology" className="text-white hover:text-gray-300 transition-colors">
               Technology
-            </a>
-            <a href="#pioneers" className="text-white hover:text-gray-300 transition-colors">
+            </Link>
+            <Link to="/#pioneers" className="text-white hover:text-gray-300 transition-colors">
               Pioneers
-            </a>
-            <a href="#contact" className="text-white hover:text-gray-300 transition-colors">
+            </Link>
+            <Link to="/#contact" className="text-white hover:text-gray-300 transition-colors">
               Contact
-            </a>
+            </Link>
             <Link to="/get-involved">
               <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200 transition-colors font-medium">
                 Get Involved
