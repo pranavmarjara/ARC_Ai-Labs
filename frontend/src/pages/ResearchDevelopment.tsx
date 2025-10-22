@@ -215,11 +215,11 @@ export default function ResearchDevelopment() {
             <h2 className="text-4xl md:text-5xl font-bold mb-6">The Ambitious Goal</h2>
             <p className="text-xl text-gray-300 mb-8">
               Collect <span className="text-green-400 font-bold">600-1000 hours</span> of slurred speech data across multiple languages.
-              Train models that don't just transcribe—they <span className="text-blue-400 font-bold">understand</span>.
+              Train models that don't just transcribe they <span className="text-blue-400 font-bold">understand</span>.
             </p>
             <p className="text-lg text-gray-400">
               Every 10 days, we measure accuracy, publish results, and iterate with real patients.
-              This isn't research in isolation—it's research in partnership with those we serve.
+              This isn't research in isolation it's research in partnership with those we serve.
             </p>
           </motion.div>
         </div>

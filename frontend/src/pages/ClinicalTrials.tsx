@@ -193,7 +193,7 @@ export default function ClinicalTrials() {
               </div>
             </div>
             <p className="text-lg text-gray-400">
-              This isn't just research—it's a <span className="text-green-400 font-bold">commitment</span> to the people we serve.
+              This isn't just research it's a <span className="text-green-400 font-bold">commitment</span> to the people we serve.
               We're building in public, learning in partnership, and improving with every cycle.
             </p>
           </motion.div>
@@ -211,7 +211,7 @@ export default function ClinicalTrials() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Join Our Vision</h2>
             <p className="text-xl text-gray-300 mb-8">
-              Whether you're a patient, researcher, clinician, or just believe in our mission—we want to hear from you.
+              Whether you're a patient, researcher, clinician, or just believe in our mission we want to hear from you.
             </p>
             <Link
               to="/#contact"
