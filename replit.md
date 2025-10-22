@@ -75,6 +75,7 @@ ARC AI Labs designs speech recognition systems that return agency, dignity, and 
 - Created stunning "Get Involved" page (/get-involved) with animated gradients, multiple sections, and prominent "Join Us!" CTA - Oct 22, 2025
 - Connected "Get Involved" buttons in Navbar and Clinical Trials page to new contributor applications page - Oct 22, 2025
 - Integrated Google Form for contributor applications (https://forms.gle/UWVjRFVK4foqz3Lv9) - Oct 22, 2025
+- Made ARC logo in navbar clickable to navigate back to homepage with hover effect - Oct 22, 2025
 
 ## API Endpoints
 - `GET /` - API status check
