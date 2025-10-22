@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import soundWavesImg from '@assets/stock_images/sound_waves_visualiz_0bd0c5c2.jpg';
 import roboticEyeImg from '@assets/stock_images/futuristic_robotic_e_91769f29.jpg';
 
@@ -21,75 +22,77 @@ export default function CTASection() {
         </motion.h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <motion.a
-            href="#contact"
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="group relative overflow-hidden rounded-2xl h-96 block"
-          >
-            <div 
-              className="absolute inset-0 bg-gradient-to-br from-blue-900/50 to-purple-900/50 group-hover:from-blue-800/50 group-hover:to-purple-800/50 transition-all"
-              style={{
-                backgroundImage: `url(${soundWavesImg})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
+          <Link to="/research">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6 }}
+              className="group relative overflow-hidden rounded-2xl h-96 block"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 to-purple-900/70 group-hover:from-blue-800/70 group-hover:to-purple-800/70 transition-all"></div>
-            </div>
-            <div className="relative h-full flex flex-col justify-end p-8 text-white">
-              <div className="mb-4">
-                <span className="text-sm font-semibold tracking-wider uppercase opacity-80">
-                  Reasearcher & Development
-                </span>
+              <div 
+                className="absolute inset-0 bg-gradient-to-br from-blue-900/50 to-purple-900/50 group-hover:from-blue-800/50 group-hover:to-purple-800/50 transition-all"
+                style={{
+                  backgroundImage: `url(${soundWavesImg})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 to-purple-900/70 group-hover:from-blue-800/70 group-hover:to-purple-800/70 transition-all"></div>
               </div>
-              <h3 className="text-3xl font-bold mb-2">Learn about research & trials</h3>
-              <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-sm flex items-center">
-                  Learn more
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </span>
+              <div className="relative h-full flex flex-col justify-end p-8 text-white">
+                <div className="mb-4">
+                  <span className="text-sm font-semibold tracking-wider uppercase opacity-80">
+                    Researcher & Development
+                  </span>
+                </div>
+                <h3 className="text-3xl font-bold mb-2">Learn about research & trials</h3>
+                <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-sm flex items-center">
+                    Learn more
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </div>
               </div>
-            </div>
-          </motion.a>
+            </motion.div>
+          </Link>
           
-          <motion.a
-            href="#technology"
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="group relative overflow-hidden rounded-2xl h-96 block"
-          >
-            <div 
-              className="absolute inset-0 bg-gradient-to-br from-green-900/50 to-teal-900/50 group-hover:from-green-800/50 group-hover:to-teal-800/50 transition-all"
-              style={{
-                backgroundImage: `url(${roboticEyeImg})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
+          <Link to="/trials">
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6 }}
+              className="group relative overflow-hidden rounded-2xl h-96 block"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-green-900/70 to-teal-900/70 group-hover:from-green-800/70 group-hover:to-teal-800/70 transition-all"></div>
-            </div>
-            <div className="relative h-full flex flex-col justify-end p-8 text-white">
-              <div className="mb-4">
-                <span className="text-sm font-semibold tracking-wider uppercase opacity-80">
-                  Engineering Vision
-                </span>
+              <div 
+                className="absolute inset-0 bg-gradient-to-br from-green-900/50 to-teal-900/50 group-hover:from-green-800/50 group-hover:to-teal-800/50 transition-all"
+                style={{
+                  backgroundImage: `url(${roboticEyeImg})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-green-900/70 to-teal-900/70 group-hover:from-green-800/70 group-hover:to-teal-800/70 transition-all"></div>
               </div>
-              <h3 className="text-3xl font-bold mb-2">A peek into our vision</h3>
-              <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-sm flex items-center">
-                  Learn more
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </span>
+              <div className="relative h-full flex flex-col justify-end p-8 text-white">
+                <div className="mb-4">
+                  <span className="text-sm font-semibold tracking-wider uppercase opacity-80">
+                    Engineering Vision
+                  </span>
+                </div>
+                <h3 className="text-3xl font-bold mb-2">A peek into our vision</h3>
+                <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-sm flex items-center">
+                    Learn more
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </div>
               </div>
-            </div>
-          </motion.a>
+            </motion.div>
+          </Link>
         </div>
       </div>
     </section>

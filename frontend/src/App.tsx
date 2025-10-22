@@ -1,24 +1,17 @@
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Mission from './components/Mission';
-import Testimonials from './components/Testimonials';
-import CTASection from './components/CTASection';
-import ContactForm from './components/ContactForm';
-import Footer from './components/Footer';
-import CookieConsent from './components/CookieConsent';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ResearchDevelopment from './pages/ResearchDevelopment';
+import ClinicalTrials from './pages/ClinicalTrials';
 
 function App() {
   return (
-    <div className="min-h-screen bg-black text-white">
-      <Navbar />
-      <Hero />
-      <Mission />
-      <Testimonials />
-      <CTASection />
-      <ContactForm />
-      <Footer />
-      <CookieConsent />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/research" element={<ResearchDevelopment />} />
+        <Route path="/trials" element={<ClinicalTrials />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
