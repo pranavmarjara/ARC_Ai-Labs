@@ -14,12 +14,12 @@ export default function ResearchDevelopment() {
       title: 'Phase 1: Data Collection',
       subtitle: 'Building the Foundation',
       items: [
-        { label: 'Protocol Development', duration: '1-3 days', status: 'complete' },
-        { label: 'Torgo Dataset Experimentation', duration: '7-10 days', status: 'complete' },
-        { label: 'Collection Zero (Pilot)', hours: '2 hours', duration: '3 days', status: 'complete' },
-        { label: 'Collection One (English)', hours: '20 hours', duration: '1 week', status: 'in-progress' },
-        { label: 'Collection Two (Multilingual)', hours: '50 hours', duration: '1 week', status: 'pending' },
-        { label: 'Collection Three (Scale)', hours: '60 hours', duration: '1 week', status: 'pending' },
+        { label: 'Protocol Development', duration: '', status: 'in-progress' },
+        { label: 'Torgo Dataset Experimentation', duration: '', status: 'in-progress' },
+        { label: 'Collection Zero (Pilot)', hours: '', duration: '', status: 'in-progress' },
+        { label: 'Collection One (English)', hours: '', duration: '', status: 'in-progress' },
+        { label: 'Collection Two (Multilingual)', hours: '', duration: '', status: 'pending' },
+        { label: 'Collection Three (Scale)', hours: '', duration: '', status: 'pending' },
       ],
       color: 'from-blue-600 to-indigo-600',
     },
@@ -214,7 +214,7 @@ export default function ResearchDevelopment() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">The Ambitious Goal</h2>
             <p className="text-xl text-gray-300 mb-8">
-              Collect <span className="text-green-400 font-bold">600-1000 hours</span> of slurred speech data across multiple languages.
+              Collect <span className="text-green-400 font-bold">500 hours</span>  (just for the MVP) of slurred speech data across multiple languages.
               Train models that don't just transcribe they <span className="text-blue-400 font-bold">understand</span>.
             </p>
             <p className="text-lg text-gray-400">
