@@ -14,19 +14,19 @@ export default function ClinicalTrials() {
       title: 'Doctors & Clinicians',
       icon: '🏥',
       description: 'Partnering with medical professionals who understand the daily challenges faced by patients with speech disorders.',
-      duration: '3 days intensive',
+      duration: '',
     },
     {
       title: 'Academic Researchers',
       icon: '🎓',
       description: 'Collaborating with national and international academia to ensure rigorous scientific methodology.',
-      duration: 'Ongoing partnership',
+      duration: '',
     },
     {
       title: 'Engineering Teams',
       icon: '⚙️',
       description: 'Working closely with engineers to rapidly iterate on patient feedback and technical improvements.',
-      duration: '3 days coordination',
+      duration: '',
     },
   ];
 
