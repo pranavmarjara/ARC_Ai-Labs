@@ -5,15 +5,15 @@ import { useRef } from 'react';
 const pioneers = [
   {
     name: 'Pranav Marjara',
-    condition: 'The Tech Head',
-    quote: "Code.Create.Conquer",
-    date: 'Oct,2025',
+    condition: 'Co-Founder',
+    quote: '',
+    date: '',
   },
   {
     name: 'Aditya Minhas',
-    condition: 'The Buisness Head',
-    quote: 'Take Where the Maps dont Take you',
-    date: 'Oct,2025',
+    condition: 'Co-Founder',
+    quote: '',
+    date: '',
   },
 ];
 
