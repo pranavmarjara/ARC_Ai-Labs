@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import pranavImage from '@assets/Gemini_Generated_Image_qtl3phqtl3phqtl3_1761322890471.png';
-import adityaImage from '@assets/Gemini_Generated_Image_r72hgor72hgor72h_1761322964906.png';
 
 const pioneers = [
   {
@@ -10,14 +8,12 @@ const pioneers = [
     condition: 'Co-Founder',
     quote: '',
     date: '',
-    image: pranavImage,
   },
   {
     name: 'Aditya Minhas',
     condition: 'Co-Founder',
     quote: '',
     date: '',
-    image: adityaImage,
   },
 ];
 
@@ -46,13 +42,6 @@ export default function Testimonials() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 hover:bg-white/10 transition-all hover:scale-105"
             >
-              <div className="mb-6">
-                <img 
-                  src={pioneer.image} 
-                  alt={pioneer.name}
-                  className="w-24 h-24 object-cover rounded-full mb-4 border-2 border-gray-700"
-                />
-              </div>
               <h3 className="text-2xl font-bold mb-2">{pioneer.name}</h3>
               <p className="text-gray-400 text-sm mb-4">
                 {pioneer.condition}
