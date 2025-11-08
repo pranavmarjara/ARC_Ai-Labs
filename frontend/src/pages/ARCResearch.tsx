@@ -407,26 +407,15 @@ export default function ARCResearch() {
               Interested in collaborating, accessing our datasets, or reviewing our methodology? 
               We believe in open science and welcome researchers worldwide.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/#contact">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-semibold text-lg hover:shadow-lg hover:shadow-purple-500/50 transition-all"
-                >
-                  Get Involved!
-                </motion.button>
-              </Link>
-              <Link to="/get-involved">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-white/10 backdrop-blur text-white border border-white/20 rounded-full font-semibold text-lg hover:bg-white/20 transition-all"
-                >
-                  Get Involved
-                </motion.button>
-              </Link>
-            </div>
+            <Link to="/get-involved">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-semibold text-lg hover:shadow-lg hover:shadow-purple-500/50 transition-all"
+              >
+                Get Involved!
+              </motion.button>
+            </Link>
           </motion.div>
         </div>
       </section>
