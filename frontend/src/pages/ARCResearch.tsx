@@ -414,7 +414,7 @@ export default function ARCResearch() {
                   whileTap={{ scale: 0.95 }}
                   className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-semibold text-lg hover:shadow-lg hover:shadow-purple-500/50 transition-all"
                 >
-                  Contact Research Team
+                  Get Involved!
                 </motion.button>
               </Link>
               <Link to="/get-involved">
