@@ -78,6 +78,7 @@ ARC AI Labs designs speech recognition systems that return agency, dignity, and 
 - Added LinkedIn and email contact buttons to "Meet Our Pioneers" section for both co-founders with secure links and accessibility features - Oct 26, 2025
 - Created comprehensive "ARC × Research" page (/arc-research) showcasing research validation, methodology, key findings, publications, and research team with purple/pink gradient theme - Nov 8, 2025
 - Removed Technology section (CTASection component) from homepage and all navigation links - Nov 8, 2025
+- Simplified ARC × Research page CTA: removed duplicate Get Involved button, kept single pink gradient button linking to /get-involved page - Nov 8, 2025
 
 ## API Endpoints
 - `GET /` - API status check
