@@ -20,7 +20,6 @@ A modern website for ARC AI Labs featuring sleek animations, responsive design, 
 │   │   │   ├── Hero.tsx
 │   │   │   ├── Mission.tsx
 │   │   │   ├── Testimonials.tsx
-│   │   │   ├── CTASection.tsx
 │   │   │   ├── ContactForm.tsx
 │   │   │   ├── Footer.tsx
 │   │   │   ├── CookieConsent.tsx
@@ -46,7 +45,6 @@ A modern website for ARC AI Labs featuring sleek animations, responsive design, 
 - Company philosophy section emphasizing speech recognition and patient-first approach
 - Smooth scroll animations using Framer Motion
 - Testimonials showcase with profile cards
-- Call-to-action tiles for different audiences
 - Contact form with backend integration
 - Cookie consent banner
 - Fully responsive design
@@ -79,6 +77,7 @@ ARC AI Labs designs speech recognition systems that return agency, dignity, and 
 - Made ARC logo in navbar clickable to navigate back to homepage with hover effect - Oct 22, 2025
 - Added LinkedIn and email contact buttons to "Meet Our Pioneers" section for both co-founders with secure links and accessibility features - Oct 26, 2025
 - Created comprehensive "ARC × Research" page (/arc-research) showcasing research validation, methodology, key findings, publications, and research team with purple/pink gradient theme - Nov 8, 2025
+- Removed Technology section (CTASection component) from homepage and all navigation links - Nov 8, 2025
 
 ## API Endpoints
 - `GET /` - API status check
