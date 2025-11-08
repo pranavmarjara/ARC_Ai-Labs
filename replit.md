@@ -29,6 +29,7 @@ A modern website for ARC AI Labs featuring sleek animations, responsive design, 
 │   │   │   ├── HomePage.tsx
 │   │   │   ├── ResearchDevelopment.tsx
 │   │   │   ├── ClinicalTrials.tsx
+│   │   │   ├── ARCResearch.tsx
 │   │   │   └── GetInvolved.tsx
 │   │   ├── assets/         # Images and static assets
 │   │   ├── App.tsx         # Main app component with routing
@@ -77,6 +78,7 @@ ARC AI Labs designs speech recognition systems that return agency, dignity, and 
 - Integrated Google Form for contributor applications (https://forms.gle/UWVjRFVK4foqz3Lv9) - Oct 22, 2025
 - Made ARC logo in navbar clickable to navigate back to homepage with hover effect - Oct 22, 2025
 - Added LinkedIn and email contact buttons to "Meet Our Pioneers" section for both co-founders with secure links and accessibility features - Oct 26, 2025
+- Created comprehensive "ARC × Research" page (/arc-research) showcasing research validation, methodology, key findings, publications, and research team with purple/pink gradient theme - Nov 8, 2025
 
 ## API Endpoints
 - `GET /` - API status check
