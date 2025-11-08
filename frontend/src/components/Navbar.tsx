@@ -30,11 +30,11 @@ export default function Navbar() {
             <Link to="/#about" className="text-white hover:text-gray-300 transition-colors">
               About
             </Link>
-            <Link to="/#technology" className="text-white hover:text-gray-300 transition-colors">
-              Technology
-            </Link>
             <Link to="/#pioneers" className="text-white hover:text-gray-300 transition-colors">
               Pioneers
+            </Link>
+            <Link to="/arc-research" className="text-white hover:text-gray-300 transition-colors">
+              ARC × Research
             </Link>
             <Link to="/#contact" className="text-white hover:text-gray-300 transition-colors">
               Contact
