@@ -3,6 +3,7 @@ import HomePage from './pages/HomePage';
 import ResearchDevelopment from './pages/ResearchDevelopment';
 import ClinicalTrials from './pages/ClinicalTrials';
 import GetInvolved from './pages/GetInvolved';
+import ARCResearch from './pages/ARCResearch';
 import ScrollToTop from './components/ScrollToTop';
 import ScrollToHash from './components/ScrollToHash';
 
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/research" element={<ResearchDevelopment />} />
         <Route path="/trials" element={<ClinicalTrials />} />
+        <Route path="/arc-research" element={<ARCResearch />} />
         <Route path="/get-involved" element={<GetInvolved />} />
       </Routes>
     </BrowserRouter>
