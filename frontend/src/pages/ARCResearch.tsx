@@ -22,14 +22,14 @@ export default function ARCResearch() {
 
   const keyFindings = [
     {
-      metric: '82%+',
+      metric: '100-32%+',
       label: 'Word Accuracy',
       description: 'Achieved with bespoke patient-specific model layers on dysarthric speech',
       icon: '🎯',
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
-      metric: '47%',
+      metric: '34%',
       label: 'WER Reduction',
       description: 'Word Error Rate improvement over baseline commercial systems',
       icon: '📊',
