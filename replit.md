@@ -79,6 +79,8 @@ ARC AI Labs designs speech recognition systems that return agency, dignity, and 
 - Created comprehensive "ARC × Research" page (/arc-research) showcasing research validation, methodology, key findings, publications, and research team with purple/pink gradient theme - Nov 8, 2025
 - Removed Technology section (CTASection component) from homepage and all navigation links - Nov 8, 2025
 - Simplified ARC × Research page CTA: removed duplicate Get Involved button, kept single pink gradient button linking to /get-involved page - Nov 8, 2025
+- Streamlined ARC × Research page by removing bullet points from methodology cards and eliminating "Transparent Publication" concept entirely - Nov 12, 2025
+- Updated research overview section from 3 principle cards to 2 cards (Patient-First Design and Rapid Validation) with centered 2-column layout - Nov 12, 2025
 
 ## API Endpoints
 - `GET /` - API status check
