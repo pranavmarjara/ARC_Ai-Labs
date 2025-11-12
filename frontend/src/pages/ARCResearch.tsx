@@ -34,20 +34,6 @@ export default function ARCResearch() {
       description: 'Word Error Rate improvement over baseline commercial systems',
       icon: '📊',
       gradient: 'from-purple-500 to-pink-500'
-    },
-    {
-      metric: '500+',
-      label: 'Hours Collected',
-      description: 'Diverse speech data from patients with various speech disorders',
-      icon: '🗣️',
-      gradient: 'from-green-500 to-emerald-500'
-    },
-    {
-      metric: '10 Days',
-      label: 'Iteration Cycle',
-      description: 'Rapid testing and improvement with real patient feedback',
-      icon: '⚡',
-      gradient: 'from-amber-500 to-orange-500'
     }
   ];
 
@@ -199,7 +185,7 @@ export default function ARCResearch() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {keyFindings.map((finding, idx) => (
               <motion.div
                 key={finding.label}
