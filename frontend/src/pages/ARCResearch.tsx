@@ -69,12 +69,6 @@ export default function ARCResearch() {
       title: 'Validation & Testing',
       description: 'Rigorous testing with real patients ensures our models work in the real world, not just in the lab.',
       gradient: 'from-green-600 to-teal-600'
-    },
-    {
-      number: '04',
-      title: 'Transparent Publication',
-      description: 'We believe in open science. Results, good or bad, are shared with the community every 10 days.',
-      gradient: 'from-amber-600 to-orange-600'
     }
   ];
 
@@ -163,12 +157,12 @@ export default function ARCResearch() {
             <p className="text-xl text-gray-400 max-w-4xl mx-auto">
               Speech recognition for people with speech disorders isn't a solved problem. 
               Commercial systems fail catastrophically. That's why we're building from the ground up, 
-              with rigorous science, transparent methodology, and real patient validation.
+              with rigorous science and real patient validation.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {['Patient-First Design', 'Transparent Methodology', 'Rapid Validation'].map((principle, idx) => (
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {['Patient-First Design', 'Rapid Validation'].map((principle, idx) => (
               <motion.div
                 key={principle}
                 initial={{ opacity: 0, y: 30 }}
@@ -177,13 +171,12 @@ export default function ARCResearch() {
                 className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 hover:border-purple-500/50 transition-all"
               >
                 <div className="text-4xl mb-4">
-                  {idx === 0 ? '🫶' : idx === 1 ? '🔬' : '⚡'}
+                  {idx === 0 ? '🫶' : '⚡'}
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{principle}</h3>
                 <p className="text-gray-400">
                   {idx === 0 && 'Every decision starts with "Will this help patients communicate better?"'}
-                  {idx === 1 && 'Our methods, data, and results are shared openly with the scientific community.'}
-                  {idx === 2 && 'Test with real patients every 10 days. Publish. Iterate. No exceptions.'}
+                  {idx === 1 && 'Test with real patients every 10 days. Iterate relentlessly. No exceptions.'}
                 </p>
               </motion.div>
             ))}
