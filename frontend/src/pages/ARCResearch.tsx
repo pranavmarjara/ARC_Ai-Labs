@@ -56,48 +56,24 @@ export default function ARCResearch() {
       number: '01',
       title: 'Ethical Data Collection',
       description: 'We work directly with patients who have speech disorders, collecting diverse speech samples with full consent and ethical oversight.',
-      points: [
-        'IRB-approved protocols',
-        'Patient consent and privacy protection',
-        'Diverse range of speech conditions',
-        'Multiple languages and dialects'
-      ],
       gradient: 'from-blue-600 to-indigo-600'
     },
     {
       number: '02',
       title: 'Model Architecture',
       description: 'Our AI uses state-of-the-art speech recognition with custom patient-specific adaptation layers.',
-      points: [
-        'Transformer-based architecture',
-        'Bespoke patient adaptation layers',
-        'Transfer learning from large datasets',
-        'Real-time inference optimization'
-      ],
       gradient: 'from-purple-600 to-pink-600'
     },
     {
       number: '03',
       title: 'Validation & Testing',
       description: 'Rigorous testing with real patients ensures our models work in the real world, not just in the lab.',
-      points: [
-        'Word Error Rate (WER) measurement',
-        'Real-world conversation testing',
-        'Continuous patient feedback loops',
-        'Comparative analysis vs. commercial systems'
-      ],
       gradient: 'from-green-600 to-teal-600'
     },
     {
       number: '04',
       title: 'Transparent Publication',
       description: 'We believe in open science. Results, good or bad, are shared with the community every 10 days.',
-      points: [
-        'Pre-prints and peer review',
-        'Open-source model components',
-        'Public progress updates',
-        'Community collaboration'
-      ],
       gradient: 'from-amber-600 to-orange-600'
     }
   ];
@@ -286,15 +262,7 @@ export default function ARCResearch() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-3xl font-bold mb-4">{step.title}</h3>
-                      <p className="text-gray-400 text-lg mb-6">{step.description}</p>
-                      <ul className="grid md:grid-cols-2 gap-3">
-                        {step.points.map((point) => (
-                          <li key={point} className="flex items-start gap-2">
-                            <span className={`mt-1 w-2 h-2 rounded-full bg-gradient-to-r ${step.gradient} flex-shrink-0`}></span>
-                            <span className="text-gray-300">{point}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <p className="text-gray-400 text-lg">{step.description}</p>
                     </div>
                   </div>
                 </div>
