@@ -314,9 +314,7 @@ export default function ARCResearch() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mt-12 text-center"
           >
-            <p className="text-gray-400 text-lg">
-              More papers coming soon. We publish progress updates every 10 days.
-            </p>
+            
           </motion.div>
         </div>
       </section>
