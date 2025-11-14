@@ -22,7 +22,7 @@ export default function ARCResearch() {
 
   const keyFindings = [
     {
-      metric: '100-32%+',
+      metric: '66%+',
       label: 'Word Accuracy',
       description: 'Achieved with bespoke patient-specific model layers on dysarthric speech',
       icon: '🎯',
