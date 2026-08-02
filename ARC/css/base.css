@@ -2,6 +2,8 @@ html {
 
   scroll-behavior: auto;
   --dark-bg: black;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 html::-webkit-scrollbar {
@@ -28,6 +30,8 @@ body {
   background-color: #000;
   font-family: "Geist", sans-serif;
   color: #fff;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 img {

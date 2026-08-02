@@ -76,7 +76,7 @@
     padding: 0 7vw 6vh;
   }
   .hero-headline__text {
-    font-size: clamp(1.3rem, 5.6vw, 2rem);
+    font-size: clamp(2rem, 9vw, 2.9rem);
     max-width: 20ch;
   }
 }

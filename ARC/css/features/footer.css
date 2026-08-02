@@ -3,6 +3,12 @@
   padding: 48px 56px 88px;
 }
 
+@media (max-width: 640px) {
+  #footerdiv {
+    padding: 40px 6vw 72px;
+  }
+}
+
 .footer__inner {
   display: flex;
   align-items: flex-start;
