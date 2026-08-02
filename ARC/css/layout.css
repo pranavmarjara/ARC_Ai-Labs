@@ -41,6 +41,7 @@ main {
   position: relative;
   z-index: 1;
   margin-top: 100vh;
+  margin-top: 100svh;
 }
 
 .site-footer {

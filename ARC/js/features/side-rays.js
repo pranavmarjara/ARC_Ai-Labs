@@ -1,4 +1,4 @@
-import { Renderer, Program, Triangle, Mesh } from 'https://unpkg.com/ogl@1.0.11';
+import { Renderer, Program, Triangle, Mesh } from '../vendor/ogl.mjs';
 
 const hexToRgb = hex => {
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

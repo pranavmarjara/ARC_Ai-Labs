@@ -4,6 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100svh;
   overflow: hidden;
   background-color: #000;
   z-index: 0;

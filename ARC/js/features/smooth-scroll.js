@@ -1,4 +1,4 @@
-import Lenis from 'https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.mjs';
+import Lenis from '../vendor/lenis.mjs';
 
 const prefersReducedMotion = window.matchMedia(
   '(prefers-reduced-motion: reduce)'

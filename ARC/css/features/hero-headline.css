@@ -73,10 +73,11 @@
 
 @media (max-width: 640px) {
   .hero-headline {
-    padding: 0 7vw 6vh;
+    padding: 0 6vw 8vh;
   }
   .hero-headline__text {
-    font-size: clamp(2rem, 9vw, 2.9rem);
-    max-width: 20ch;
+    font-size: clamp(2.4rem, 11vw, 3.4rem);
+    max-width: 15ch;
+    line-height: 1.08;
   }
 }
