@@ -1,0 +1,44 @@
+.mission {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 8vw;
+  text-align: center;
+}
+
+.mission__eyebrow {
+  margin: 0 0 22px;
+  color: #9d9d9d;
+  font-family: "Geist", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mission__text {
+  max-width: 900px;
+  margin: 0;
+  font-family: "Geist", sans-serif;
+  font-size: clamp(1.3rem, 2.6vw, 2rem);
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+.mission__text strong {
+  font-weight: 700;
+}
+
+.mission__text .word {
+  color: #fff;
+}
+
+@media (max-width: 720px) {
+  .mission__eyebrow {
+    font-size: 12px;
+  }
+}

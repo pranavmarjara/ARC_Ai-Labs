@@ -1,0 +1,82 @@
+.hero-headline {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 0 6vw 8vh;
+  pointer-events: none;
+}
+
+.hero-headline__text {
+  margin: 0;
+  max-width: 22ch;
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.6rem, 3.8vw, 3.8rem);
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+  color: #fff;
+
+  text-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.25),
+    0 12px 40px rgba(0, 0, 0, 0.55),
+    0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.hero-headline__text em {
+  font-style: normal;
+  background: linear-gradient(100deg, #ffffff 20%, #9fb4ff 50%, #ffffff 80%);
+  background-size: 220% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: hero-headline-sheen 6s ease-in-out infinite;
+}
+
+.hero-headline__line {
+  display: block;
+  opacity: 0;
+  transform: translateY(0.4em);
+  filter: blur(6px);
+  animation: hero-headline-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--line-delay, 0s);
+}
+
+@keyframes hero-headline-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes hero-headline-sheen {
+  0% { background-position: 200% 0; }
+  100% { background-position: -20% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-headline__line {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .hero-headline__text em {
+    animation: none;
+    background-position: 0 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-headline {
+    padding: 0 7vw 6vh;
+  }
+  .hero-headline__text {
+    font-size: clamp(1.3rem, 5.6vw, 2rem);
+    max-width: 20ch;
+  }
+}

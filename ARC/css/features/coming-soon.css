@@ -1,0 +1,120 @@
+.page-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 120px 8vw 80px;
+  background-color: #000;
+  text-align: center;
+  scroll-margin-top: 60px;
+}
+
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 640px;
+  padding: 56px 48px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  background-color: #0d0d0d;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.coming-soon:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 44px rgba(255, 255, 255, 0.08);
+}
+
+.coming-soon__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 16px 7px 12px;
+  margin: 0 0 28px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.coming-soon__dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #fff;
+  flex: 0 0 auto;
+}
+
+.coming-soon__dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: #fff;
+  animation: coming-soon-pulse 1.8s ease-out infinite;
+}
+
+.coming-soon__badge-text {
+  color: #e6e6e6;
+  font-family: "Geist", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.coming-soon__title {
+  margin: 0 0 16px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.02em;
+
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.2),
+    0 0 36px rgba(255, 255, 255, 0.08);
+}
+
+.coming-soon__text {
+  margin: 0;
+  max-width: 440px;
+  color: #a6a6a6;
+  font-family: "Geist", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+@keyframes coming-soon-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coming-soon__dot::after {
+    animation: none;
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .page-section {
+    padding: 100px 6vw 60px;
+  }
+
+  .coming-soon {
+    padding: 44px 28px;
+  }
+}

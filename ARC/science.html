@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARC — Science</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/features/nav-dropdown.css">
+    <link rel="stylesheet" href="css/features/scroll-reveal.css">
+    <link rel="stylesheet" href="css/features/coming-soon.css">
+    <link rel="stylesheet" href="css/science.css">
+    <link rel="stylesheet" href="css/features/header-blur.css">
+    <link rel="stylesheet" href="css/features/scroll-progress.css">
+    <link rel="stylesheet" href="css/features/footer.css">
+</head>
+<body>
+
+    <div class="header-blur" aria-hidden="true">
+        <div class="header-blur__layer"></div>
+        <div class="header-blur__layer"></div>
+        <div class="header-blur__layer"></div>
+        <div class="header-blur__layer"></div>
+        <div class="header-blur__layer"></div>
+        <div class="header-blur__layer"></div>
+    </div>
+
+    <header id="site-header" class="site-header">
+        <a href="index.html" class="site-header__logo-link">
+            <img src="images/logo.png" class="site-header__logo" alt="ARC logo">
+        </a>
+
+        <nav class="site-header__center" id="site-header-nav">
+            <ul class="site-header__nav">
+                <li class="nav-dropdown">
+                    <a href="about.html" class="nav-dropdown__label">About us</a>
+                    <svg class="nav-dropdown__caret" width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="nav-dropdown__menu">
+                        <a href="about.html#founders" class="nav-dropdown__item">Founders</a>
+                        <a href="about.html#advisors" class="nav-dropdown__item">Advisors</a>
+                    </div>
+                </li>
+                <li class="nav-dropdown nav-dropdown--active">
+                    <a href="science.html" class="nav-dropdown__label">Science</a>
+                    <svg class="nav-dropdown__caret" width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="nav-dropdown__menu">
+                        <a href="science.html#philosophy" class="nav-dropdown__item">Philosophy</a>
+                        <a href="science.html#publications" class="nav-dropdown__item">Publications</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="site-header__actions">
+            <a href="join.html" class="site-header__btn site-header__btn--ghost">Join</a>
+            <a href="clinical-trials.html" class="site-header__btn site-header__btn--solid">Clinical Trials</a>
+        </div>
+
+        <button type="button" id="nav-toggle" class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-header-nav">
+            <span class="nav-toggle__bar"></span>
+            <span class="nav-toggle__bar"></span>
+            <span class="nav-toggle__bar"></span>
+        </button>
+    </header>
+
+    <main>
+
+        <section id="philosophy" class="page-section">
+            <div class="philosophy reveal-up" data-reveal>
+                <p class="philosophy__eyebrow">Philosophy</p>
+                <span class="philosophy__quote-mark" aria-hidden="true">&ldquo;</span>
+                <p class="philosophy__text">Science is humanity's <em>greatest force multiplier</em>. At ARC Labs AI, we transform it into capabilities that empower doctors, clinicians, and individuals.</p>
+            </div>
+        </section>
+
+        <section id="publications" class="page-section">
+            <div class="coming-soon reveal-up" data-reveal>
+                <span class="coming-soon__badge">
+                    <span class="coming-soon__dot" aria-hidden="true"></span>
+                    <span class="coming-soon__badge-text">Coming soon</span>
+                </span>
+                <h2 class="coming-soon__title">Publications</h2>
+                <p class="coming-soon__text">Our published research and clinical findings will be listed here soon.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+
+        <div id="footerdiv">
+            <div class="footer__inner">
+
+                <div class="footer__brand">
+                    <img src="images/logo.png" class="footer__logo" alt="ARC logo">
+                    <p class="footer__tagline">Advancing regenerative science through rigorous, human-centered clinical research.</p>
+                    <div class="footer__social">
+                        <a href="https://www.linkedin.com/company/arclabs-ai/?viewAsMember=true" target="_blank" rel="noopener noreferrer" class="footer__social-btn footer__social-btn--linkedin" aria-label="ARC on LinkedIn">
+                            <svg class="footer__social-icon" viewBox="0 0 448 512" height="1.5em" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"></path>
+                            </svg>
+                            <span class="footer__social-text">LinkedIn</span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <nav class="footer__nav" aria-label="Footer">
+                    <span class="footer__nav-title">Site</span>
+                    <a href="index.html" class="footer__nav-link">Home</a>
+                    <a href="about.html" class="footer__nav-link">About Us</a>
+                    <a href="science.html" class="footer__nav-link">Science</a>
+                    <a href="clinical-trials.html" class="footer__nav-link">Clinical Trials</a>
+                    <a href="join.html" class="footer__nav-link">Join</a>
+                </nav>
+
+                <div class="footer__cta">
+                    <a href="contact.html" class="footer__contact-btn">Contact Us</a>
+                </div>
+
+            </div>
+
+            <div class="footer__bottom">
+                <div class="footer__collab-group">
+                    <span class="footer__collab-label">Collaborators</span>
+                    <div class="footer__collab-avatars">
+                        <a href="https://www.iitrpr.ac.in/tbif/" target="_blank" rel="noopener noreferrer" class="footer__collab">
+                            <img src="images/collaborators/TBIF.png" class="footer__collab-img" alt="TBIF logo">
+                            <span class="footer__collab-tooltip">TBIF</span>
+                        </a>
+                        <a href="https://seedfund.startupindia.gov.in/" target="_blank" rel="noopener noreferrer" class="footer__collab">
+                            <img src="images/collaborators/SISSF.png" class="footer__collab-img" alt="SISSF logo">
+                            <span class="footer__collab-tooltip">Startup India Seed Fund</span>
+                        </a>
+                        <a href="https://impunjab.org/" target="_blank" rel="noopener noreferrer" class="footer__collab">
+                            <img src="images/collaborators/IMP.png" class="footer__collab-img" alt="IMP logo">
+                            <span class="footer__collab-tooltip">IM Punjab</span>
+                        </a>
+                        <a href="https://www.chitkara.edu.in/ciif/" target="_blank" rel="noopener noreferrer" class="footer__collab">
+                            <img src="images/collaborators/CIIF.png" class="footer__collab-img" alt="CIIF logo">
+                            <span class="footer__collab-tooltip">Chitkara Innovation Incubation Foundation</span>
+                        </a>
+                    </div>
+                </div>
+
+                <a href="mailto:arclabs.ai@gmail.com" class="footer__email">arclabs.ai@gmail.com</a>
+            </div>
+
+            <p class="footer__copyright">&copy; 2026 ARC AI Labs. All rights reserved.</p>
+
+            <button type="button" id="footer-to-top" class="footer__to-top" aria-label="Back to top">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 19V5M12 5L6 11M12 5L18 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+
+    </footer>
+
+    <script type="module" src="js/features/smooth-scroll.js"></script>
+    <script type="module" src="js/features/mobile-nav.js"></script>
+    <script type="module" src="js/science.js"></script>
+    <script type="module" src="js/features/footer.js"></script>
+    <script src="js/features/scroll-progress.js"></script>
+</body>
+</html>

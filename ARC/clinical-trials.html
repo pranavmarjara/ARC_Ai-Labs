@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARC — Clinical Trials</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/features/nav-dropdown.css">
+    <link rel="stylesheet" href="css/features/scroll-reveal.css">
+    <link rel="stylesheet" href="css/features/coming-soon.css">
+    <link rel="stylesheet" href="css/clinical-trials.css">
+    <link rel="stylesheet" href="css/features/header-blur.css">
+    <link rel="stylesheet" href="css/features/scroll-progress.css">
+</head>
+<body>
+
+    <div class="header-blur" aria-hidden="true">
+        <div class="header-blur__layer"></div>
+        <div class="header-blur__layer"></div>
+        <div class="header-blur__layer"></div>
+        <div class="header-blur__layer"></div>
+        <div class="header-blur__layer"></div>
+        <div class="header-blur__layer"></div>
+    </div>
+
+    <header id="site-header" class="site-header">
+        <a href="index.html" class="site-header__logo-link">
+            <img src="images/logo.png" class="site-header__logo" alt="ARC logo">
+        </a>
+
+        <nav class="site-header__center" id="site-header-nav">
+            <ul class="site-header__nav">
+                <li class="nav-dropdown">
+                    <a href="about.html" class="nav-dropdown__label">About us</a>
+                    <svg class="nav-dropdown__caret" width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="nav-dropdown__menu">
+                        <a href="about.html#founders" class="nav-dropdown__item">Founders</a>
+                        <a href="about.html#advisors" class="nav-dropdown__item">Advisors</a>
+                    </div>
+                </li>
+                <li class="nav-dropdown">
+                    <a href="science.html" class="nav-dropdown__label">Science</a>
+                    <svg class="nav-dropdown__caret" width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="nav-dropdown__menu">
+                        <a href="science.html#philosophy" class="nav-dropdown__item">Philosophy</a>
+                        <a href="science.html#publications" class="nav-dropdown__item">Publications</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="site-header__actions">
+            <a href="join.html" class="site-header__btn site-header__btn--ghost">Join</a>
+            <a href="clinical-trials.html" class="site-header__btn site-header__btn--solid">Clinical Trials</a>
+        </div>
+
+        <button type="button" id="nav-toggle" class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-header-nav">
+            <span class="nav-toggle__bar"></span>
+            <span class="nav-toggle__bar"></span>
+            <span class="nav-toggle__bar"></span>
+        </button>
+    </header>
+
+    <main>
+
+        <section class="page-section">
+            <div class="coming-soon reveal-up" data-reveal>
+                <span class="coming-soon__badge">
+                    <span class="coming-soon__dot" aria-hidden="true"></span>
+                    <span class="coming-soon__badge-text">Coming soon</span>
+                </span>
+                <h2 class="coming-soon__title">Clinical Trials</h2>
+                <p class="coming-soon__text">We're preparing to launch our first clinical trials. Details on participation and study sites will be announced here soon.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script type="module" src="js/features/smooth-scroll.js"></script>
+    <script type="module" src="js/features/mobile-nav.js"></script>
+    <script type="module" src="js/clinical-trials.js"></script>
+    <script src="js/features/scroll-progress.js"></script>
+</body>
+</html>

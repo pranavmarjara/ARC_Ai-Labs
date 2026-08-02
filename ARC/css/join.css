@@ -1,0 +1,266 @@
+main {
+  margin-top: 0;
+}
+
+.join-hero,
+.join-values,
+.join-roles,
+.join-contact {
+  width: 100%;
+  padding-left: 8vw;
+  padding-right: 8vw;
+}
+
+.join-hero__eyebrow,
+.join-values__eyebrow,
+.join-roles__eyebrow {
+  margin: 0 0 18px;
+  color: #9d9d9d;
+  font-family: "Geist", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.join-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding-top: 60px;
+  background-color: #0d0d0d;
+}
+
+.join-hero__title {
+  max-width: 900px;
+  margin: 0 0 24px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 6.4vw, 5.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.join-hero__text {
+  max-width: 620px;
+  margin: 0 0 40px;
+  color: #b8b8b8;
+  font-family: "Geist", sans-serif;
+  font-size: clamp(0.95rem, 1.6vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+.join-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  padding: 0 32px;
+  border-radius: 999px;
+  background-color: #fff;
+  color: #111;
+  font-family: "Geist", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.join-hero__cta:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.join-values {
+  padding-top: 140px;
+  padding-bottom: 140px;
+  background-color: #000;
+}
+
+.join-values__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.join-value {
+  padding: 36px 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background-color: #141414;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.join-value:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+  background-color: #181818;
+}
+
+.join-value__index {
+  display: block;
+  margin-bottom: 20px;
+  color: #6b6b6b;
+  font-family: "Geist", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.join-value__title {
+  margin: 0 0 12px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.join-value__text {
+  margin: 0;
+  color: #9d9d9d;
+  font-family: "Geist", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+  .join-values__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.join-roles {
+  padding-top: 100px;
+  padding-bottom: 140px;
+  background-color: #0d0d0d;
+}
+
+.join-roles__list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.join-role {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 0.2s ease, padding-left 0.2s ease;
+}
+
+.join-role:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+  padding-left: 20px;
+}
+
+.join-role__title {
+  margin: 0 0 8px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: clamp(1.05rem, 2vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.join-role__meta {
+  margin: 0;
+  color: #7a7a7a;
+  font-family: "Geist", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.join-role__arrow {
+  flex: none;
+  color: #7a7a7a;
+  font-size: 22px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.join-role:hover .join-role__arrow {
+  color: #fff;
+  transform: translateX(4px);
+}
+
+.join-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding-top: 100px;
+  padding-bottom: 140px;
+  background-color: #000;
+  text-align: center;
+}
+
+.join-contact__title {
+  max-width: 640px;
+  margin: 0 0 16px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: clamp(1.8rem, 3.6vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.join-contact__text {
+  max-width: 520px;
+  margin: 0 0 36px;
+  color: #9d9d9d;
+  font-family: "Geist", sans-serif;
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.join-contact__email {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  padding: 0 32px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.join-contact__email:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.join-contact__email--copied {
+  border-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+@media (max-width: 720px) {
+  .join-hero,
+  .join-values,
+  .join-roles,
+  .join-contact {
+    padding-left: 6vw;
+    padding-right: 6vw;
+  }
+
+  .join-role {
+    flex-wrap: wrap;
+  }
+}

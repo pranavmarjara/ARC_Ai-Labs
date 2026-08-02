@@ -1,0 +1,403 @@
+main {
+  margin-top: 0;
+}
+
+.about-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 1205.2px;
+  height: 100vh;
+  padding: 0 8vw;
+  overflow: hidden;
+  text-align: left;
+}
+
+.about-hero__eyebrow {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 18px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: default;
+}
+
+.about-hero__title {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 0 32px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-weight: 800;
+  font-size: 80px;
+  line-height: 84px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  cursor: default;
+}
+
+.about-hero__title-fill {
+  color: #fff;
+}
+
+.about-hero__text {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+  margin: 0;
+  color: #A6A6A6;
+  font-family: "Geist", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.75;
+  text-align: left;
+  cursor: default;
+
+  line-height: 32px;
+}
+
+@media (max-width: 720px) {
+  .about-hero {
+    width: 100%;
+    padding: 0 6vw;
+  }
+
+  .about-hero__title {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+}
+
+.about-boxes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+}
+
+.about-boxes__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(48px, 7vw, 88px);
+}
+
+.founder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  width: clamp(480px, 38vw, 620px);
+}
+
+.founder--reverse {
+  flex-direction: row-reverse;
+}
+
+.founder--reverse .founder__info {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.founder--reverse .founder__links {
+  justify-content: flex-end;
+}
+
+.founder__photo-wrap {
+  flex: 0 0 auto;
+  width: clamp(200px, 16vw, 260px);
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #1c1c1c;
+}
+
+.founder__photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.founder__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.founder__name {
+  margin: 0 0 4px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.founder__role {
+  margin: 0 0 16px;
+  color: #a6a6a6;
+  font-family: "Geist", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.founder__links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.founder__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.founder__link:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: #111;
+}
+
+.founder__link svg {
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
+}
+
+@media (max-width: 720px) {
+  .about-boxes__row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .founder,
+  .founder--reverse {
+    flex-direction: column;
+    width: min(90vw, 480px);
+  }
+
+  .founder--reverse .founder__info {
+    align-items: center;
+    text-align: center;
+  }
+
+  .founder--reverse .founder__links {
+    justify-content: center;
+  }
+}
+
+.collaborators{
+  position: relative;
+  width: 100vw;
+  background-color: #000;
+  padding: 0;
+}
+.collaborators__pin{
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#colp{
+  height: 584px;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 0;
+}
+#colabs{
+  height: 56px;
+  width: 1232px;
+  font-size: 56px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+#colcards{
+  height: 480px;
+  width: max-content;
+  background-color: black;
+  display: flex;
+  gap: 24px;
+  margin: 0;
+  margin-left: 120.4px;
+  align-self: flex-start;
+  will-change: transform;
+}
+.cards{
+  height: 100%;
+  width: 320px;
+  flex: 0 0 320px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cards:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 32px rgba(255, 255, 255, 0.08);
+}
+
+.card__photo-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  flex: 0 0 auto;
+  overflow: hidden;
+  background-color: #1c1c1c;
+}
+
+.card__photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 20px 22px 22px;
+}
+
+.card__name {
+  margin: 0 0 4px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.card__role {
+  margin: 0;
+  color: #9d9d9d;
+  font-family: "Geist", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.card__links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 6px 10px 6px 8px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #d3d3d3;
+  font-family: "Geist", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.card__link:hover {
+  background-color: #fff;
+  color: #111;
+}
+
+.card__link svg {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  color: #7a7a7a;
+  transition: color 0.2s ease;
+}
+
+.card__link:hover svg {
+  color: #111;
+}
+
+.card__link-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 720px) {
+  .collaborators {
+    width: 100%;
+    padding: 60px 0;
+  }
+
+  .collaborators__pin {
+    position: static;
+    height: auto;
+    width: 100%;
+    overflow: visible;
+  }
+
+  #colp {
+    height: auto;
+    width: 100%;
+    padding: 0 6vw;
+    gap: 32px;
+  }
+
+  #colabs {
+    width: auto;
+    height: auto;
+    font-size: clamp(2rem, 8vw, 3.2rem);
+  }
+
+  #colcards {
+    width: 100%;
+    height: auto;
+    margin-left: 0;
+    flex-direction: column;
+    align-self: stretch;
+  }
+
+  .cards {
+    width: 100%;
+    height: auto;
+    flex: 1 1 auto;
+  }
+}

@@ -1,0 +1,322 @@
+main {
+  margin-top: 0;
+}
+
+.contact-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 55vh;
+  padding-top: 60px;
+  padding-left: 8vw;
+  padding-right: 8vw;
+  background-color: #0d0d0d;
+}
+
+.contact-hero__eyebrow {
+  margin: 0 0 18px;
+  color: #9d9d9d;
+  font-family: "Geist", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact-hero__title {
+  max-width: 900px;
+  margin: 0 0 20px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.4rem, 5.6vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.contact-hero__text {
+  max-width: 620px;
+  margin: 0;
+  color: #b8b8b8;
+  font-family: "Geist", sans-serif;
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+.contact-form-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 8vw;
+  background-color: #000;
+}
+
+.contact-form-section__intro {
+  max-width: 420px;
+}
+
+.contact-form-section__label {
+  margin: 0 0 14px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  white-space: nowrap;
+
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.2),
+    0 0 36px rgba(255, 255, 255, 0.08);
+}
+
+.contact-form-section__subtext {
+  margin: 0;
+  max-width: 360px;
+  color: #9d9d9d;
+  font-family: "Geist", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.contact-form-card {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  padding: 32px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  background-color: #111;
+}
+
+.contact-form__row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.contact-form__row:last-of-type {
+  margin-bottom: 20px;
+}
+
+.contact-form__label {
+  margin-bottom: 7px;
+  color: #cfcfcf;
+  font-family: "Geist", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.contact-form__input,
+.contact-form__textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  background-color: #191919;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.contact-form__textarea {
+  resize: vertical;
+  min-height: 90px;
+  max-height: 240px;
+  line-height: 1.6;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.contact-form__textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.contact-form__textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.contact-form__textarea::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  border: 2px solid #191919;
+}
+
+.contact-form__textarea::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+.contact-form__input::placeholder,
+.contact-form__textarea::placeholder {
+  color: #6b6b6b;
+}
+
+.contact-form__input:hover,
+.contact-form__textarea:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.contact-form__input:focus,
+.contact-form__textarea:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.55);
+  background-color: #1c1c1c;
+}
+
+.contact-form__input:invalid:not(:placeholder-shown) {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.contact-form__hint {
+  margin-top: 8px;
+  color: #7a7a7a;
+  font-family: "Geist", sans-serif;
+  font-size: 12.5px;
+  font-weight: 400;
+}
+
+.contact-form__honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.contact-form__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: 999px;
+  background-color: #fff;
+  color: #111;
+  font-family: "Geist", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.contact-form__submit:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.contact-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.contact-success[hidden] {
+  display: none;
+}
+
+.contact-success__icon {
+  margin-bottom: 22px;
+  color: #fff;
+}
+
+.contact-success__title {
+  margin: 0 0 12px;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.contact-success__text {
+  max-width: 420px;
+  margin: 0 0 32px;
+  color: #9d9d9d;
+  font-family: "Geist", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.contact-success__again {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding: 0 28px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background-color: transparent;
+  color: #fff;
+  font-family: "Geist", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.contact-success__again:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.contact-form-section--centered {
+  position: relative;
+  min-height: calc(100vh - 60px);
+  margin-top: 60px;
+  padding: 60px 8vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 36px;
+}
+
+@media (max-width: 720px) {
+  .contact-hero,
+  .contact-form-section {
+    padding-left: 6vw;
+    padding-right: 6vw;
+  }
+
+  .contact-form-card {
+    padding: 24px 20px;
+  }
+
+  .contact-form-section--centered {
+    min-height: calc(100vh - 60px);
+    padding-left: 6vw;
+    padding-top: 90px;
+    padding-bottom: 16px;
+    gap: 16px;
+  }
+
+  .contact-form-section__intro {
+    max-width: none;
+    margin: 0 0 0 2px;
+  }
+
+  .contact-form-section__label {
+    display: block;
+    font-size: 1.6rem;
+    white-space: normal;
+  }
+
+  .contact-form-section__subtext {
+    max-width: none;
+  }
+}

@@ -1,0 +1,19 @@
+main {
+  margin-top: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+main {
+  height: 100vh;
+}
+
+.page-section {
+  height: 100vh;
+  min-height: 0;
+  padding: 0 8vw;
+}
