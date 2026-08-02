@@ -78,6 +78,7 @@ void main() {
   color.rgb = mix(vec3(gray), color.rgb, iSaturation);
 
   color.a = max(color.r, max(color.g, color.b)) * iOpacity;
+  color.rgb *= color.a;
   gl_FragColor = color;
 }`;
 
@@ -103,6 +104,7 @@ export function initSideRays(container, options = {}) {
     renderer = new Renderer({
       dpr: Math.min(window.devicePixelRatio || 1, 2),
       alpha: true,
+      premultipliedAlpha: true,
     });
   } catch {
     return null;
