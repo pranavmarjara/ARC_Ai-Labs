@@ -299,7 +299,7 @@ function resize() {
         // mountain so the summit (about 12° above the look-at point) lands near 18% down, clear of
         // the top edge and the Menu pill, while the look-at point stays just above the card
         camera.fov = 55;
-        camera.setViewOffset(W, H, 0, H * .12, W, H);
+        camera.setViewOffset(W, H, 0, H * .16, W, H);
     }
     camera.updateProjectionMatrix();
 }
