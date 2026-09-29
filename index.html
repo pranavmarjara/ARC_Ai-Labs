@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ARC Labs</title>
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,400&family=EB+Garamond:ital,wght@1,400..800&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.css">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+    }
+  }
+</script>
+</head>
+<body class="is-loading">
+
+<div id="scrollbar" aria-hidden="true"><div id="scrollthumb"></div></div>
+
+
+<header class="bar">
+  <a class="bar-brand" href="#">ARC Labs</a>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">
+    <span class="menu-btn__label">Menu</span>
+    <span class="menu-btn__icon" aria-hidden="true"><i></i><i></i></span>
+  </button>
+  <nav id="site-nav" aria-label="Sections">
+    <a href="#arc1">ARC-1</a>
+    <a href="#why">Why speech</a>
+    <a href="#roadmap">Milestones</a>
+    <a href="#team">Team</a>
+    <a href="#documentation">Press Release</a>
+    <a href="#communication">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <!-- hero: the scan in a card on the left, the tagline on the right -->
+  <div class="hero" id="hero">
+    <figure class="hero-card">
+      <img class="hero-logo" src="images/logo.png" alt="ARC Labs">
+      <img class="hero-scan" src="images/hero-scan.jpg" alt="False-colour MRI scan of a head, seen from the front, with the brain glowing orange and yellow">
+    </figure>
+    <div class="hero-side">
+      <h1 class="hero-tag" aria-label="Speech, not guessed. measured.">
+        <span class="line"><span>Speech,</span></span>
+        <span class="line"><span>not guessed.</span></span>
+        <span class="line line--accent"><span>measured.</span></span>
+      </h1>
+    </div>
+  </div>
+
+  <!-- intro -->
+  <section id="intro">
+    <div class="reveal intro">
+      <div class="side">
+        <p class="label">The gap</p>
+        <p class="soft">When the brain is affected, it shows up in how a person speaks. But clinicians have no objective way to measure those changes. Assessment relies on perceptual rating scales that vary between listeners, happens only during clinic visits, and produces no data that can be trended over time.</p>
+        <p class="soft">The result: recovery can't be tracked precisely, treatment can't be adjusted early, and outcomes can't be proven.</p>
+      </div>
+      <p class="quote">Speech reveals what is happening in our minds, yet our analysis around it is subjective, fragmented and shallow.</p>
+    </div>
+  </section>
+
+  <!-- ARC-1 -->
+  <section id="arc1">
+    <h2 class="reveal display">One instrument. Fourteen biomarkers.</h2>
+    <div class="reveal cols c2">
+      <p class="reveal lede">A multi-microphone array in a rigid mount that plugs into any laptop, tablet or phone over USB-C.</p>
+      <p class="soft body">The patient speaks a few short tasks while ARC-1 records their voice and the room around them on separate channels, so background noise is never mistaken for a symptom. The recording is turned into precise measures of how stable, well-timed and coordinated their speech is, given to the clinician or researcher as numbers and graphs to read, compare and interpret for themselves.</p>
+    </div>
+    <div class="measure-row">
+      <div class="convene" id="convene">
+        <p class="convene-words">
+          <span class="w"><span>Breath.</span></span>
+          <span class="w"><span>Muscle.</span></span>
+          <span class="w"><span>Timing.</span></span>
+          <span class="w"><span>Thought.</span></span>
+        </p>
+        <p class="convene-line">All arriving at once, in a single word.</p>
+      </div>
+      <figure class="reveal measure-art"><img src="images/brain.webp" alt="Illustration of the brain's white-matter pathways, shown in white on a dark ground"></figure>
+    </div>
+  </section>
+
+  <!-- why speech -->
+  <section id="why">
+    <h2 class="reveal display">designed for neurological analysis of speech.</h2>
+    <p class="reveal lede" style="max-width:38ch; margin-bottom: clamp(36px,5vw,56px)">Breath, voice, resonance, tongue, timing and meaning, all at once, in real time. Break any link in that chain and the sound changes in a way that can be measured.</p>
+    <div class="reveal cols c3">
+      <div class="unit"><h3>It runs on five cranial nerves</h3><p>Jaw, lips, tongue, throat, palate and larynx are driven by five cranial nerves, the breath behind them by the spinal nerves, the timing by motor cortex, cerebellum and basal ganglia. Damage anywhere along that chain marks the sound.</p></div>
+      <div class="unit"><h3>It is cheap enough to repeat</h3><p>Scans and blood biomarkers happen a few times a year. Speech can be taken weekly, which is where the signal in a progressive disease actually lives.</p></div>
+      <div class="unit"><h3>It is how patients and caregivers connect</h3><p>For a patient, what matters most day to day is being understood by the people giving care. Speech is the bridge between patient and caregiver, and it deserves to be measured as carefully as any scan.</p></div>
+    </div>
+    <div class="reveal trial">
+      <p class="display">Built like an instrument.</p>
+      <div style="display:grid; gap:14px; align-content:end">
+        <p>In a recent ALS trial, objective speech measures tracked disease progression as well as the standard clinical scale, and picked up decline in individual patients whose clinical score had not moved at all. One of the five measures carrying that result is one of ours.</p>
+        <p class="label">Scientific Reports, 2026</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- where we are -->
+  <section id="progress">
+    <div class="reveal team">
+      <p class="reveal lede">A working instrument, a filed patent, and the study that proves it is designed.</p>
+      <ul class="persist">
+        <li>Working instrument, 14 measures with documented mathematics</li>
+        <li>Patent filed · SISFS funded</li>
+        <li>Incubated at TBIF, IIT Ropar and CCIE</li>
+        <li>11 lab demonstrations secured</li>
+        <li>Ethics approval and test licence in progress</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- roadmap: contour terrain that flies summit to summit as you scroll (roadmap/roadmap.js) -->
+  <section id="roadmap" aria-label="Milestones">
+    <div class="rm-stage">
+      <canvas id="rm-terrain" aria-hidden="true"></canvas>
+      <div class="rm-vignette"></div>
+      <div class="rm-dim" id="rm-dim"></div>
+
+      <div class="rm-labels" id="rm-labels" aria-hidden="true"></div>
+      <div class="rm-marker" id="rm-marker"></div>
+
+      <h2 class="rm-title" id="rm-title">
+        <span class="l">Milestones</span>
+      </h2>
+
+      <div class="rm-card" id="rm-card">
+        <div id="rm-slides"></div>
+        <div class="rm-bars" id="rm-bars"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- team -->
+  <section id="team">
+    <h2 class="reveal display">The people behind the instrument.</h2>
+
+    <p class="reveal label crew-head">Founders</p>
+    <div class="founders">
+      <article class="reveal founder">
+        <div class="photo founder-photo"><img src="images/team/aditya.jpg" alt="Aditya Minhas"><span class="ph label">Photo</span></div>
+        <div class="founder-text">
+          <p class="label soft founder-role">Co-founder · CEO</p>
+          <h3 class="founder-name"><span>Aditya</span><span>Minhas</span></h3>
+          <a class="founder-link" href="https://www.linkedin.com/in/aditya-m-6b576237a/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
+      <article class="reveal founder">
+        <div class="photo founder-photo"><img src="images/team/pranav.png" alt="Pranav Marjara"><span class="ph label">Photo</span></div>
+        <div class="founder-text">
+          <p class="label soft founder-role">Co-founder · CTO</p>
+          <h3 class="founder-name"><span>Pranav</span><span>Marjara</span></h3>
+          <a class="founder-link" href="https://www.linkedin.com/in/pranav-marjara-2a7390364/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
+    </div>
+
+    <p class="reveal label crew-head">Advisors</p>
+    <div class="advisors">
+      <article class="reveal member">
+        <div class="photo"><img src="images/team/adv-jayashree.jpg" alt="Jayashree Dasgupta"><span class="ph label">Photo</span></div>
+        <div><h3 class="name">Jayashree Dasgupta</h3><p class="label soft">Atlantic Fellow (Oxford)</p><a class="li" href="https://www.linkedin.com/in/jayashreedasgupta/" target="_blank" rel="noopener"><span class="sr-only">Jayashree Dasgupta on LinkedIn</span></a></div>
+      </article>
+      <article class="reveal member">
+        <div class="photo"><img src="images/team/adv-pramod.jpeg" alt="Pramod Patankar"><span class="ph label">Photo</span></div>
+        <div><h3 class="name">Pramod Patankar</h3><p class="label soft">Strategic and Fundraising Advisor</p><a class="li" href="https://www.linkedin.com/in/patankarpramod/" target="_blank" rel="noopener"><span class="sr-only">Pramod Patankar on LinkedIn</span></a></div>
+      </article>
+      <article class="reveal member">
+        <div class="photo"><img src="images/team/adv-vishal.jpg" alt="Vishal Ahuja"><span class="ph label">Photo</span></div>
+        <div><h3 class="name">Vishal Ahuja</h3><p class="label soft">Chief Regulatory Officer</p><a class="li" href="https://www.linkedin.com/in/vishalahuja92/" target="_blank" rel="noopener"><span class="sr-only">Vishal Ahuja on LinkedIn</span></a></div>
+      </article>
+      <article class="reveal member">
+        <div class="photo"><img src="images/team/adv-anusha.jpg" alt="Anusha Prakash"><span class="ph label">Photo</span></div>
+        <div><h3 class="name">Anusha Prakash</h3><p class="label soft">IIT Ropar</p><a class="li" href="https://www.linkedin.com/in/anushaprakash90/" target="_blank" rel="noopener"><span class="sr-only">Anusha Prakash on LinkedIn</span></a></div>
+      </article>
+      <article class="reveal member">
+        <div class="photo"><img src="images/team/adv-keerti.jpg" alt="Keerti Bhusan Pradhan"><span class="ph label">Photo</span></div>
+        <div><h3 class="name">Keerti Bhusan Pradhan</h3><p class="label soft">Tata Institute of Social Sciences</p><a class="li" href="https://www.linkedin.com/in/keertibhusanpradhan/" target="_blank" rel="noopener"><span class="sr-only">Keerti Bhusan Pradhan on LinkedIn</span></a></div>
+      </article>
+    </div>
+
+    <p class="reveal label crew-head center">Collaborators</p>
+    <div class="reveal logo-strip">
+      <a class="logo" href="https://www.iitrpr.ac.in/tbif/" target="_blank" rel="noopener"><img src="images/team/IITR.jpg" alt="IIT Ropar"><span class="ph label soft">IIT Ropar</span><span class="logo-name label" aria-hidden="true">IIT Ropar</span></a>
+      <a class="logo" href="https://www.linkedin.com/company/ccie-chitkara-centre-for-innovation-and-entrepreneurship/" target="_blank" rel="noopener"><img src="images/team/collab-ciif.png" alt="CCIE"><span class="ph label soft">CCIE</span><span class="logo-name label" aria-hidden="true">CCIE</span></a>
+      <a class="logo" href="https://seedfund.startupindia.gov.in/" target="_blank" rel="noopener"><img src="images/team/collab-sissf.png" alt="Startup India Seed Fund Scheme"><span class="ph label soft">Startup India Seed Fund Scheme</span><span class="logo-name label" aria-hidden="true">Startup India Seed Fund Scheme</span></a>
+    </div>
+  </section>
+
+  <!-- press release, from the Header draft -->
+  <section id="documentation">
+      <div class="sectionbody" id="docsbody">
+
+          <div class="press">
+
+              <!-- pinned in the middle of the viewport; the cards ride over it -->
+              <div class="pressheading">
+                  <div class="pressheadinginner">
+                      <span class="presseyebrow">( Notes from ARC Labs )</span>
+                      <h2 class="presstitle">Press Release</h2>
+                  </div>
+              </div>
+
+              <div class="presswrap">
+
+              <!-- "coming soon" sits over the cards; they stay in place underneath, just out of reach until coverage lands -->
+              <div class="presssoon">
+                  <div class="presssoonmsg">
+                      <p class="presssoontitle">Coming soon</p>
+                  </div>
+              </div>
+
+              <div class="pressgrid" inert>
+
+                  <article tabindex="0" role="button" class="presscard span4 reveal">
+                      <div class="presstext">
+                          <p>Placeholder article. The opening paragraph carries the lede — who, what, and why a reader who has never heard of the company should keep going past the first line.</p>
+                          <p>The second paragraph gives the context the lede skipped: the size of the problem, the people it affects, and the reason this particular approach is worth a column of newsprint.</p>
+                          <p>Then the quote. Coverage almost always turns on one line from a founder or a clinician, set on its own, and it is usually the line that gets screenshotted and passed around afterwards.</p>
+                          <p>A paragraph of detail follows: what the instrument actually measures, over what window, and what a clinician does with the number once it exists. Technical, but written for a general reader.</p>
+                          <p>Here the piece widens out. Other groups working on the same question, what they have published, and where this work sits among them — the paragraph that keeps the story from reading like a press release.</p>
+                          <p>A second quote lands about here, usually from someone outside the company: an advisor, a clinician who has used it, or a researcher willing to say what is and is not proven yet.</p>
+                          <p>The caveats paragraph. What the data does not yet show, which populations have not been covered, and what would have to be true before any of this belongs in routine care.</p>
+                          <p>A paragraph on what happens next: the trials, the approvals, the partnerships, and the timeline the company is willing to put its name to in print.</p>
+                          <p>The closing paragraph returns to the person the piece opened with, because that is how these are written, and leaves the reader with the sentence the editor chose the headline from.</p>
+                          <p>Swap all of this for the real excerpt when the coverage lands. The card shows only the first few lines; everything here is what opens when a reader clicks through.</p>
+                      </div>
+
+                      <span class="pressmore" aria-hidden="true">Read more</span>
+
+                      <div class="presscardfoot">
+                          <div class="pressperson">
+                              <span class="pressavatar" aria-hidden="true"></span>
+                              <span class="presslines">
+                                  <span class="pressname">Publication</span>
+                                  <span class="pressrole">Section · Month 2026</span>
+                              </span>
+                          </div>
+
+                          <a class="presslink" href="#">Read article
+                              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5"/></svg>
+                          </a>
+                      </div>
+                  </article>
+
+                  <figure class="pressphoto span2 reveal" style="--ratio: 3 / 4">
+                      <img src="images/press/press-1.jpg" alt="">
+                  </figure>
+
+                  <a class="pressclip span3 reveal" data-video="VIDEO_ID" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" style="--ratio: 16 / 9">
+                      <img class="pressclipthumb" alt="">
+                      <span class="pressplay" aria-hidden="true"></span>
+                  </a>
+
+                  <article tabindex="0" role="button" class="presscard span3 reveal">
+                      <div class="presstext">
+                          <p>Placeholder article. The opening paragraph carries the lede — who, what, and why a reader who has never heard of the company should keep going past the first line.</p>
+                          <p>The second paragraph gives the context the lede skipped: the size of the problem, the people it affects, and the reason this particular approach is worth a column of newsprint.</p>
+                          <p>Then the quote. Coverage almost always turns on one line from a founder or a clinician, set on its own, and it is usually the line that gets screenshotted and passed around afterwards.</p>
+                          <p>A paragraph of detail follows: what the instrument actually measures, over what window, and what a clinician does with the number once it exists. Technical, but written for a general reader.</p>
+                          <p>Here the piece widens out. Other groups working on the same question, what they have published, and where this work sits among them — the paragraph that keeps the story from reading like a press release.</p>
+                          <p>A second quote lands about here, usually from someone outside the company: an advisor, a clinician who has used it, or a researcher willing to say what is and is not proven yet.</p>
+                          <p>The caveats paragraph. What the data does not yet show, which populations have not been covered, and what would have to be true before any of this belongs in routine care.</p>
+                          <p>A paragraph on what happens next: the trials, the approvals, the partnerships, and the timeline the company is willing to put its name to in print.</p>
+                          <p>The closing paragraph returns to the person the piece opened with, because that is how these are written, and leaves the reader with the sentence the editor chose the headline from.</p>
+                          <p>Swap all of this for the real excerpt when the coverage lands. The card shows only the first few lines; everything here is what opens when a reader clicks through.</p>
+                      </div>
+
+                      <span class="pressmore" aria-hidden="true">Read more</span>
+
+                      <div class="presscardfoot">
+                          <div class="pressperson">
+                              <span class="pressavatar" aria-hidden="true"></span>
+                              <span class="presslines">
+                                  <span class="pressname">Publication</span>
+                                  <span class="pressrole">Section · Month 2026</span>
+                              </span>
+                          </div>
+
+                          <a class="presslink" href="#">Read article
+                              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5"/></svg>
+                          </a>
+                      </div>
+                  </article>
+
+                  <article tabindex="0" role="button" class="presscard span3 pullup reveal">
+                      <div class="presstext">
+                          <p>Placeholder article. The opening paragraph carries the lede — who, what, and why a reader who has never heard of the company should keep going past the first line.</p>
+                          <p>The second paragraph gives the context the lede skipped: the size of the problem, the people it affects, and the reason this particular approach is worth a column of newsprint.</p>
+                          <p>Then the quote. Coverage almost always turns on one line from a founder or a clinician, set on its own, and it is usually the line that gets screenshotted and passed around afterwards.</p>
+                          <p>A paragraph of detail follows: what the instrument actually measures, over what window, and what a clinician does with the number once it exists. Technical, but written for a general reader.</p>
+                          <p>Here the piece widens out. Other groups working on the same question, what they have published, and where this work sits among them — the paragraph that keeps the story from reading like a press release.</p>
+                          <p>A second quote lands about here, usually from someone outside the company: an advisor, a clinician who has used it, or a researcher willing to say what is and is not proven yet.</p>
+                          <p>The caveats paragraph. What the data does not yet show, which populations have not been covered, and what would have to be true before any of this belongs in routine care.</p>
+                          <p>A paragraph on what happens next: the trials, the approvals, the partnerships, and the timeline the company is willing to put its name to in print.</p>
+                          <p>The closing paragraph returns to the person the piece opened with, because that is how these are written, and leaves the reader with the sentence the editor chose the headline from.</p>
+                          <p>Swap all of this for the real excerpt when the coverage lands. The card shows only the first few lines; everything here is what opens when a reader clicks through.</p>
+                      </div>
+
+                      <span class="pressmore" aria-hidden="true">Read more</span>
+
+                      <div class="presscardfoot">
+                          <div class="pressperson">
+                              <span class="pressavatar" aria-hidden="true"></span>
+                              <span class="presslines">
+                                  <span class="pressname">Publication</span>
+                                  <span class="pressrole">Interview · Month 2026</span>
+                              </span>
+                          </div>
+
+                          <a class="presslink" href="#">Read article
+                              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5"/></svg>
+                          </a>
+                      </div>
+                  </article>
+
+                  <figure class="pressphoto span3 reveal" style="--ratio: 16 / 10">
+                      <img src="images/press/press-2.jpg" alt="">
+                  </figure>
+
+                  <a class="pressclip span4 reveal" data-video="VIDEO_ID" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" style="--ratio: 16 / 9">
+                      <img class="pressclipthumb" alt="">
+                      <span class="pressplay" aria-hidden="true"></span>
+                  </a>
+
+                  <figure class="pressphoto span2 reveal" style="--ratio: 1 / 1">
+                      <img src="images/press/press-3.jpg" alt="">
+                  </figure>
+
+              </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+</main>
+
+<!-- contact footer, from the Header draft -->
+    <section id="communication">
+
+        <!-- the marbled texture sits behind everything; the card floats on it -->
+        <div class="commsbg" aria-hidden="true"></div>
+
+        <div class="sectionbody" id="commsbody">
+
+            <div class="contactpanel" id="contactpanel">
+
+                <div class="cardhead">
+                    <h2 class="contactword" id="contactword" aria-label="Contact"><span class="contactslot" aria-hidden="true"><span class="contactletter" style="--i: 0">C</span></span><span class="contactslot" aria-hidden="true"><span class="contactletter" style="--i: 1">o</span></span><span class="contactslot" aria-hidden="true"><span class="contactletter" style="--i: 2">n</span></span><span class="contactslot" aria-hidden="true"><span class="contactletter" style="--i: 3">t</span></span><span class="contactslot" aria-hidden="true"><span class="contactletter" style="--i: 4">a</span></span><span class="contactslot" aria-hidden="true"><span class="contactletter" style="--i: 5">c</span></span><span class="contactslot" aria-hidden="true"><span class="contactletter" style="--i: 6">t</span></span></h2>
+                </div>
+
+                <div class="cardbody">
+
+                    <div class="cardmeta">
+
+                        <div class="metablock">
+                            <p class="metalabel">Enquiries</p>
+                            <p class="metaline"><a class="copymail" href="mailto:connect@arclabsai.in" title="Click to copy">connect@arclabsai.in</a></p>
+                        </div>
+
+                        <div class="metablock">
+                            <p class="metalabel">Elsewhere</p>
+                            <p class="metaline"><a href="https://www.linkedin.com/company/arclabs-ai/" target="_blank" rel="noopener">LinkedIn</a></p>
+                        </div>
+
+                        <figure class="metashot">
+                            <img src="images/contact.jpg" alt="">
+                        </figure>
+                    </div>
+
+                    <form class="cardform" id="contactform" action="https://api.web3forms.com/submit" method="POST" novalidate>
+                        <input type="hidden" name="access_key" value="a5a899f0-fbc7-436e-b1dd-138a6f4060cc">
+                        <input type="hidden" name="subject" value="New message from the ARC Labs website">
+                        <input type="checkbox" name="botcheck" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+                        <p class="contacteyebrow">Start a conversation</p>
+
+                        <div class="contactgrid">
+
+                            <label class="contactfield">
+                                <input type="text" name="first" placeholder=" " autocomplete="given-name" required>
+                                <span class="contactfieldlabel">First Name</span>
+                            </label>
+
+                            <label class="contactfield">
+                                <input type="text" name="last" placeholder=" " autocomplete="family-name" required>
+                                <span class="contactfieldlabel">Last Name</span>
+                            </label>
+
+                            <label class="contactfield wide">
+                                <input type="email" name="email" placeholder=" " autocomplete="email" required>
+                                <span class="contactfieldlabel">Email</span>
+                            </label>
+
+                            <label class="contactfield wide">
+                                <textarea name="message" placeholder=" " data-lenis-prevent required></textarea>
+                                <span class="contactfieldlabel">Type your message here</span>
+                            </label>
+
+                            <label class="contactconsent">
+                                <input type="checkbox" name="consent" required>
+                                <span class="contactbox" aria-hidden="true">
+                                    <svg viewBox="0 0 12 12"><path d="M2 6.4 4.8 9 10 3"/></svg>
+                                </span>
+                                <span>I give ARC Labs permission to contact me at this email address.</span>
+                            </label>
+
+                            <div class="contactsendrow">
+                                <p class="contactstatus" id="contactstatus" role="status">We usually reply within two working days.</p>
+
+                                <button class="contactsend" type="submit">Send</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="contactthanks" aria-live="polite">
+                        <h3>Thank you.</h3>
+                        <p>Your message is with us. Someone from the team will be in touch soon.</p>
+                    </div>
+                </div>
+
+                <div class="cardfoot">
+                    <span class="footmark">&copy;2026</span>
+                </div>
+            </div>
+
+            <!-- back to the hero, in the bottom-right corner of the page -->
+            <a class="footup" href="#hero" aria-label="Back to top">
+                <span class="footuplabel" aria-hidden="true">Back to the top</span>
+                <span class="footupicon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg>
+                </span>
+            </a>
+        </div>
+    </section>
+
+
+<!-- press release reader -->
+<div class="pressmodal" id="pressmodal" hidden>
+    <div class="pressmodalback" data-close></div>
+
+    <div class="pressmodalpanel" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Field note">
+        <button class="pressmodalclose" type="button" data-close aria-label="Close">&times;</button>
+
+        <div class="pressmodalbody" id="pressmodalbody"></div>
+
+        <div class="pressmodalfoot" id="pressmodalfoot"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="script.js"></script>
+<script type="module" src="roadmap/roadmap.js"></script></body>
+</html>
