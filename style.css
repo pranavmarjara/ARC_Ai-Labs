@@ -1965,10 +1965,13 @@ main > section#roadmap {
   }
   #roadmap .rm-brand { height: 50%; }
   /* slides with a photo get a taller card and tighter type so the photo isn't squeezed to a strip */
-  #roadmap .rm-card:has(.rm-photo) { height: 60vh; height: 60svh; }
-  #roadmap .rm-photo { min-height: 160px; }
+  #roadmap .rm-card:has(.rm-photo) { height: max(60vh, 430px); height: max(60svh, 430px); }
+  #roadmap .rm-photo { min-height: 130px; }
   #roadmap .rm-photo + .rm-brand { padding-top: 14px; }
   #roadmap .rm-photo ~ .rm-copy { margin-top: 10px; }
+  /* no swipe-progress bars on phones; the room they kept free goes back to the photo */
+  #roadmap .rm-bars { display: none; }
+  #roadmap .rm-slide:has(.rm-photo) { padding-bottom: 20px; }
   /* long summit names wrap instead of running off the right edge */
   #roadmap .rm-lbl.peak .t { width: max-content; max-width: min(150px, 38vw); white-space: normal; font-size: 13px; line-height: 1.2; }
 }
@@ -1981,7 +1984,7 @@ main > section#roadmap {
   #roadmap .rm-name { margin-top: 10px; font-size: 16px; }
   #roadmap .rm-alt { margin-top: 6px; }
   #roadmap .rm-copy { margin-top: 8px; font-size: 12.5px; line-height: 1.45; }
-  #roadmap .rm-bars { bottom: 16px; }
+  #roadmap .rm-bars { display: none; }
   /* too short for a photo to read; the text keeps the room */
   #roadmap .rm-photo { display: none; }
   #roadmap .rm-slide:has(.rm-photo) { padding-bottom: 0; }
