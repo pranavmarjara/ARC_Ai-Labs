@@ -69,8 +69,17 @@
     if (img.complete) (img.naturalWidth ? hit : miss)();
   });
 
-  /* ---------- hero entrance: body starts as .is-loading (hero held back), released on the next frame so it plays in ---------- */
-  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.remove('is-loading')));
+  /* ---------- hero entrance, and scroll states put straight where the page is ----------
+     body starts as .is-loading (hero held back) and is released on the next frame so the hero plays in.
+     Scroll-driven states (the colour flood) jump straight to where the page already is, both then and again once
+     the page has loaded and a reload's scroll position has been restored, so they never fade in to catch up. */
+  const settles = [];
+  const settle = () => settles.forEach(f => f());
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    settle();
+    document.body.classList.remove('is-loading');
+  }));
+  addEventListener('load', () => requestAnimationFrame(settle));
 
   /* ---------- hero tagline: letters light up and thicken around the cursor ----------
      Each line is split into one span per letter. Their centres are measured at rest (relative to
@@ -140,18 +149,26 @@
   (() => {
     const hero = document.getElementById('hero'), intro = document.getElementById('intro');
     if (!hasGsap || !hero) return;
-    const navy = '#0A1B2F', paper = css('--paper'), light = '#C9C9C9';
-    document.documentElement.classList.add('flood');
+    const light = '#C9C9C9';
+    const layer = document.createElement('div');
+    layer.className = 'flood-layer';
+    layer.setAttribute('aria-hidden', 'true');
+    document.body.prepend(layer);
     const tl = gsap.timeline({
-      defaults: { duration: reduce ? 0.01 : 0.5, ease: 'power2.inOut' },
+      defaults: { duration: reduce ? 0.01 : 0.8, ease: 'sine.inOut' },
       // going down, it switches when the hero's bottom edge passes 70% down the screen
       scrollTrigger: { trigger: hero, start: 'bottom 70%', toggleActions: 'play none none none' }
     });
     // going up, it only switches back once the page reaches the very top
     ScrollTrigger.create({ start: 1, onLeaveBack: () => tl.reverse() });
-    tl.fromTo(document.body, { backgroundColor: navy }, { backgroundColor: paper }, 0);
+    tl.fromTo(layer, { opacity: 1 }, { opacity: 0 }, 0);
     // the intro's blue and grey would vanish on navy, so they start light and settle into their own colours
     if (intro) tl.fromTo(intro, { '--ink': light, '--text': light }, { '--ink': css('--ink'), '--text': css('--text') }, 0);
+    // a reload partway down lands straight on the paper and the intro's own colours, rather than fading to them
+    settles.push(() => {
+      const st = tl.scrollTrigger;
+      if (st && scrollY >= st.start) tl.progress(1);
+    });
   })();
 
   /* ---------- scroll pill ---------- */
@@ -475,6 +492,232 @@
           }
       }, { once: true });
   });
+
+  /* ---------- the written sections between the hero and the milestones ----------
+     Layered on the existing layout, nothing moves: the headlines rise word by word, the intro's quote inks in
+     word by word as it is read, the body copy rises line by line, the rules draw themselves, and the blue band carries a live voice trace
+     that swells under the pointer. Runs before the reveals below, so the blocks it animates itself can drop
+     their plain fade. */
+  (() => {
+    if (!hasGsap || reduce) return;
+    const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    // wraps each word of a plain-text element in its own span; the spaces stay as text so lines break as before
+    const splitWords = (el, make) => {
+      const words = el.textContent.trim().split(/\s+/);
+      el.textContent = '';
+      return words.map((w, i) => {
+        if (i) el.append(' ');
+        const s = make(w);
+        el.append(s);
+        return s;
+      });
+    };
+
+    /* headlines: each word rises from behind its own mask, a beat apart */
+    const heads = [...document.querySelectorAll('#arc1 > h2.display, #why > h2.display, #why .trial .display')];
+    heads.forEach(h => {
+      h.classList.remove('reveal');
+      h.classList.add('split-head');
+      const said = h.textContent.trim();
+      const inner = splitWords(h, w => {
+        const wd = document.createElement('span');
+        wd.className = 'wd';
+        wd.setAttribute('aria-hidden', 'true');
+        const inn = document.createElement('span');
+        inn.className = 'wd-in';
+        inn.textContent = w;
+        wd.append(inn);
+        return wd;
+      }).map(wd => wd.firstChild);
+      // screen readers get the sentence whole, not word by word
+      const sr = document.createElement('span');
+      sr.className = 'sr-only';
+      sr.textContent = said;
+      h.append(sr);
+      gsap.fromTo(inner, { yPercent: 130 }, {
+        yPercent: 0, duration: 1.2, ease: 'expo.out', stagger: 0.07,
+        scrollTrigger: { trigger: h, start: 'top 88%', once: true },
+        onComplete: () => h.classList.add('risen')
+      });
+    });
+
+    /* the intro's quote inks in word by word as it is read */
+    document.querySelectorAll('#intro .quote').forEach(el => {
+      const words = splitWords(el, w => {
+        const s = document.createElement('span');
+        s.className = 'ink-w';
+        s.textContent = w;
+        return s;
+      });
+      gsap.fromTo(words, { opacity: 0.15 }, {
+        opacity: 1, ease: 'none', stagger: 0.1,
+        scrollTrigger: { trigger: el, start: 'top 85%', end: 'bottom 55%', scrub: 0.5 }
+      });
+    });
+
+    /* body copy: each line rises out of its own mask as it comes up the screen, tied to the scroll
+       (the line mask reveal from webcomp/text animation/second.html) */
+    (() => {
+      const START = 0.96, END = 0.72;   // where on the screen a line starts and finishes rising, as a share of its height
+      const STAGGER = 0.3;              // how much later each line starts than the one above it
+      const blocks = [];
+      const add = (el, offset = 0) => { el.dataset.text = el.textContent.trim(); blocks.push({ el, offset }); };
+      document.querySelectorAll('#why .trial p.label').forEach(el => add(el));
+      let lines = [], ticking = false, width = innerWidth;
+
+      // let the browser break the text, read back where the breaks fell, then rebuild it one clipping box per line
+      const split = () => {
+        lines = [];
+        for (const { el, offset } of blocks) {
+          el.textContent = '';
+          const probe = document.createElement('span');
+          probe.style.display = 'block';
+          el.append(probe);
+          const marker = document.createElement('span');
+          const rows = [];
+          let current = '', lastTop = null;
+          for (const word of el.dataset.text.split(/\s+/)) {
+            probe.textContent = current ? current + ' ' + word : word;
+            probe.append(marker);
+            // measured from the probe's own top: text that sits at the foot of its box (the blue band) grows
+            // upward as it wraps, so a new line would not move the marker on the screen
+            const top = marker.getBoundingClientRect().top - probe.getBoundingClientRect().top;
+            if (lastTop !== null && top > lastTop + 1) { rows.push(current); current = word; }
+            else current = current ? current + ' ' + word : word;
+            lastTop = top;
+          }
+          if (current) rows.push(current);
+          probe.remove();
+          rows.forEach((row, i) => {
+            const mask = document.createElement('span');
+            mask.className = 'line-mask';
+            const inner = document.createElement('span');
+            // the space at each break stays, so the text still reads (and copies) as one sentence
+            inner.textContent = i < rows.length - 1 ? row + ' ' : row;
+            mask.append(inner);
+            el.append(mask);
+            lines.push({ mask, inner, index: i + offset, top: 0, e: -1 });
+          });
+        }
+        measure();
+      };
+      const measure = () => {
+        for (const l of lines) l.top = l.mask.getBoundingClientRect().top + scrollY;
+        update();
+      };
+      const update = () => {
+        ticking = false;
+        const vh = innerHeight, travel = vh * (START - END);
+        for (const l of lines) {
+          // a long paragraph on a phone would otherwise leave its last lines waiting near the top of the screen
+          const begin = vh * START - travel * STAGGER * Math.min(l.index, 4);
+          const p = Math.min(1, Math.max(0, (begin - (l.top - scrollY)) / travel));
+          const e = 1 - Math.pow(1 - p, 3);   // eased, so each line arrives softly
+          if (e === l.e) continue;
+          l.e = e;
+          l.inner.style.setProperty('--hidden', ((1 - e) * 110).toFixed(2) + '%');
+        }
+      };
+      split();
+      addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+      // the breaks only move when the width does (a phone's address bar changes just the height)
+      let wait = 0;
+      addEventListener('resize', () => {
+        clearTimeout(wait);
+        wait = setTimeout(() => { if (innerWidth !== width) { width = innerWidth; split(); } else measure(); }, 150);
+      });
+      document.fonts && document.fonts.ready.then(split);
+      ScrollTrigger.addEventListener('refresh', measure);
+    })();
+
+    /* why speech: a line of ink runs along each column's rule as the columns come in */
+    const grid = document.querySelector('#why .c3');
+    if (grid) {
+      grid.classList.remove('reveal');
+      const units = [...grid.querySelectorAll('.unit')];
+      units.forEach((u, i) => u.style.setProperty('--d', (i * 0.14) + 's'));
+      ScrollTrigger.create({ trigger: grid, start: 'top 86%', once: true, onEnter: () => units.forEach(u => u.classList.add('swept')) });
+      // a soft light follows the pointer across the column it is over
+      if (fine) units.forEach(u => u.addEventListener('pointermove', e => {
+        const r = u.getBoundingClientRect();
+        u.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        u.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      }));
+    }
+
+    /* where we are: the lines arrive in turn, their rules sweep, and the numbers count up */
+    const list = document.querySelector('#progress .persist');
+    if (list) {
+      const items = [...list.children];
+      items.forEach((li, i) => {
+        li.style.setProperty('--d', (i * 0.1) + 's');
+        li.innerHTML = li.innerHTML.replace(/\d+/g, n => `<span class="count" data-to="${n}">${n}</span>`);
+      });
+      const counts = [...list.querySelectorAll('.count')];
+      gsap.fromTo(items, { opacity: 0, x: -24 }, {
+        opacity: 1, x: 0, duration: 0.9, ease: 'power3.out', stagger: 0.1,
+        scrollTrigger: {
+          trigger: list, start: 'top 88%', once: true,
+          onEnter: () => {
+            items.forEach(li => li.classList.add('swept'));
+            counts.forEach(c => {
+              const o = { v: 0 };
+              c.textContent = '0';
+              gsap.to(o, { v: +c.dataset.to, duration: 1.4, delay: 0.25, ease: 'power2.out', onUpdate: () => { c.textContent = Math.round(o.v); } });
+            });
+          }
+        }
+      });
+    }
+
+    /* the blue band: a voice trace runs behind the words, in bursts like syllables, and swells under the pointer */
+    const trial = document.querySelector('#why .trial');
+    if (trial) {
+      const cv = document.createElement('canvas');
+      cv.className = 'trial-wave';
+      cv.setAttribute('aria-hidden', 'true');
+      trial.prepend(cv);
+      const ctx = cv.getContext('2d');
+      let W = 0, H = 0, on = false, raf = 0, mx = -1e4, lift = 0, liftGoal = 0;
+      new ResizeObserver(() => {
+        W = trial.clientWidth; H = trial.clientHeight;
+        cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+      }).observe(trial);
+      // three traces, the first bright and the others fainter echoes of it
+      const traces = [{ a: 0.28, k: 0, w: 1.4 }, { a: 0.14, k: 1.9, w: 1 }, { a: 0.07, k: 3.4, w: 1 }];
+      const draw = now => {
+        raf = 0;
+        if (!on || !ctx) return;
+        const t = now / 1000, s = scrollY * 0.004;
+        lift += (liftGoal - lift) * 0.06;
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        ctx.clearRect(0, 0, W, H);
+        const mid = H * 0.55, amp = H * 0.17;
+        for (const tr of traces) {
+          ctx.beginPath();
+          for (let x = 0; x <= W; x += 3) {
+            // a syllable envelope over a voiced carrier
+            const syl = Math.max(0, Math.sin(x * 0.011 - t * 1.3 + tr.k)) * (0.65 + 0.35 * Math.sin(x * 0.0037 + t * 0.5));
+            const carrier = Math.sin(x * 0.09 - t * 6 + s + tr.k) * 0.6 + Math.sin(x * 0.031 + t * 2.3 + tr.k * 2) * 0.4;
+            const near = Math.exp(-((x - mx) ** 2) / 39200) * lift;   // a bump about 140px wide
+            const y = mid + carrier * amp * (0.16 + syl * 0.84) * (1 + near * 1.8);
+            if (x) ctx.lineTo(x, y); else ctx.moveTo(x, y);
+          }
+          ctx.strokeStyle = `rgba(245, 245, 245, ${tr.a + lift * 0.08})`;
+          ctx.lineWidth = tr.w;
+          ctx.stroke();
+        }
+        raf = requestAnimationFrame(draw);
+      };
+      new IntersectionObserver(([e]) => {
+        on = e.isIntersecting;
+        if (on && !raf) raf = requestAnimationFrame(draw);
+      }).observe(trial);
+      trial.addEventListener('pointermove', e => { mx = e.clientX - trial.getBoundingClientRect().left; liftGoal = 1; });
+      trial.addEventListener('pointerleave', () => { liftGoal = 0; });
+    }
+  })();
 
   /* ---------- reveals: fade up as each block enters, same as the Header draft ---------- */
   const revealables = document.querySelectorAll('.reveal');
