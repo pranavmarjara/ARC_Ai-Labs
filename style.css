@@ -41,7 +41,6 @@ img, canvas, svg { max-width: 100%; }
 .soft { color: var(--text); }
 /* headings, labels and the menu stay blue */
 h1, h2, h3, .display, .quote, .label, .bar a, .name { color: var(--ink); }
-.trial .display { color: var(--paper); }
 #team h2.display { color: #071724; }
 .label.soft { color: var(--text); }
 p { margin: 0; }
@@ -132,11 +131,6 @@ h3 { font-size: 20px; font-weight: 700; letter-spacing: -.01em; line-height: 1.2
 .unit { border-top: 1px solid var(--rule); padding-top: 14px; }
 .unit p { color: var(--text); }
 
-/* intro */
-.intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: clamp(22px, 4vw, 64px); }
-.intro .quote { font-size: clamp(34px, 4.8vw, 72px); font-weight: 700; letter-spacing: -.035em; line-height: .98; text-wrap: balance; }
-.intro .side { display: grid; gap: 18px; align-content: start; }
-
 /* problem */
 .stat { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 24px; align-items: end; }
 .stat .num { font-size: clamp(110px, 17vw, 260px); }
@@ -204,6 +198,64 @@ h3 { font-size: 20px; font-weight: 700; letter-spacing: -.01em; line-height: 1.2
 .measure-art img { display: block; width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 760px) { .measure-row { grid-template-columns: minmax(0, 1fr); } .measure-art { translate: none; } }
 
+/* ---------- the voiceprint: one ink line, the voice, held still behind the page while the beats scroll past (script.js) ---------- */
+main > section.vp { padding: 0; }
+/* clip, not hidden: it keeps the stage sticky while stopping it from hanging past the section's end into the gap above the roadmap */
+/* the field sits on a slightly darker paper than the rest of the page */
+.vp { position: relative; overflow: clip; background: var(--paper-2); }
+/* the line's stage: pinned to the screen for the whole section, and taking no room of its own */
+.vp-stage { position: sticky; top: 0; height: 100vh; height: 100svh; margin-bottom: -100vh; margin-bottom: -100svh; pointer-events: none; display: none; }
+.vp.live .vp-stage { display: block; }
+.vp-field { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; }
+
+/* each beat has a screen of its own; the line runs through the gap between the words and the note as it passes the middle */
+.vp-beat {
+  position: relative; z-index: 1;
+  min-height: 100vh; min-height: 100svh; padding: 12vh var(--gutter);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+}
+.vp-kicker { margin-bottom: 14px; }
+.vp-say {
+  margin: 0 auto; max-width: 15ch;
+  font-size: clamp(38px, 6.2vw, 108px); font-weight: 700; line-height: .98; letter-spacing: -.045em; text-wrap: balance;
+}
+/* the answer word of each line in the hero's italic serif */
+.vp-say em {
+  font-family: "EB Garamond", Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400;
+  font-size: 1.14em; letter-spacing: -.02em;
+}
+.vp-note { margin: 14vh auto 0; max-width: 40ch; font-size: clamp(14px, 1.05vw, 17px); line-height: 1.5; color: var(--text); text-wrap: balance; }
+
+/* the answer under the last line: a statement of its own, a size down from the line above it */
+.vp-answer {
+  margin-top: 12vh; max-width: none;
+  font-size: clamp(28px, 3.6vw, 64px); font-weight: 700; line-height: 1; letter-spacing: -.04em; color: var(--ink); text-wrap: balance;
+}
+.vp-answer em { font-family: "EB Garamond", Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; font-size: 1.14em; letter-spacing: -.02em; }
+
+/* a longer line runs wider, so it sits in fewer rows */
+.vp-say--wide { max-width: 24ch; }
+
+/* the two rows that pass each other, each held on one line */
+.vp-row { display: block; white-space: nowrap; }
+.vp-say:has(.vp-row) { max-width: none; }
+
+/* the charcoal band crosses over the wave field, and the field ends there: the data chapter after it sits on plain paper */
+.vp-band { position: relative; z-index: 1; padding: 0 var(--gutter); }
+
+/* ---------- after the band: the old version's sections, on paper, spaced as they were ---------- */
+.vd { position: relative; z-index: 1; background: var(--paper); }
+.vd-old { padding: clamp(72px, 10vw, 140px) var(--gutter) 0; }
+/* the instrument: a lead on the left, a short note on the right */
+/* the signal: a wide strip where the noise falls away from the voice and the voice becomes a graph */
+.signal { margin: clamp(40px, 5vw, 80px) 0 0; }
+.signal-cv { display: block; width: 100%; height: clamp(180px, 22vw, 340px); max-width: none; }
+.instrument { align-items: start; margin-top: 0; }
+/* with no heading above it, the lead carries the section */
+.instrument .lede { max-width: 24ch; font-size: clamp(28px, 3.2vw, 52px); line-height: 1.12; letter-spacing: -.025em; color: var(--ink); }
+.instrument-how { max-width: 48ch; font-size: clamp(16px, 1.15vw, 20px); line-height: 1.65; color: var(--text); text-wrap: pretty; }
+.trial .display { color: var(--paper); }
 /* trial */
 /* runs edge to edge: pulls out past the section's side gutter, then pads the text back in line with the page */
 .trial { margin-top: clamp(40px, 6vw, 72px); margin-inline: calc(-1 * var(--gutter)); background: var(--ink); color: var(--paper); padding: clamp(40px, 5vw, 72px) var(--gutter); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 20px 40px; }
@@ -259,9 +311,11 @@ h3 { font-size: 20px; font-weight: 700; letter-spacing: -.01em; line-height: 1.2
   #progress .persist li:hover::after { transform: scaleX(1); transform-origin: left; }
 }
 
-/* the blue band's voice trace sits behind its words */
-.trial { position: relative; overflow: hidden; isolation: isolate; }
-.trial-wave { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; max-width: none; pointer-events: none; }
+
+/* the pieces script.js moves */
+.vp-w, .vp-ch { display: inline-block; }
+.vp-w { transform-origin: 50% 100%; }
+.vp-mask { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .12em; margin-bottom: -.12em; }
 
 /* tables */
 .scroll { overflow-x: auto; }
@@ -447,7 +501,7 @@ td.r, th.r { text-align: right; padding-right: 0; }
   .hero-tag { font-size: clamp(44px, 13vw, 96px); }
 }
 @media (max-width: 760px) {
-  .intro, .c2, .c3, .team, .trial, .versus { grid-template-columns: minmax(0, 1fr); }
+  .c2, .c3, .team, .trial, .versus { grid-template-columns: minmax(0, 1fr); }
   .stat { grid-template-columns: minmax(0, 1fr); }
   .som-row, .som-axis { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .som-axis span:first-child { display: none; }
@@ -1759,8 +1813,10 @@ body.is-loading .bar { opacity: 0; }
     top: calc(10px + env(safe-area-inset-top, 0px)); right: 12px;
     display: inline-flex; align-items: center; gap: 10px;
     min-height: 44px; padding: 0 16px 0 18px;
-    border: 0; border-radius: 999px;
-    background: var(--ink); color: var(--paper);
+    border: 1px solid transparent; border-radius: 999px;
+    /* the hero's own navy; at the very top it sits flush on the hero with no edge, and a faint edge comes in once
+       the page scrolls (script.js sets .edged), so it never vanishes against the navy further down */
+    background: #0A1B2F; color: #F5F5F5;
     font: 600 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase;
     box-shadow: 0 6px 20px rgba(14, 48, 68, .18);
     cursor: pointer; -webkit-tap-highlight-color: transparent;
@@ -1772,6 +1828,8 @@ body.is-loading .bar { opacity: 0; }
   }
   .menu-btn__icon i:first-child { top: 1px; }
   .menu-btn__icon i:last-child { top: 7.5px; }
+  .menu-btn { transition: border-color .3s ease; }
+  .menu-btn.edged { border-color: rgba(245, 245, 245, .18); }
   .bar.open .menu-btn { background: var(--paper); color: var(--ink); box-shadow: none; }
   .bar.open .menu-btn__icon i:first-child { top: 4.25px; transform: rotate(45deg); }
   .bar.open .menu-btn__icon i:last-child { top: 4.25px; transform: rotate(-45deg); }
@@ -1807,16 +1865,18 @@ body.is-loading .bar { opacity: 0; }
   main > section { padding-top: 72px; }
   h2.display { font-size: clamp(40px, 12vw, 56px); max-width: none; margin-bottom: 24px; }
   .lede { font-size: 21px; }
-  #why .lede { margin-bottom: 32px !important; }
-  .intro { gap: 28px; }
-  .intro .quote { font-size: clamp(32px, 9.4vw, 44px); }
   .measure-row { margin-top: 48px; padding-block: 28px; gap: 24px; }
   .convene { --fs: clamp(44px, 14vw, 64px); }
   .c3 { gap: 22px; }
-  .trial { padding-block: 40px; gap: 18px; }
-  .trial .display { font-size: clamp(34px, 10vw, 46px); }
   .team { gap: 22px; }
   .persist li { padding: 14px 0; }
+  .vp-say { font-size: clamp(34px, 10.5vw, 56px); }
+  .vp-note { margin-top: 12vh; }
+  .vd-old { padding-top: 72px; }
+  #why .lede { margin-bottom: 32px !important; }
+  .trial { padding-block: 40px; gap: 18px; }
+  .trial .display { font-size: clamp(34px, 10vw, 46px); }
+  .vp-row { white-space: normal; }
 
   /* ---- founders: photo beside the name, both cards stacked ---- */
   .founders { gap: 12px; }
@@ -1910,14 +1970,94 @@ main > section#roadmap {
   --rm-label: var(--ink-soft);
   --rm-bar: var(--rule);
   position: relative;
-  height: 1350vh;
-  padding: 0;
+  /* one screen until opened (script.js): the flight only takes its long scroll once asked for */
+  height: 100vh; height: 100dvh;
+  /* the terrain sits in a rounded panel inset from the page's edges, like the reasons panel above it */
+  padding: var(--rm-inset);
   margin-top: clamp(72px, 10vw, 140px);
-  background: var(--paper);
+  background: transparent;
   color: var(--ink);
+  --rm-inset: clamp(8px, .65vw, 12px);
 }
+main > section#roadmap { transition: padding .6s cubic-bezier(.65, 0, .35, 1); }
+/* exploring: the panel opens out to fill the whole screen */
+main > section#roadmap.is-open { padding: 0; }
+main > section#roadmap.is-open { height: 666vh; }   /* the pace of the earlier 700vh flight, with the last milestone taking a shorter share (roadmap.js LAST) */
+
+/* Explore, under the title; the close cross, top left while the flight is open */
+#roadmap .rm-open, #roadmap .rm-skip {
+  position: absolute; z-index: 5;
+  font: 600 15px/1 var(--sans); letter-spacing: .01em; color: #F5F5F5;
+  background: rgba(255, 255, 255, .08); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgba(201, 201, 201, .45); border-radius: 999px; cursor: pointer;
+  transition: background-color .25s ease, border-color .25s ease, opacity .4s ease;
+}
+#roadmap .rm-open { left: 50%; top: calc(50% + clamp(56px, 6vw, 96px)); transform: translateX(-50%); padding: 15px 28px; }
+#roadmap .rm-skip { left: clamp(16px, 2.4vw, 32px); top: calc(clamp(16px, 2.4vw, 32px) + env(safe-area-inset-top, 0px)); opacity: 0; pointer-events: none; }
+/* Explore is no pill: the whole resting screen opens the flight (script.js), so all it shows is a quiet hint, a few
+   small words, brightening while the pointer is over the screen */
+#roadmap .rm-open {
+  padding: 10px 4px; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; border: 0; border-radius: 0;
+  font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: rgba(245, 245, 245, .6);
+  transition: color .3s ease, opacity .4s ease;
+}
+#roadmap:not(.is-open) .rm-stage { cursor: pointer; }
+#roadmap:not(.is-open) .rm-stage:hover .rm-open { color: #F5F5F5; }
+#roadmap .rm-open:focus-visible { outline: 1px solid rgba(245, 245, 245, .7); outline-offset: 6px; }
+/* the words sit in the top right corner of the milestones card, on every screen */
+#roadmap .rm-open { left: auto; right: 16px; top: 16px; transform: none; }
+
+/* with a mouse, the hint is a circle that rides on the pointer and inverts whatever it passes over (a white disc
+   in difference mode: navy turns pale, the white contour lines dark), growing in as the pointer comes onto the
+   screen. A touch screen has no pointer to follow, so there it is the words alone */
+#roadmap .rm-cursor { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  /* the circle stands in for the pointer itself: script.js hides the pointer on the whole page exactly while the
+     circle is showing, since a hover rule would leave a still pointer hidden after the page scrolls out from under it */
+  html.rm-cursor-on, html.rm-cursor-on * { cursor: none !important; }
+  #roadmap .rm-cursor {
+    display: block; position: absolute; left: 0; top: 0; z-index: 6; pointer-events: none;
+    width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%;
+    background: #fff; mix-blend-mode: difference;
+    /* position and size apart, so only the grow-in is eased by CSS; the position follows the pointer every frame */
+    translate: var(--x, 0px) var(--y, 0px); scale: 0;
+    transition: scale .15s ease-out;
+    transform: scale(var(--k, 1));   /* the swell with speed, set every frame by script.js, on top of the grow-in */
+  }
+  #roadmap .rm-cursor.on { scale: 1; }
+}
+/* Close: a bare cross, no words (its name is in aria-label); on hover the circle fills
+   white and the cross, now navy, turns a quarter */
+#roadmap .rm-skip {
+  display: inline-flex; align-items: center;
+  background: none; -webkit-backdrop-filter: none; backdrop-filter: none; border: 0; border-radius: 999px; padding: 0;
+  font-size: 17px; font-weight: 500; letter-spacing: .01em;
+  color: rgba(245, 245, 245, .8);
+  transition: color .25s ease, opacity .4s ease;
+}
+#roadmap .rm-skip-o {
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+  color: #F5F5F5;
+  transition: background-color .3s ease, color .3s ease;
+}
+#roadmap .rm-skip-o svg { display: block; transition: transform .4s cubic-bezier(.19, 1, .22, 1); }
+#roadmap .rm-skip:hover { color: #fff; }
+#roadmap .rm-skip:hover .rm-skip-o { background: #F5F5F5; color: #071724; }
+#roadmap .rm-skip:hover .rm-skip-o svg { transform: rotate(90deg); }
+#roadmap .rm-skip:focus-visible { outline: 1px solid rgba(245, 245, 245, .7); outline-offset: 6px; }
+#roadmap.is-open .rm-open { opacity: 0; pointer-events: none; }
+/* the cross only once the first milestone is up (roadmap.js sets rm-started) */
+#roadmap.is-open.rm-started .rm-skip { opacity: 1; pointer-events: auto; }
+
 /* dvh follows a phone's browser bars, so the card at the foot is never tucked under them */
-#roadmap .rm-stage { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; }
+#roadmap .rm-stage {
+  position: sticky; top: var(--rm-inset);
+  height: calc(100vh - 2 * var(--rm-inset)); height: calc(100dvh - 2 * var(--rm-inset));
+  overflow: hidden; border-radius: 10px; background: var(--paper);
+  transform-origin: 50% 0;
+  transition: top .6s cubic-bezier(.65, 0, .35, 1), height .6s cubic-bezier(.65, 0, .35, 1), border-radius .6s ease;
+}
+#roadmap.is-open .rm-stage { top: 0; height: 100vh; height: 100dvh; border-radius: 0; }
 #roadmap canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; max-width: none; }
 
 /* washes out the terrain before the reveal */

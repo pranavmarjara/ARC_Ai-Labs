@@ -44,8 +44,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,400&family=EB+Garamond:ital,wght@1,400..800&display=swap">
-<link rel="stylesheet" href="vendor/lenis.css">
-<link rel="stylesheet" href="style.css?v=27">
+<link rel="stylesheet" href="style.css?v=112">
 </head>
 <body class="is-loading">
 
@@ -59,8 +58,8 @@
     <span class="menu-btn__icon" aria-hidden="true"><i></i><i></i></span>
   </button>
   <nav id="site-nav" aria-label="Sections">
-    <a href="#arc1">ARC-1</a>
-    <a href="#why">Why speech</a>
+    <a href="#intro">Why speech</a>
+    <a href="#why">ARC-1</a>
     <a href="#roadmap">Milestones</a>
     <a href="#team">Team</a>
     <a href="#documentation">Press Release</a>
@@ -84,25 +83,33 @@
     </div>
   </div>
 
-  <!-- intro -->
-  <section id="intro">
-    <div class="intro">
-      <div class="side">
-        <p class="label">The gap</p>
-        <p class="soft">When the brain is affected, it shows up in how a person speaks. But clinicians have no objective way to measure those changes. Assessment relies on perceptual rating scales that vary between listeners, happens only during clinic visits, and produces no data that can be trended over time.</p>
-        <p class="soft">The result: recovery can't be tracked precisely, treatment can't be adjusted early, and outcomes can't be proven.</p>
-      </div>
-      <p class="reveal quote">Speech reveals what is happening in our minds, yet our analysis around it is subjective, fragmented and shallow.</p>
+  <!-- the voiceprint: a wave field holds still behind the page while the words scroll past it.
+       Each beat is one short line and one small note, each arriving its own way (script.js).
+       The charcoal band crosses over it as a band of its own -->
+  <section id="intro" class="vp" aria-label="What ARC Labs does">
+    <div class="vp-stage" aria-hidden="true">
+      <canvas class="vp-field"></canvas>
     </div>
-  </section>
 
-  <!-- ARC-1 -->
-  <section id="arc1">
-    <h2 class="reveal display">One instrument. Fourteen biomarkers.</h2>
-    <div class="cols c2">
-      <p class="reveal lede">A multi-microphone array in a rigid mount that plugs into any laptop, tablet or phone over USB-C.</p>
-      <p class="soft body">The patient speaks a few short tasks while ARC-1 records their voice and the room around them on separate channels, so background noise is never mistaken for a symptom. The recording is turned into precise measures of how stable, well-timed and coordinated their speech is, given to the clinician or researcher as numbers and graphs to read, compare and interpret for themselves.</p>
-    </div>
+    <article class="vp-beat" data-in="letters">
+      <h2 class="vp-say">Every sentence is a feat of <em>coordination.</em></h2>
+    </article>
+
+    <article class="vp-beat" data-in="grow">
+      <h2 class="vp-say vp-say--wide">Which is why neurological conditions leave their mark on speech.</h2>
+    </article>
+
+    <article class="vp-beat" data-in="focus" data-field="chaos">
+      <h2 class="vp-say">Yet, speech is still judged by <em>ear.</em></h2>
+    </article>
+
+    <article class="vp-beat" id="arc1" data-in="letters">
+      <h2 class="vp-say">Ears can lie. Numbers <em>don't.</em></h2>
+      <p class="vp-note vp-answer">ARC-1 helps with <em>exactly that.</em></p>
+    </article>
+
+    <!-- the charcoal band, as it was -->
+    <div class="vp-band">
     <div class="measure-row">
       <div class="convene" id="convene">
         <p class="convene-words">
@@ -115,28 +122,32 @@
       </div>
       <figure class="reveal measure-art"><img src="images/brain.webp" alt="Illustration of the brain's white-matter pathways, shown in white on a dark ground"></figure>
     </div>
-  </section>
+    </div>
 
-  <!-- why speech -->
-  <section id="why">
-    <h2 class="reveal display">designed for neurological analysis of speech.</h2>
-    <p class="reveal lede" style="max-width:38ch; margin-bottom: clamp(36px,5vw,56px)">Breath, voice, resonance, tongue, timing and meaning, all at once, in real time. Break any link in that chain and the sound changes in a way that can be measured.</p>
-    <div class="reveal cols c3">
-      <div class="unit"><h3>It runs on five cranial nerves</h3><p>Jaw, lips, tongue, throat, palate and larynx are driven by five cranial nerves, the breath behind them by the spinal nerves, the timing by motor cortex, cerebellum and basal ganglia. Damage anywhere along that chain marks the sound.</p></div>
-      <div class="unit"><h3>It is cheap enough to repeat</h3><p>Scans and blood biomarkers happen a few times a year. Speech can be taken weekly, which is where the signal in a progressive disease actually lives.</p></div>
-      <div class="unit"><h3>It is how patients and caregivers connect</h3><p>For a patient, what matters most day to day is being understood by the people giving care. Speech is the bridge between patient and caregiver, and it deserves to be measured as carefully as any scan.</p></div>
+    <!-- after the band: the old version's "why speech" and "where we are", exactly as they were -->
+    <div class="vd">
+    <div id="why" class="vd-old">
+    <!-- the text and the drawing hold on screen together while the drawing changes (script.js) -->
+    <div class="arc-hold" id="arc-hold">
+    <div class="reveal cols c2 instrument">
+      <p class="lede">ARC-1 is a headset designed to hear only the person speaking, filtering out the noise around them.</p>
+      <p class="instrument-how">From a few short speech tasks, it calculates the speech biomarkers and turns them into clear graphs, so changes are easy to see and analyse over time.</p>
+    </div>
+    <!-- what ARC-1 does, drawn: the room's noise falls away from the voice, and the voice becomes a graph (script.js, tied to the scroll) -->
+    <figure class="signal" id="signal" aria-label="A noisy recording is cleaned down to the voice alone, which is then turned into a graph">
+      <canvas class="signal-cv"></canvas>
+    </figure>
     </div>
     <div class="reveal trial">
       <p class="display">Built like an instrument.</p>
       <div style="display:grid; gap:14px; align-content:end">
-        <p>In a recent ALS trial, objective speech measures tracked disease progression as well as the standard clinical scale, and picked up decline in individual patients whose clinical score had not moved at all. One of the five measures carrying that result is one of ours.</p>
-        <p class="label">Scientific Reports, 2026</p>
+        <p>Too often the patient has to fit the tool. ARC-1 is built the other way round: every part of it is designed around the patient's comfort, so the measurement fits them.</p>
+        <p class="label">Made to fit the patient</p>
       </div>
     </div>
-  </section>
+    </div>
 
-  <!-- where we are -->
-  <section id="progress">
+    <div id="progress" class="vd-old">
     <div class="reveal team">
       <p class="reveal lede">A working instrument, a filed patent, and the study that proves it is designed.</p>
       <ul class="persist">
@@ -147,9 +158,12 @@
         <li>Ethics approval and test licence in progress</li>
       </ul>
     </div>
+    </div>
+    </div>
   </section>
 
-  <!-- roadmap: contour terrain that flies summit to summit as you scroll (roadmap/roadmap.js) -->
+  <!-- roadmap: contour terrain that flies summit to summit as you scroll (roadmap/roadmap.js).
+       It rests as one screen until Explore opens the flight; it closes again once scrolled past (script.js) -->
   <section id="roadmap" aria-label="Milestones">
     <div class="rm-stage">
       <canvas id="rm-terrain" aria-hidden="true"></canvas>
@@ -162,6 +176,13 @@
       <h2 class="rm-title" id="rm-title">
         <span class="l">Milestones</span>
       </h2>
+
+      <button class="rm-open" id="rm-open" type="button" aria-expanded="false" aria-controls="roadmap" aria-label="Explore milestones">Click to explore</button>
+      <!-- follows the pointer over the resting screen (script.js) -->
+      <div class="rm-cursor" id="rm-cursor" aria-hidden="true"></div>
+      <button class="rm-skip" id="rm-skip" type="button" aria-label="Close milestones">
+        <span class="rm-skip-o" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+      </button>
 
       <div class="rm-card" id="rm-card">
         <div id="rm-slides"></div>
@@ -432,7 +453,7 @@
                             </label>
 
                             <label class="contactfield wide">
-                                <textarea name="message" placeholder=" " data-lenis-prevent required></textarea>
+                                <textarea name="message" placeholder=" " required></textarea>
                                 <span class="contactfieldlabel">Type your message here</span>
                             </label>
 
@@ -478,7 +499,7 @@
 <div class="pressmodal" id="pressmodal" hidden>
     <div class="pressmodalback" data-close></div>
 
-    <div class="pressmodalpanel" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Field note">
+    <div class="pressmodalpanel" role="dialog" aria-modal="true" aria-label="Field note">
         <button class="pressmodalclose" type="button" data-close aria-label="Close">&times;</button>
 
         <div class="pressmodalbody" id="pressmodalbody"></div>
@@ -489,7 +510,6 @@
 
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
-<script src="vendor/lenis.min.js"></script>
-<script src="script.js?v=14"></script>
-<script type="module" src="roadmap/roadmap.js?v=12"></script></body>
+<script src="script.js?v=93"></script>
+<script type="module" src="roadmap/roadmap.js?v=27"></script></body>
 </html>

@@ -1,6 +1,6 @@
 /* Roadmap section, imported from website drafts/Extra/projects topo.
    A contour-line terrain pinned in #roadmap; scrolling flies the camera summit to summit
-   while the card on the right steps through the milestones. Lenis is set up in script.js.
+   while the card on the right steps through the milestones.
    The title, card and bars run on their own; the 3D terrain is loaded on top of them, so a machine
    with no WebGL at all still gets every milestone on a plain navy ground.
    three is pinned at r162, the last release that still runs on WebGL1, and served from our own vendor/ folder. */
@@ -33,7 +33,7 @@ const STOPS = [
       x: -38,  z: -402, height: 34, spread: 14, view: 20 },
     { phase: "Milestone 08", when: "Aug 2026", name: "SISFS", img: "images/roadmap/08-sisf.jpg", pos: "58% 30%", alt: "Startup India Seed Fund",
       copy: "Backed by the Startup India Seed Fund Scheme, funding the next stretch of the climb.",
-      x: 26,   z: -462, height: 46, spread: 13, view: -15 },
+      x: 26,   z: -462, height: 36, spread: 13, view: -15 },
 ];
 
 /* ---------------- helpers ---------------- */
@@ -130,9 +130,12 @@ const barFills = [...barsEl.querySelectorAll("b")];
    0.00–0.12  title fades, terrain brightens, camera descends to the first summit
    0.09–0.14  labels fade in
    0.10–0.17  card rises
-   0.16–0.98  one segment per mountain                                 */
+   0.16–0.98  one segment per mountain; the last one shorter (see LAST)  */
 const N = STOPS.length;
-const P_START = .16, P_END = .98, SEG = (P_END - P_START) / N;
+// every other stop spends the end of its segment flying on to the next summit; the last has nowhere to go, so it gets
+// only the part the others spend standing still, and doesn't linger
+const LAST = .55;
+const P_START = .16, P_END = .98, SEG = (P_END - P_START) / (N - 1 + LAST);
 const MOVE = .32;   // half-width (in segments) of the camera flight around each boundary
 const FADE = .1;    // half-width of the card content crossfade
 
@@ -142,17 +145,20 @@ function updateDom(p, local) {
     titleEl.style.opacity = 1 - tt;
     titleEl.style.transform = `translate(-50%, calc(-50% - ${tt * 40}px)) scale(${1 - tt * .06})`;
     titleEl.style.filter = `blur(${tt * 6}px)`;
-    dimEl.style.opacity = .55 * (1 - range(p, 0, .1));
+    // no veil over the land: the preview shows it plainly, and the flight opens on that same view
+    dimEl.style.opacity = 0;
 
     const cardIn = easeOut(range(p, .1, .17));
     cardEl.style.transform = `translateY(${(1 - cardIn) * 110}vh)`;
+    // the close cross waits until the card has brought in the first milestone (style.css)
+    section.classList.toggle("rm-started", p >= P_START);
 
     slides.forEach((s, i) => {
         const fin = i === 0 ? 1 : range(local, i - FADE, i + FADE);
         const fout = i === N - 1 ? 1 : 1 - range(local, i + 1 - FADE, i + 1 + FADE);
         s.style.opacity = Math.min(fin, fout);
     });
-    barFills.forEach((b, i) => b.style.transform = `scaleX(${clamp(local - i)})`);
+    barFills.forEach((b, i) => b.style.transform = `scaleX(${clamp((local - i) / (i === N - 1 ? LAST : 1))})`);
 }
 
 /* ---------------- the land: every height, normal, speck of dust and summit ----------------
@@ -349,11 +355,20 @@ function setupTerrain(THREE, land) {
         };
     }
     const VIEWS = STOPS.map((_, i) => viewFor(i));
-    // high, distant establishing shot behind the title
-    const VIEW_START = {
-        pos: new THREE.Vector3(10, 150, 150),
-        target: new THREE.Vector3(-10, 0, -70),
-    };
+
+    // the opening view, behind the title: a close view of the first summit and its neighbours, a little further back than
+    // the flight's own first stop and swaying gently from side to side while the section rests closed. Opening it, the
+    // sway holds where it is and the flight starts from exactly that view, so nothing jumps when Explore is pressed
+    function overview(t) {
+        const s = STOPS[0], top = summits[0];
+        const az = THREE.MathUtils.degToRad(s.view) + Math.sin(t * .07) * .22;
+        const dist = 46 + top.y * 1.15 + 34, lift = top.y * .85 + 34;
+        return {
+            pos: new THREE.Vector3(top.x + Math.sin(az) * dist, lift, top.z + Math.cos(az) * dist),
+            target: new THREE.Vector3(top.x, top.y * .5, top.z),
+        };
+    }
+    let sway = 0, lastT = null;   // the sway's own clock: it only runs while the section rests closed
 
     function mixView(a, b, t) {
         return { pos: a.pos.clone().lerp(b.pos, t), target: a.target.clone().lerp(b.target, t) };
@@ -407,6 +422,8 @@ function setupTerrain(THREE, land) {
     }
     resize();
     window.addEventListener("resize", resize);
+    // the panel itself changes size too (it goes full screen while the flight is open), so follow the canvas, not just the window
+    if ("ResizeObserver" in window) new ResizeObserver(resize).observe(canvas);
     cardBelow.addEventListener("change", resize);
     // one frame now, while the reader is still up the page, so the shaders compile and the land reaches the
     // graphics card here rather than as a hitch on the first scroll into the section
@@ -425,12 +442,14 @@ function setupTerrain(THREE, land) {
     });
 
     // one frame of the 3D layer, driven by the same progress as the card
-    return function draw(p, local, t) {
+    return function draw(p, local, t, resting) {
         uniforms.uTime.value = t;
+        if (resting && lastT !== null) sway += t - lastT;
+        lastT = t;
 
-        // camera
+        // camera: from the opening view down to the first summit, then summit to summit
         const intro = ease(range(p, 0, .14));
-        let view = mixView(VIEW_START, VIEWS[0], intro);
+        let view = mixView(overview(sway), VIEWS[0], intro);
         if (p > P_START) view = flight(local);
 
         mouse.sx = lerp(mouse.sx, mouse.x, .05);
@@ -447,6 +466,7 @@ function setupTerrain(THREE, land) {
             const s = toScreen(l.p);
             const near = 1 - range(l.p.distanceTo(view.target), 45, 80);
             const el = labelEls[i];
+            // no names until the flight is under way: the preview shows the land, the milestones are kept for the flight
             el.style.opacity = s.visible ? labelIn * near : 0;
             el.style.transform = `translate3d(${s.x}px, ${s.y}px, 0)`;
         });
@@ -471,11 +491,13 @@ function frame(time) {
     const r = section.getBoundingClientRect();
     if (r.bottom >= 0 && r.top <= innerHeight) {
         const total = section.offsetHeight - innerHeight;
-        const p = clamp(-r.top / total);
+        // closed, the section is a single screen with no scroll to fly through: it rests on the overview
+        const resting = total <= 1;
+        const p = resting ? 0 : clamp(-r.top / total);
         const local = clamp((p - P_START) / SEG, 0, N);
         updateDom(p, local);
         if (draw) {
-            try { draw(p, local, time / 1000); }
+            try { draw(p, local, time / 1000, resting); }
             catch (err) { console.warn("Roadmap terrain stopped:", err); draw = null; }
         }
     }

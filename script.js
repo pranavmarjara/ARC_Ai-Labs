@@ -1,42 +1,42 @@
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
-  /* ---------- smooth scroll: Lenis driven by the GSAP ticker, same settings as the Header draft ---------- */
   const hasGsap = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
-  const hasLenis = typeof Lenis !== 'undefined';
-  let lenis = null;
-  if (hasLenis && !reduce) {
-    lenis = new Lenis({
-      // how much of the remaining distance is covered each frame: higher is snappier, lower is floatier
-      lerp: 0.085,
-      smoothWheel: true,
-      // how far one wheel notch travels: below 1 slows the whole page down
-      wheelMultiplier: 0.6,
-      touchMultiplier: 1.1
-    });
-  }
   if (hasGsap) gsap.registerPlugin(ScrollTrigger);
-  // one clock for both: the GSAP ticker drives Lenis, so nothing runs a second loop
-  if (lenis && hasGsap) {
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add(time => lenis.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
-  } else if (lenis) {
-    const raf = time => { lenis.raf(time); requestAnimationFrame(raf); };
-    requestAnimationFrame(raf);
-  }
-  // in-page links glide instead of jumping
-  document.addEventListener('click', e => {
-    const a = e.target.closest('a[href^="#"]');
-    if (!a || !lenis) return;
-    const id = a.getAttribute('href').slice(1);
-    const target = id ? document.getElementById(id) : null;
-    if (!target) return;
-    e.preventDefault();
-    lenis.scrollTo(target);
-  });
+
+  /* ---------- in-page links travel to their section instead of jumping ----------
+     Eased in and out, a little longer for a longer trip. The section's place is read again every frame, so anything
+     that grows or shrinks on the way (the milestones closing) cannot leave it short. A wheel, touch or key takes over */
+  (() => {
+    if (reduce) return;
+    let run = 0;
+    const stop = () => { run++; };
+    ['wheel', 'touchstart', 'keydown'].forEach(t => addEventListener(t, stop, { passive: true }));
+    const ease = t => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);   // easeInOutCubic
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a || e.defaultPrevented) return;
+      const id = a.getAttribute('href').slice(1);
+      const el = id ? document.getElementById(id) : document.documentElement;
+      if (!el) return;
+      e.preventDefault();
+      const goal = () => Math.max(0, Math.min(el.getBoundingClientRect().top + scrollY, document.documentElement.scrollHeight - innerHeight));
+      const from = scrollY, dur = Math.min(1200, 450 + Math.abs(goal() - from) * 0.08);
+      const me = ++run;
+      let t0 = 0;
+      const step = () => {
+        if (me !== run) return;
+        const now = performance.now();
+        t0 = t0 || now;
+        const t = Math.min(1, (now - t0) / dur);
+        scrollTo(0, from + (goal() - from) * ease(t));
+        if (t < 1) requestAnimationFrame(step);
+        else if (id) history.replaceState(null, '', '#' + id);
+      };
+      requestAnimationFrame(step);
+    });
+  })();
 
   /* ---------- phone menu: the section links open as a full-screen sheet ---------- */
   (() => {
@@ -50,14 +50,17 @@
       btn.setAttribute('aria-expanded', open);
       label.textContent = open ? 'Close' : 'Menu';
       document.documentElement.classList.toggle('menu-open', open);
-      if (lenis) open ? lenis.stop() : lenis.start();
     };
     btn.addEventListener('click', () => setOpen(!bar.classList.contains('open')));
-    // close before the document-level handler above glides to the section (a stopped Lenis would ignore it)
+    // a link in the sheet closes it on the way to its section
     nav.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && bar.classList.contains('open')) { setOpen(false); btn.focus(); } });
     // widening past the phone layout drops the sheet
     matchMedia('(min-width: 761px)').addEventListener('change', m => { if (m.matches) setOpen(false); });
+    // the pill's faint edge only once the page has left the very top (style.css)
+    const edge = () => btn.classList.toggle('edged', scrollY > 4);
+    addEventListener('scroll', edge, { passive: true });
+    edge();
   })();
 
 
@@ -163,7 +166,8 @@
     ScrollTrigger.create({ start: 1, onLeaveBack: () => tl.reverse() });
     tl.fromTo(layer, { opacity: 1 }, { opacity: 0 }, 0);
     // the intro's blue and grey would vanish on navy, so they start light and settle into their own colours
-    if (intro) tl.fromTo(intro, { '--ink': light, '--text': light }, { '--ink': css('--ink'), '--text': css('--text') }, 0);
+    // its darker paper starts in the navy too, and turns with the rest
+    if (intro) tl.fromTo(intro, { '--ink': light, '--text': light, backgroundColor: '#0A1B2F' }, { '--ink': css('--ink'), '--text': css('--text'), backgroundColor: css('--paper-2') }, 0);
     // a reload partway down lands straight on the paper and the intro's own colours, rather than fading to them
     settles.push(() => {
       const st = tl.scrollTrigger;
@@ -208,9 +212,7 @@
     const onMove = m => {
       const top = Math.min(Math.max(0, startTop + m.clientY - startY), range);
       const target = (top / range) * scrollable;
-      // the thumb must track the pointer exactly, so this one bypasses the easing
-      if (lenis) lenis.scrollTo(target, { immediate: true, force: true });
-      else scrollTo(0, target);
+      scrollTo(0, target);
     };
     const onUp = () => {
       thumb.classList.remove('dragging');
@@ -384,11 +386,6 @@
           pressModal.hidden = false;
           document.body.style.overflow = "hidden";
 
-          // Lenis owns the wheel; stopping it leaves the panel free to scroll natively
-          if (lenis) {
-              lenis.stop();
-          }
-
           const close = pressModal.querySelector(".pressmodalclose");
 
           if (close) {
@@ -399,10 +396,6 @@
       const closePress = () => {
           pressModal.hidden = true;
           document.body.style.overflow = "";
-
-          if (lenis) {
-              lenis.start();
-          }
 
           if (lastFocused) {
               lastFocused.focus();
@@ -493,10 +486,568 @@
       }, { once: true });
   });
 
+  /* ---------- the voiceprint: a wave field holds still behind the page while the beats scroll past ----------
+     Each beat's words arrive their own way, all tied to the scroll: grown up from the baseline, pulled into focus,
+     letters rising, two rows passing each other. After the charcoal band come the old sections, with their own motion (below). */
+  (() => {
+    const vp = document.querySelector('.vp');
+    if (!vp || reduce) return;
+    const stage = vp.querySelector('.vp-stage'), cv = vp.querySelector('.vp-field'), band = vp.querySelector('.vp-band');
+    const beats = [...vp.querySelectorAll('.vp-beat')].map(el => ({
+      el, mode: el.dataset.in,
+      say: el.querySelector('.vp-say'),
+      side: [...el.querySelectorAll('.vp-kicker, .vp-note')],
+      words: [], chars: [], rows: [], len: 0
+    }));
+    const N = beats.length;
+    if (!N) return;
+    vp.classList.add('live');
+
+    // split a line into word spans (an italic word keeps its <em> inside its span), optionally each in a clipping mask
+    const words = (root, masked) => {
+      const out = [];
+      const make = node => {
+        const w = document.createElement('span');
+        w.className = 'vp-w';
+        if (!masked) { w.append(node); out.push(w); return w; }
+        const m = document.createElement('span');
+        m.className = 'vp-mask';
+        w.append(node); m.append(w); out.push(w);
+        return m;
+      };
+      const walk = parent => {
+        for (const n of [...parent.childNodes]) {
+          if (n.nodeType === Node.TEXT_NODE) {
+            const parts = n.data.split(/(\s+)/).filter(Boolean);
+            n.replaceWith(...parts.map(p => /^\s+$/.test(p) ? document.createTextNode(p) : make(document.createTextNode(p))));
+          } else if (n.classList && n.classList.contains('vp-row')) walk(n);
+          else { const holder = document.createElement('span'); n.before(holder); holder.replaceWith(make(n)); }
+        }
+      };
+      walk(root);
+      return out;
+    };
+    // split each word into letter spans
+    const letters = w => {
+      const host = w.querySelector('em') || w;
+      const text = host.textContent;
+      host.textContent = '';
+      return [...text].map(ch => {
+        const c = document.createElement('span');
+        c.className = 'vp-ch';
+        c.textContent = ch;
+        host.append(c);
+        return { el: c, ch };
+      });
+    };
+
+    for (const b of beats) {
+      b.say.setAttribute('aria-label', b.say.textContent.replace(/\s+/g, ' ').trim());
+      if (b.mode === 'cross') b.rows = [...b.say.querySelectorAll('.vp-row')];
+      else {
+        b.words = words(b.say, b.mode === 'letters' || b.mode === 'stack').map(el => ({ el, x0: 0, w: 0 }));
+        if (b.mode === 'letters') b.chars = b.words.flatMap(w => letters(w.el));
+      }
+      [...b.say.children].forEach(c => c.setAttribute('aria-hidden', 'true'));
+    }
+
+    let W = 0;
+    const measure = () => {
+      W = stage.clientWidth;
+      if (field) field.resize();
+      for (const b of beats) {
+        // where each word sits on screen, and how far along the sentence it is in reading order
+        let along = 0;
+        for (const w of b.words) {
+          const r = w.el.getBoundingClientRect();
+          w.x0 = r.left; w.w = r.width; w.at = along;
+          along += r.width + 24;
+        }
+        b.len = along;
+      }
+    };
+
+    const clamp = v => Math.max(0, Math.min(1, v));
+    const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
+    const set = (el, o, tf) => { el.style.opacity = o; el.style.transform = tf; };
+    // dark to light over a short stretch around the middle, for whatever has to stay readable as the page goes dark
+    const flip = k => smooth((k - 0.4) / 0.2);
+
+    /* ---------- the ground behind the words: a wave field (Scroll Wave Field, Originkit, ported from React to plain WebGL).
+       A wide sheet of dots in perspective, heaving in slow swells and flowing toward the eye; scrolling pushes it on
+       faster, and the pointer lifts a soft mound under itself that glows. At the gap the order goes out of it: the swells
+       fall flat and the dots scatter up the whole screen. Dots in the hero's navy on the paper ---------- */
+    const field = (() => {
+      const FIELD_W = 3600, FIELD_D = 7000, SPACING = 36, CAM_Z0 = 700, FOV = 60, DPR_CAP = 1.5, TAU = Math.PI * 2;
+      const CAM_Y_FULL = 550, CAM_REF_AREA = 1200 * 800, CAM_SCALE_MIN = 0.5, CAM_SCALE_MAX = 2.5, CURSOR_FOLLOW = 7;
+      // the settings chosen in Originkit's editor
+      const S = {
+        colors: ['#0A1B2F', '#00314F'],
+        dotSize: 2, scatter: 108, cameraHeight: 50,
+        waveHeight: 200, waveLength: 2070, waveSpeed: 110,   // slowed well down from Originkit's 250
+        tilt: 12, roll: 0, cursorRadius: 20, cursorLift: 25   // hover toned down from Originkit's 25 and 45
+      };
+      const flowSpeed = S.waveSpeed * (260 / 160);
+      const hoverGlow = Math.min(400, Math.abs(S.cursorLift) * (100 / 45));
+      const SCROLL_PUSH = 1.1;   // how far the field flows per pixel scrolled
+
+      const VERT = `
+        precision highp float;
+        attribute vec2 aGrid;
+        attribute vec2 aSeed;
+        uniform vec2 uRes; uniform float uFocal; uniform float uTime; uniform float uAmp; uniform float uScatter;
+        uniform float uFreq; uniform vec2 uDir; uniform float uFlow; uniform float uDepth; uniform float uCamY;
+        uniform float uCamZ; uniform float uPitch; uniform float uRoll; uniform float uDot; uniform float uColorCount;
+        uniform vec2 uJit; uniform vec3 uColors[8]; uniform vec3 uCursor; uniform float uCurR; uniform float uCurS;
+        uniform float uHover;
+        uniform float uChaos;
+        varying vec3 vCol; varying float vA; varying float vHot;
+        vec3 pickColor(float sel) {
+          float idx = floor(sel * uColorCount);
+          vec3 c = uColors[0];
+          for (int i = 1; i < 8; i++) {
+            if (float(i) >= uColorCount) break;
+            if (float(i) == idx) c = uColors[i];
+          }
+          return c;
+        }
+        float surf(vec2 q) {
+          return sin(q.x) * 0.55 + sin(q.x * 0.55 + q.y * 1.15) * 0.30 + sin(q.y * 0.75) * 0.22;
+        }
+        void main() {
+          vec2 w = aGrid + (aSeed - 0.5) * uJit;
+          w.y = uCamZ + mod(w.y - uFlow - uCamZ, uDepth);
+          float h3 = fract(sin(dot(aSeed, vec2(91.37, 47.13))) * 12345.678);
+          float h = surf(w * uFreq - uDir * uTime) * uAmp + (h3 - 0.5) * uScatter;
+          float cd = length(w - uCursor.xy);
+          float g = exp(-(cd * cd) / (uCurR * uCurR)) * uCursor.z;
+          h += g * uCurS;
+          float g2 = g * g; g2 = g2 * g2; g2 = g2 * g2;
+          // scatter: the swells fall flat and each dot slips a short way off its place in the sheet and lifts to its own
+          // random height, some of them up past the horizon into the top of the screen, without anything flying about.
+          // The lift grows with distance so the dots spread evenly up the screen rather than bunching near the eye
+          vec3 P = vec3(w.x, h, w.y);
+          if (uChaos > 0.001) {
+            float r1 = fract(sin(dot(aSeed, vec2(12.9898, 78.233))) * 43758.5453);
+            float r2 = fract(sin(dot(aSeed, vec2(39.346, 11.135))) * 24634.6345);
+            float r3 = fract(sin(dot(aSeed, vec2(73.156, 52.235))) * 13758.937);
+            float dist = max(w.y - uCamZ, 200.0);
+            vec3 S = vec3(w.x + (r1 - 0.5) * 520.0, uCamY + (r2 * 1.3 - 0.85) * dist, w.y + (r3 - 0.5) * 520.0);   // from the foot of the screen to past its top
+            P = mix(P, S, uChaos);
+          }
+          vec3 p = vec3(P.x, P.y - uCamY, P.z - uCamZ);
+          float c = cos(uPitch), s = sin(uPitch);
+          float ry = p.y * c + p.z * s;
+          float rz = -p.y * s + p.z * c;
+          if (rz < 40.0) {
+            gl_Position = vec4(2.0, 2.0, 0.0, 1.0); gl_PointSize = 0.0;
+            vCol = uColors[0]; vA = 0.0; vHot = 0.0;
+            return;
+          }
+          float cr = cos(uRoll), sr = sin(uRoll);
+          float rx = p.x * cr - ry * sr;
+          float ryr = p.x * sr + ry * cr;
+          gl_Position = vec4((rx * uFocal / rz) / (uRes.x * 0.5), (ryr * uFocal / rz) / (uRes.y * 0.5), 0.0, 1.0);
+          float rad = max(uDot * uFocal / rz, 0.55);
+          gl_PointSize = clamp(rad * 2.0 * (1.0 + g2 * uHover * 0.20), 1.0, 220.0);
+          float bri = 0.28 + h3 * 0.72;
+          vec2 bq = w * vec2(0.0040, 0.0032) - uDir * uTime * 0.30;
+          float band = sin(bq.x) + sin(bq.y);
+          float sel = fract((band + 2.0) * 0.25 + (aSeed.y - 0.5) * 0.55);
+          vCol = pickColor(sel);
+          float lum = dot(vCol, vec3(0.299, 0.587, 0.114));
+          vHot = (0.25 + 0.75 * lum) * bri * bri * 0.7 + g2 * uHover * 0.55;
+          float fog = (1.0 - smoothstep(2800.0, 6400.0, rz)) * smoothstep(70.0, 240.0, rz);
+          vA = bri * fog * (1.0 + g2 * uHover * 0.55);
+        }`;
+      const FRAG = `
+        precision highp float;
+        varying vec3 vCol; varying float vA; varying float vHot;
+        void main() {
+          float d = length(gl_PointCoord - 0.5) * 2.0;
+          if (d > 1.0) discard;
+          float a = (1.0 - smoothstep(0.90, 1.0, d)) * vA;
+          vec3 col = vCol + vec3(1.0) * pow(1.0 - d, 10.0) * vHot * 0.9;
+          gl_FragColor = vec4(col * a, a);
+        }`;
+
+      const gl = cv.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true, depth: false });
+      if (!gl) return null;
+      const compile = (type, src) => {
+        const sh = gl.createShader(type);
+        gl.shaderSource(sh, src); gl.compileShader(sh);
+        if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) console.warn('wave field shader:', gl.getShaderInfoLog(sh));
+        return sh;
+      };
+      const prog = gl.createProgram();
+      gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
+      gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.warn('wave field link:', gl.getProgramInfoLog(prog)); return null; }
+      gl.useProgram(prog);
+      const aGrid = gl.getAttribLocation(prog, 'aGrid'), aSeed = gl.getAttribLocation(prog, 'aSeed');
+      const U = n => gl.getUniformLocation(prog, n);
+      const u = {
+        res: U('uRes'), focal: U('uFocal'), time: U('uTime'), amp: U('uAmp'), scatter: U('uScatter'), freq: U('uFreq'),
+        dir: U('uDir'), flow: U('uFlow'), depth: U('uDepth'), camY: U('uCamY'), camZ: U('uCamZ'), pitch: U('uPitch'),
+        roll: U('uRoll'), dot: U('uDot'), colorCount: U('uColorCount'), jit: U('uJit'), colors: U('uColors[0]'),
+        cursor: U('uCursor'), curR: U('uCurR'), curS: U('uCurS'), hover: U('uHover'), chaos: U('uChaos')
+      };
+
+      // the grid of dots, each with two random seeds. The dots keep one spacing (sparser than Originkit's default), and the
+      // sheet is made as wide as the screen's shape needs for its sides to stay out of view all the way to the far fog
+      const gridBuf = gl.createBuffer(), seedBuf = gl.createBuffer();
+      let count = 0, builtW = 0;
+      const spacingX = SPACING, spacingZ = SPACING;
+      const buildGrid = fieldW => {
+        const rnd = (a => () => {
+          a |= 0; a = (a + 0x6d2b79f5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        })(0x5eed);
+        const cols = Math.ceil(fieldW / spacingX), rows = Math.ceil(FIELD_D / spacingZ);
+        count = cols * rows;
+        const grid = new Float32Array(count * 2), seed = new Float32Array(count * 2);
+        for (let r = 0, i = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++, i++) {
+            grid[i * 2] = -fieldW / 2 + (c + 0.5) * spacingX; grid[i * 2 + 1] = r * spacingZ;
+            seed[i * 2] = rnd(); seed[i * 2 + 1] = rnd();
+          }
+        }
+        gl.bindBuffer(gl.ARRAY_BUFFER, gridBuf); gl.bufferData(gl.ARRAY_BUFFER, grid, gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, seedBuf); gl.bufferData(gl.ARRAY_BUFFER, seed, gl.STATIC_DRAW);
+        builtW = fieldW;
+      };
+      const pal = new Float32Array(8 * 3);
+      const palNow = new Float32Array(8 * 3);
+      S.colors.forEach((c, i) => [1, 3, 5].forEach((o, j) => { pal[i * 3 + j] = parseInt(c.slice(o, o + 2), 16) / 255; }));
+
+      gl.disable(gl.DEPTH_TEST);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.ONE, gl.ONE);
+
+      let cssW = 0, cssH = 0, dpr = 1, areaScale = 1;
+      const resize = () => {
+        dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+        cssW = stage.clientWidth; cssH = stage.clientHeight;
+        areaScale = cssW > 0 && cssH > 0 ? Math.min(CAM_SCALE_MAX, Math.max(CAM_SCALE_MIN, Math.sqrt((cssW * cssH) / CAM_REF_AREA))) : 1;
+        const w = Math.max(1, Math.round(cssW * dpr)), h = Math.max(1, Math.round(cssH * dpr));
+        if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+        gl.viewport(0, 0, w, h);
+        // half the view's width at the far fog (6400 deep, 60 degree view), with a margin; never narrower than the original sheet
+        const need = Math.max(FIELD_W, Math.ceil(2 * 6400 * Math.tan(Math.PI / 6) * (cssW / Math.max(1, cssH)) * 1.15 / 400) * 400);
+        if (need !== builtW) buildGrid(need);
+      };
+
+      // the pointer: where it is, eased toward, and how present it is (fades in on hover, out on leave)
+      const ptr = { x: 0, y: 0, sx: 0, sy: 0, active: 0, target: 0 };
+      vp.addEventListener('pointermove', e => {
+        const r = stage.getBoundingClientRect();
+        ptr.x = e.clientX - r.left; ptr.y = e.clientY - r.top; ptr.target = 1;
+      });
+      vp.addEventListener('pointerleave', () => { ptr.target = 0; });
+
+      // where the pointer's ray meets the ground, in field coordinates
+      const groundHit = (mx, my, wDev, hDev, focal, pitch, roll, camY, camZ) => {
+        const px = mx * dpr - wDev / 2, py = -(my * dpr - hDev / 2);
+        const cr = Math.cos(roll), sr = Math.sin(roll);
+        const dx = (px * cr + py * sr) / focal, dy = (-px * sr + py * cr) / focal;
+        const c = Math.cos(pitch), s = Math.sin(pitch);
+        const wy = dy * c - s, wz = dy * s + c;
+        if (wy > -1e-4) return null;
+        const t = -camY / wy;
+        return { x: dx * t, z: camZ + wz * t };
+      };
+
+      let phase = 0, flow = 0, hitX = 0, hitZ = -1e6, lastY = scrollY, chaos = 0;
+      // chaosGoal: 0 for the calm wave, 1 for every dot scattered (set by the beat on screen)
+      const render = (dt, chaosGoal = 0) => {
+        chaos += (chaosGoal - chaos) * (1 - Math.exp(-dt * 2.5));
+        if (cssW <= 0 || cssH <= 0 || !count) { resize(); if (cssW <= 0 || cssH <= 0 || !count) return; }
+        // the hover presence eases in and out instead of switching
+        ptr.active += (ptr.target - ptr.active) * (1 - Math.exp(-dt * 10));
+        if (ptr.active < 0.002) { ptr.sx = ptr.x; ptr.sy = ptr.y; }
+        else { const k = 1 - Math.exp(-dt * CURSOR_FOLLOW); ptr.sx += (ptr.x - ptr.sx) * k; ptr.sy += (ptr.y - ptr.sy) * k; }
+
+        // scrolling down pushes the field toward the eye, scrolling up draws it back
+        const dy = scrollY - lastY; lastY = scrollY;
+        phase += dt * (S.waveSpeed / 100);
+        flow = ((flow + dt * flowSpeed + dy * SCROLL_PUSH) % FIELD_D + FIELD_D) % FIELD_D;
+
+        const pitch = (S.tilt * Math.PI) / 180, roll = (-S.roll * Math.PI) / 180;
+        const camY = (Math.min(100, Math.max(0, S.cameraHeight)) / 100) * CAM_Y_FULL * areaScale, camZ = CAM_Z0;
+        const wDev = cv.width, hDev = cv.height;
+        const focal = hDev / (2 * Math.tan(((FOV / 2) * Math.PI) / 180));
+
+        if (ptr.active <= 0.001) { hitX = 0; hitZ = -1e6; }
+        else {
+          const hit = groundHit(ptr.sx, ptr.sy, wDev, hDev, focal, pitch, roll, camY, camZ);
+          if (hit) { hitX = hit.x; hitZ = hit.z; } else if (hitZ === -1e6) { hitX = 0; hitZ = FIELD_D; }
+        }
+
+        gl.uniform2f(u.res, wDev, hDev);
+        gl.uniform1f(u.focal, focal);
+        gl.uniform1f(u.time, phase);
+        gl.uniform1f(u.amp, S.waveHeight);
+        gl.uniform1f(u.scatter, S.scatter);
+        gl.uniform1f(u.freq, TAU / Math.max(50, S.waveLength));
+        gl.uniform2f(u.dir, 0, -1);
+        gl.uniform1f(u.flow, flow);
+        gl.uniform1f(u.depth, FIELD_D);
+        gl.uniform1f(u.camY, camY);
+        gl.uniform1f(u.camZ, camZ);
+        gl.uniform1f(u.pitch, pitch);
+        gl.uniform1f(u.roll, roll);
+        gl.uniform1f(u.dot, S.dotSize);
+        gl.uniform1f(u.colorCount, S.colors.length);
+        gl.uniform2f(u.jit, spacingX * 0.25, spacingZ * 0.7);
+        // as the field scatters, its dots whiten, flipping quickly as the page behind them passes mid-grey (below),
+        // so they never sit grey on grey
+        const white = flip(chaos);
+        for (let i = 0; i < pal.length; i++) palNow[i] = pal[i] + (1 - pal[i]) * white;
+        gl.uniform3fv(u.colors, palNow);
+        gl.uniform3f(u.cursor, hitX, hitZ, ptr.active);
+        gl.uniform1f(u.curR, Math.max(1, (S.cursorRadius / 100) * (FIELD_W / 2)));
+        gl.uniform1f(u.curS, S.cursorLift);
+        gl.uniform1f(u.hover, hoverGlow / 100);
+        gl.uniform1f(u.chaos, chaos);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, gridBuf);
+        gl.enableVertexAttribArray(aGrid);
+        gl.vertexAttribPointer(aGrid, 2, gl.FLOAT, false, 0, 0);
+        gl.bindBuffer(gl.ARRAY_BUFFER, seedBuf);
+        gl.enableVertexAttribArray(aSeed);
+        gl.vertexAttribPointer(aSeed, 2, gl.FLOAT, false, 0, 0);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.POINTS, 0, count);
+      };
+      return { resize, render, level: () => chaos };
+    })();
+
+    /* the gap goes dark: while the field is scattered the section fades to black and its words to white, and back again
+       as it settles. Written only while it is (or was just) away from normal, so the colour flood above is left alone */
+    const mixHex = (a, b, t) => {
+      const ca = a.match(/\w\w/g).map(h => parseInt(h, 16)), cb = b.match(/\w\w/g).map(h => parseInt(h, 16));
+      return `rgb(${ca.map((v, i) => Math.round(v + (cb[i] - v) * t)).join(', ')})`;
+    };
+    const PAPER = css('--paper-2').replace('#', ''), INK = css('--ink').replace('#', ''), TEXT = css('--text').replace('#', '');
+    let shown = 0;
+    const invert = k => {
+      k = Math.round(k * 1000) / 1000;
+      if (k === shown) return;
+      shown = k;
+      if (k <= 0.001) { vp.style.removeProperty('background-color'); vp.style.removeProperty('--ink'); vp.style.removeProperty('--text'); return; }
+      // the paper eases into black; the words stay dark until it is half way, then turn white quickly, so they never
+      // wash out against a grey of their own shade
+      const t = flip(k);
+      vp.style.backgroundColor = mixHex(PAPER, '050505', smooth(k));
+      vp.style.setProperty('--ink', mixHex(INK, 'F5F5F5', t));
+      vp.style.setProperty('--text', mixHex(TEXT, 'F5F5F5', t));
+    };
+
+    let on = false, raf = 0, last = 0;
+    const frame = now => {
+      raf = 0;
+      if (!on) return;
+      const dt = last ? Math.min((now - last) / 1000, 0.05) : 0;
+      last = now;
+      const vh = innerHeight;
+
+      // q for each beat: 0 as its line comes up over the foot of the screen, 1 at the middle, 2 at the top
+      let chaosGoal = 0;
+      // every position is read before anything is written, so the browser lays the page out once a frame, not once a beat
+      const tops = beats.map(b => { const r = b.say.getBoundingClientRect(); return r.top + r.height / 2; });
+      const bandGone = band && band.getBoundingClientRect().bottom < 0;
+      beats.forEach((b, i) => {
+        let q = (vh - tops[i]) / (vh * 0.5);
+        // the gap scatters the field as it comes up, and lets it settle again as the next beat arrives
+        if (b.el.dataset.field === 'chaos') chaosGoal = smooth((q - 0.3) / 0.5) * (1 - smooth((q - 1.45) / 0.45));
+        // off screen: set it once at the nearest end, so a beat never shows its words before they arrive
+        if (q < -0.2 || q > 2.4) {
+          q = q < 0 ? -0.2 : 2.4;
+          if (b.q === q) return;
+        }
+        b.q = q;
+
+        const side = smooth((q - 0.35) / 0.4);
+        b.side.forEach(el => set(el, side.toFixed(3), `translateY(${((1 - side) * 14).toFixed(1)}px)`));
+
+        if (b.mode === 'grow') {
+          // the words grow up from their baseline in reading order
+          const said = smooth((q - 0.25) / 0.7);
+          const head = -80 + (b.len + 160) * said;
+          for (const w of b.words) {
+            const v = smooth((head - w.at) / (w.w + 60));
+            set(w.el, v.toFixed(3), v > 0.999 ? 'none' : `translateY(${((1 - v) * 0.3).toFixed(3)}em) scaleY(${(0.12 + 0.88 * v).toFixed(3)})`);
+          }
+        } else if (b.mode === 'focus') {
+          // heard, not measured: each word starts as a loose blur and is pulled into focus in turn, the last word last
+          const n = b.words.length;
+          b.words.forEach((w, j) => {
+            const v = smooth((q - 0.2 - 0.6 * (j / n)) / 0.3);
+            w.el.style.opacity = (0.25 + 0.75 * v).toFixed(3);
+            w.el.style.filter = v > 0.999 ? 'none' : `blur(${((1 - v) * 14).toFixed(2)}px)`;
+            // stretched wide as it blurs, drawn in as it sharpens; a transform, so the line never rewraps
+            w.el.style.transformOrigin = '50% 50%';
+            w.el.style.transform = v > 0.999 ? '' : `scaleX(${(1 + (1 - v) * 0.15).toFixed(3)})`;
+          });
+        } else if (b.mode === 'letters') {
+          // letters rise out of their word's mask one after another
+          const n = b.chars.length;
+          b.chars.forEach((c, j) => {
+            const v = smooth((q - 0.2 - 0.55 * (j / n)) / 0.25);
+            c.el.style.transform = v > 0.999 ? 'none' : `translateY(${((1 - v) * 110).toFixed(1)}%)`;
+          });
+        } else if (b.mode === 'cross') {
+          // the two rows come in from opposite sides, line up at the middle, and keep going past each other
+          const x = (1 - q) * 30;
+          const o = clamp(1.25 - Math.abs(1 - q) * 0.9);
+          set(b.rows[0], o.toFixed(3), `translateX(${(-x).toFixed(2)}vw)`);
+          set(b.rows[1], o.toFixed(3), `translateX(${x.toFixed(2)}vw)`);
+        }
+      });
+
+      // once the charcoal band has gone up past the top, the paper below it covers the field: stop drawing it
+      if (field && !bandGone) field.render(dt, chaosGoal);
+      if (field) invert(field.level());
+      raf = requestAnimationFrame(frame);
+    };
+
+    measure();
+    new ResizeObserver(measure).observe(stage);
+    document.fonts && document.fonts.ready.then(measure);
+    new IntersectionObserver(([e]) => {
+      on = e.isIntersecting;
+      last = 0;
+      if (on && !raf) raf = requestAnimationFrame(frame);
+    }).observe(vp);
+  })();
+
+  /* ---------- milestones on request: the roadmap rests as a single screen (the terrain under its title) that the page
+     scrolls straight past. Explore opens it into the full flight and glides into it; the cross (or Esc) closes it back to
+     the resting screen, right where it is. It also closes once the page has scrolled on past its end or back up above it; closing
+     behind the reader takes the flight's length back out of the scroll position too, so what is on screen stays put ---------- */
+  (() => {
+    const rm = document.getElementById('roadmap');
+    const openBtn = document.getElementById('rm-open'), skipBtn = document.getElementById('rm-skip');
+    if (!rm || !openBtn || !skipBtn) return;
+    const to = y => scrollTo(0, y);
+    const relayout = () => {
+      if (hasGsap) ScrollTrigger.refresh();
+    };
+    const setOpen = on => {
+      rm.classList.toggle('is-open', on);
+      openBtn.setAttribute('aria-expanded', on);
+      relayout();
+    };
+    // rounded up to a whole pixel: landing a fraction short leaves a hairline of the paper showing above the navy
+    const top = () => Math.ceil(rm.getBoundingClientRect().top + scrollY);
+
+    // Explore: glide the resting screen into place, then open the flight the moment it lands. Opened first, from partway
+    // past the section's top, the camera would start some way into the flight. The glide is our own so it can end on
+    // the open exactly, with no guessed wait: quick for a short move, a little longer for a long one
+    let gliding = false;
+    openBtn.addEventListener('click', () => {
+      if (gliding || rm.classList.contains('is-open')) return;
+      const y = top() + 1;   // a pixel past the top, so no sliver of paper can show above the stage on any screen
+      const from = scrollY, dist = y - from;
+      if (Math.abs(dist) < 2) { setOpen(true); return; }
+      gliding = true;
+      const dur = Math.min(600, 350 + Math.abs(dist) * 0.25);
+      const ease = t => 1 - Math.pow(1 - t, 3);   // easeOutCubic: sets off at once, settles softly
+      let t0 = 0;
+      const step = () => {
+        const now = performance.now();
+        t0 = t0 || now;   // timed from the first frame, so a late first frame cannot cut the glide short
+        const t = Math.min(1, (now - t0) / dur);
+        scrollTo(0, from + dist * ease(t));
+        if (t < 1) requestAnimationFrame(step);
+        else { gliding = false; setOpen(true); }
+      };
+      requestAnimationFrame(step);
+    });
+    // at rest, the inverting circle rides on the pointer, easing after it, and swells while the pointer moves fast
+    // (how far it trails behind is the measure of speed), settling back as it slows
+    const stage = rm.querySelector('.rm-stage'), hint = document.getElementById('rm-cursor');
+    if (hint && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      let tx = 0, ty = 0, x = 0, y = 0, k = 1, raf = 0, over = false;
+      const draw = () => {
+        x += (tx - x) * 0.22; y += (ty - y) * 0.22;
+        const swell = 1 + Math.min(Math.hypot(tx - x, ty - y) / 50, 1.5);   // up to 2.5 times its size
+        k += (swell - k) * 0.15;
+        hint.style.setProperty('--x', `${x.toFixed(1)}px`);
+        hint.style.setProperty('--y', `${y.toFixed(1)}px`);
+        hint.style.setProperty('--k', k.toFixed(3));
+        raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.3 || k > 1.005 ? requestAnimationFrame(draw) : 0;
+        if (!raf) { k = 1; hint.style.setProperty('--k', '1'); }
+      };
+      // where the pointer is is kept from the window, and checked against the screen on every move and every scroll:
+      // scrolled under a still pointer, the browser sends no enter or leave until the mouse moves again, which made the
+      // circle late to appear and late to go
+      let px = 0, py = 0, has = false;
+      const show = () => {
+        const on = over && !rm.classList.contains('is-open');
+        hint.classList.toggle('on', on);
+        document.documentElement.classList.toggle('rm-cursor-on', on);
+      };
+      const check = scrolled => {
+        if (!has) { over = false; show(); return; }
+        const r = stage.getBoundingClientRect();
+        const inside = px >= r.left && px < r.right && py >= r.top && py < r.bottom;
+        tx = px - r.left; ty = py - r.top;
+        // arriving, or carried by the scroll: sit right on the pointer rather than easing (or swelling) after it
+        if ((inside && !over) || scrolled) {
+          x = tx; y = ty;
+          hint.style.setProperty('--x', `${x.toFixed(1)}px`);
+          hint.style.setProperty('--y', `${y.toFixed(1)}px`);
+        }
+        over = inside;
+        show();
+        if (over && !raf) raf = requestAnimationFrame(draw);
+      };
+      addEventListener('pointermove', e => { px = e.clientX; py = e.clientY; has = true; check(false); }, { passive: true });
+      addEventListener('scroll', () => check(true), { passive: true });
+      document.documentElement.addEventListener('pointerleave', () => { has = false; check(false); });
+      new MutationObserver(show).observe(rm, { attributes: true, attributeFilter: ['class'] });
+    }
+    // at rest, a click anywhere on the screen opens it, the same as Explore
+    stage.addEventListener('click', e => {
+      if (rm.classList.contains('is-open') || e.target.closest('button, a')) return;
+      openBtn.click();
+    });
+    const close = () => {
+      if (!rm.classList.contains('is-open')) return;
+      // noted before closing: once the page shortens, the browser clamps the scroll to the new end on its own
+      const before = rm.offsetHeight, y = scrollY, passed = rm.getBoundingClientRect().bottom < 0;
+      setOpen(false);
+      // closed behind the reader: the page below has moved up by the flight's length, so move the scroll up with it
+      if (passed) to(y - (before - rm.offsetHeight));
+    };
+    skipBtn.addEventListener('click', () => {
+      setOpen(false);
+      // back out of full screen onto the resting screen, staying on it rather than moving on
+      to(top());
+    });
+    addEventListener('keydown', e => {
+      if (e.key !== 'Escape' || !rm.classList.contains('is-open')) return;
+      const r = rm.getBoundingClientRect();
+      if (r.top < innerHeight && r.bottom > 0) skipBtn.click();
+    });
+    // done with it: scrolled on past the end, or back up above the start
+    const check = () => {
+      if (!rm.classList.contains('is-open')) return;
+      const r = rm.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) close();
+    };
+    // the page's own scroll event, which fires however the page moves (wheel, keys, the scroll pill, a link)
+    addEventListener('scroll', check, { passive: true });
+  })();
+
   /* ---------- the written sections between the hero and the milestones ----------
      Layered on the existing layout, nothing moves: the headlines rise word by word, the intro's quote inks in
-     word by word as it is read, the body copy rises line by line, the rules draw themselves, and the blue band carries a live voice trace
-     that swells under the pointer. Runs before the reveals below, so the blocks it animates itself can drop
+     word by word as it is read, the body copy rises line by line, and the rules draw themselves. Runs before the reveals below, so the blocks it animates itself can drop
      their plain fade. */
   (() => {
     if (!hasGsap || reduce) return;
@@ -670,53 +1221,118 @@
         }
       });
     }
+  })();
 
-    /* the blue band: a voice trace runs behind the words, in bursts like syllables, and swells under the pointer */
-    const trial = document.querySelector('#why .trial');
-    if (trial) {
-      const cv = document.createElement('canvas');
-      cv.className = 'trial-wave';
-      cv.setAttribute('aria-hidden', 'true');
-      trial.prepend(cv);
-      const ctx = cv.getContext('2d');
-      let W = 0, H = 0, on = false, raf = 0, mx = -1e4, lift = 0, liftGoal = 0;
-      new ResizeObserver(() => {
-        W = trial.clientWidth; H = trial.clientHeight;
-        cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
-      }).observe(trial);
-      // three traces, the first bright and the others fainter echoes of it
-      const traces = [{ a: 0.28, k: 0, w: 1.4 }, { a: 0.14, k: 1.9, w: 1 }, { a: 0.07, k: 3.4, w: 1 }];
-      const draw = now => {
-        raf = 0;
-        if (!on || !ctx) return;
-        const t = now / 1000, s = scrollY * 0.004;
-        lift += (liftGoal - lift) * 0.06;
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-        ctx.clearRect(0, 0, W, H);
-        const mid = H * 0.55, amp = H * 0.17;
-        for (const tr of traces) {
-          ctx.beginPath();
-          for (let x = 0; x <= W; x += 3) {
-            // a syllable envelope over a voiced carrier
-            const syl = Math.max(0, Math.sin(x * 0.011 - t * 1.3 + tr.k)) * (0.65 + 0.35 * Math.sin(x * 0.0037 + t * 0.5));
-            const carrier = Math.sin(x * 0.09 - t * 6 + s + tr.k) * 0.6 + Math.sin(x * 0.031 + t * 2.3 + tr.k * 2) * 0.4;
-            const near = Math.exp(-((x - mx) ** 2) / 39200) * lift;   // a bump about 140px wide
-            const y = mid + carrier * amp * (0.16 + syl * 0.84) * (1 + near * 1.8);
-            if (x) ctx.lineTo(x, y); else ctx.moveTo(x, y);
-          }
-          ctx.strokeStyle = `rgba(245, 245, 245, ${tr.a + lift * 0.08})`;
-          ctx.lineWidth = tr.w;
-          ctx.stroke();
+  /* ---------- milestones: the terrain's rounded panel comes up a little small and out of focus, and grows to full size
+     and comes sharp as it reaches the top of the screen ---------- */
+  (() => {
+    const stage = document.querySelector('#roadmap .rm-stage');
+    if (!hasGsap || reduce || !stage) return;
+    const scroll = { trigger: '#roadmap', start: 'top bottom', end: 'top top', scrub: true };
+    gsap.fromTo(stage, { scale: 0.94 }, { scale: 1, ease: 'none', scrollTrigger: scroll });
+    // what is inside the panel blurs, not the panel itself, so its rounded edge stays crisp
+    // (the title's own filter belongs to roadmap.js, which sets it every frame, so its text takes this blur instead)
+    const inside = [...stage.children].map(el => el.id === 'rm-title' ? el.firstElementChild : el).filter(Boolean);
+    gsap.fromTo(inside, { filter: 'blur(14px)' }, {
+      filter: 'blur(0px)', ease: 'none', scrollTrigger: { ...scroll },
+      // once it is sharp, drop the filter altogether so the flight draws at full speed
+      onUpdate() { if (this.progress() === 1) inside.forEach(el => { el.style.filter = 'none'; }); }
+    });
+  })();
+
+  /* ---------- the signal: what ARC-1 does, drawn as one line. It starts as everything the room hears (the voice buried
+     in noise), the noise falls away to leave only the voice, and the voice then settles into a graph with its points
+     and grid. It holds in the middle of the screen while that happens; the line itself keeps moving gently the whole time ---------- */
+  (() => {
+    const fig = document.getElementById('signal');
+    if (!fig) return;
+    const cv = fig.querySelector('.signal-cv'), ctx = cv.getContext('2d');
+    const ink = css('--ink') || '#4757B3', grey = css('--text') || '#323232', rule = css('--rule');
+    const smooth = v => { v = Math.max(0, Math.min(1, v)); return v * v * (3 - 2 * v); };
+    let W = 0, H = 0, dpr = 1, p = reduce ? 1 : 0, t = 0, on = false, raf = 0;
+    // the same noise every frame for a given x, shifted slowly in time
+    const hash = n => { const x = Math.sin(n * 127.1) * 43758.5453; return x - Math.floor(x); };
+    const noise = (x, tt) => {
+      const i = Math.floor(x * 220 + tt * 9), f = x * 220 + tt * 9 - i;
+      return (hash(i) * (1 - f) + hash(i + 1) * f) * 2 - 1;
+    };
+    // the voice: bursts of a few words, each a run of vibration under its own envelope
+    const voice = (x, tt) => {
+      const env = Math.max(0, Math.sin(x * Math.PI * 5.2 + 0.6)) ** 1.6 * (0.55 + 0.45 * Math.sin(x * 9.1 + 1.3));
+      return env * Math.sin(x * 160 + tt * 5) * (0.75 + 0.25 * Math.sin(x * 37 + tt * 2));
+    };
+    // the graph it becomes: a gentle trend across the strip
+    const trend = x => 0.35 * Math.sin(x * Math.PI * 1.4 + 0.4) - 0.25 * x + 0.08 * Math.sin(x * 11);
+
+    const size = () => {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      W = cv.clientWidth; H = cv.clientHeight;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      draw();
+    };
+    const draw = () => {
+      if (!W) return;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      const clean = smooth((p - 0.12) / 0.33), graph = smooth((p - 0.55) / 0.3);
+      const mid = H / 2, amp = H * 0.4;
+      // the graph's grid comes up behind the line
+      if (graph > 0) {
+        ctx.strokeStyle = rule; ctx.globalAlpha = graph; ctx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) { const y = H * (0.1 + 0.2 * i); ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+        ctx.globalAlpha = 1;
+      }
+      // the room's noise: a grey scribble that thins away as the voice is picked out
+      if (clean < 1) {
+        ctx.strokeStyle = grey; ctx.globalAlpha = 0.35 * (1 - clean); ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let px = 0; px <= W; px += 2) {
+          const x = px / W, y = mid + amp * (0.55 * noise(x, t) + 0.3 * noise(x * 3.1 + 5, t * 1.7));
+          px ? ctx.lineTo(px, y) : ctx.moveTo(px, y);
         }
-        raf = requestAnimationFrame(draw);
+        ctx.stroke(); ctx.globalAlpha = 1;
+      }
+      // the line itself: voice plus whatever noise is left, easing into the graph
+      ctx.strokeStyle = ink; ctx.lineWidth = 1.5 + graph; ctx.lineJoin = 'round';
+      ctx.beginPath();
+      const at = px => {
+        const x = px / W;
+        const wave = voice(x, t) * 0.8 + (1 - clean) * 0.5 * noise(x * 1.7 + 9, t * 1.3);
+        return mid + amp * (wave * (1 - graph) + trend(x) * graph);
       };
-      new IntersectionObserver(([e]) => {
-        on = e.isIntersecting;
-        if (on && !raf) raf = requestAnimationFrame(draw);
-      }).observe(trial);
-      trial.addEventListener('pointermove', e => { mx = e.clientX - trial.getBoundingClientRect().left; liftGoal = 1; });
-      trial.addEventListener('pointerleave', () => { liftGoal = 0; });
-    }
+      for (let px = 0; px <= W; px += 1.5) px ? ctx.lineTo(px, at(px)) : ctx.moveTo(px, at(px));
+      ctx.stroke();
+      // the measured points along the graph
+      if (graph > 0.02) {
+        ctx.fillStyle = ink;
+        for (let i = 1; i < 12; i++) {
+          const px = W * i / 12, r = 3.5 * smooth((graph - i * 0.03) / 0.4);
+          if (r <= 0) continue;
+          ctx.beginPath(); ctx.arc(px, at(px), r, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    };
+    const frame = now => {
+      raf = 0;
+      if (!on) return;
+      t = now / 1000;
+      draw();
+      raf = requestAnimationFrame(frame);
+    };
+    size();
+    new ResizeObserver(size).observe(cv);
+    if (reduce) return;
+    new IntersectionObserver(([e]) => { on = e.isIntersecting; if (on && !raf) raf = requestAnimationFrame(frame); }).observe(fig);
+    // noisy all the way up; once the text and the drawing under it are both on screen (the drawing at the foot), they hold
+    // there together while the scroll cleans it and turns it into a graph, then let go and the page carries on.
+    // A block taller than the screen holds from its top instead
+    const hold = document.getElementById('arc-hold') || fig;
+    if (hasGsap) ScrollTrigger.create({
+      trigger: hold, pin: hold, scrub: true, end: '+=140%',
+      start: () => hold.offsetHeight > innerHeight * 0.92 ? 'top top' : 'bottom bottom-=' + Math.round(innerHeight * 0.04),
+      onUpdate: self => { p = self.progress; }
+    });
+    else p = 1;
   })();
 
   /* ---------- reveals: fade up as each block enters, same as the Header draft ---------- */
