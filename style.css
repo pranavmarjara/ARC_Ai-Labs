@@ -428,7 +428,7 @@ td.r, th.r { text-align: right; padding-right: 0; }
 .founder-link:hover { background: var(--ink); color: var(--paper); }
 .founder-link span { transition: transform .25s ease; }
 .founder-link:hover span { transform: translate(2px, -2px); }
-.advisors { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); }
+.advisors { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); }
 .advisors .name { font-size: 20px; }
 /* advisors on hover: the photo eases in and a blue LinkedIn band rises over its foot */
 .advisors .member { position: relative; }
@@ -443,6 +443,7 @@ td.r, th.r { text-align: right; padding-right: 0; }
   transform: translateY(101%);
   transition: transform .45s cubic-bezier(.19, 1, .22, 1);
 }
+.advisors .member.scholar .photo::after { content: "Google Scholar ↗"; }
 .advisors .member:hover .photo img { transform: scale(1.08); filter: saturate(1.1); }
 .advisors .member:hover .photo::after { transform: none; }
 .advisors .member:hover .name { color: var(--ink-soft); }
@@ -506,7 +507,7 @@ td.r, th.r { text-align: right; padding-right: 0; }
   .som-row, .som-axis { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .som-axis span:first-child { display: none; }
 }
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   .advisors { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
