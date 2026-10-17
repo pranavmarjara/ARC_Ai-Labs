@@ -403,27 +403,41 @@
       };
 
       document.querySelectorAll(".presscard").forEach((card) => {
+          const outlet = card.querySelector(".presslink");
+          const outletHref = outlet ? outlet.getAttribute("href") : null;
+          const hasOutlet = outletHref && outletHref !== "#";
+
+          // a card with a real outlet link goes straight to the article; a placeholder opens the excerpt
+          const activate = () => {
+              if (hasOutlet) {
+                  window.open(outletHref, "_blank", "noopener");
+              } else {
+                  openPress(card);
+              }
+          };
+
           card.addEventListener("click", (event) => {
               const link = event.target.closest(".presslink");
 
-              // a real outlet link goes where it points; a placeholder one opens the excerpt
               if (link) {
-                  const href = link.getAttribute("href");
-
-                  if (href && href !== "#") {
+                  if (hasOutlet) {
                       return;
                   }
 
                   event.preventDefault();
               }
 
-              openPress(card);
+              activate();
           });
 
           card.addEventListener("keydown", (event) => {
+              if (event.target !== card) {
+                  return;
+              }
+
               if (event.key === "Enter" || event.key === " ") {
                   event.preventDefault();
-                  openPress(card);
+                  activate();
               }
           });
       });

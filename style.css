@@ -1373,6 +1373,10 @@ main > section#documentation{
     grid-column: span 4;
 }
 
+.presscard.span6{
+    grid-column: span 6;
+}
+
 /* a photograph, standing on its own */
 .pressphoto{
     margin: 0;
@@ -1468,16 +1472,21 @@ main > section#documentation{
 .presscard{
     padding: 26px 28px 22px;
 
-    border: 1px solid var(--line);
-    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
 
-    background-color: var(--panel);
+    /* white on the grey page, with a soft shadow, so the cards lift off the section */
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(7, 23, 36, 0.06), 0 10px 30px -8px rgba(7, 23, 36, 0.16);
 
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, translate 0.3s ease;
 }
 
 .presscard:hover{
-    border-color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    box-shadow: 0 2px 4px rgba(7, 23, 36, 0.06), 0 20px 44px -10px rgba(7, 23, 36, 0.24);
+    /* translate, not transform: the scroll reveal owns the inline transform */
+    translate: 0 -3px;
 }
 
 /* the cards are previews now, so they size to their own clamped text */
@@ -1498,10 +1507,68 @@ main > section#documentation{
     outline-offset: 3px;
 }
 
+/* a press card: the article's cover as a thumbnail on the left, the text beside it */
+.presscard:has(.presscover){
+    display: grid;
+    grid-template-columns: minmax(150px, 34%) 1fr;
+    gap: 26px;
+    align-items: start;
+
+    padding: 22px;
+}
+
+.presscover{
+    margin: 0;
+
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+
+    border-radius: 6px;
+    background-color: color-mix(in srgb, var(--strong) 6%, transparent);
+}
+
+.pressbody{
+    min-width: 0;
+}
+
+.pressbody .pressmore{
+    margin-bottom: 0;
+}
+
+.pressbody .presscardfoot{
+    margin-top: 16px;
+    padding-top: 14px;
+}
+
+.presscover img{
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: transform 0.5s ease;
+}
+
+.presscard:hover .presscover img{
+    transform: scale(1.03);
+}
+
+.presshead{
+    margin: 0 0 10px;
+
+    font-size: clamp(18px, 1.4vw, 21px);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.6px;
+
+    color: var(--strong);
+}
+
 /* only the first few lines show on the card */
 .presstext{
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -1742,7 +1809,7 @@ main > section#documentation{
         margin-top: 0;
     }
 
-    .presscard.span2, .presscard.span3, .presscard.span4,
+    .presscard.span2, .presscard.span3, .presscard.span4, .presscard.span6,
     .pressphoto.span2, .pressphoto.span3, .pressphoto.span4,
     .pressclip.span2, .pressclip.span3, .pressclip.span4{
         grid-column: span 1;
@@ -1906,6 +1973,8 @@ body.is-loading .bar { opacity: 0; }
   /* stacked, the photo would sit second; the video placeholder takes that spot instead */
   .pressphoto { display: none; }
   .presscard { padding: 20px 18px 16px; }
+  .presscard:has(.presscover) { grid-template-columns: 1fr; gap: 16px; padding: 16px; }
+  .presscover { max-width: 320px; }
   .presscard p { font-size: 15px; line-height: 1.6; }
   .presscardfoot { margin-top: 18px; padding-top: 14px; }
   .pressmodal { padding: 0; align-items: flex-end; }
