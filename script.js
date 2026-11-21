@@ -1406,4 +1406,157 @@
     });
   });
 
+  // video press cards: hovering shows a muted preview of data-start..data-end (seconds) over the poster.
+  // Only on devices that can hover, and not for people who asked for reduced motion.
+  const canPreview = matchMedia('(hover: hover)').matches &&
+    !matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // How it stays clean and quick: YouTube draws its own title, logo and play/pause icons whenever
+  // its player starts, pauses or resumes, and we can't style inside its frame. So once the card
+  // nears the screen the player starts muted and hidden, lets that start-up overlay run out unseen,
+  // and then keeps looping the clip quietly while the card is on screen. It is never paused there,
+  // so YouTube never shows a pause screen; hovering just rewinds to the start and fades it in.
+  if (canPreview) {
+    const YT_ORIGIN = 'https://www.youtube-nocookie.com';
+    const WARM_UP_MS = 4000;
+    const REVEAL_MS = 300;
+
+    document.querySelectorAll('.presscover[data-video]').forEach((cover) => {
+      const card = cover.closest('.presscard') || cover;
+      const id = cover.dataset.video;
+      const start = parseInt(cover.dataset.start || '0', 10);
+      const end = parseInt(cover.dataset.end || '0', 10);
+
+      let frame = null;
+      let ready = false;
+      let warm = false;       // the start-up overlay has run out
+      let warmTimer = null;
+      let onScreen = false;
+      let hovering = false;
+      let finished = false;   // reached data-end during this hover
+      let revealTimer = null;
+
+      const send = (func, args = []) => {
+        if (frame && frame.contentWindow) {
+          frame.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args }), YT_ORIGIN);
+        }
+      };
+
+      // captions follow the viewer's own YouTube settings, so switch them off through the player itself
+      const noCaptions = () => {
+        send('unloadModule', ['captions']);
+        send('unloadModule', ['cc']);
+      };
+
+      // our play button does a short "press" and fades out, then the video fades in
+      const reveal = () => {
+        if (!warm || revealTimer || frame.classList.contains('isplaying')) return;
+        cover.classList.add('isstarting');
+        revealTimer = setTimeout(() => {
+          revealTimer = null;
+          if (hovering && !finished) {
+            frame.classList.add('isplaying');
+            cover.classList.add('ispreviewing');
+          }
+        }, REVEAL_MS);
+      };
+
+      const conceal = () => {
+        clearTimeout(revealTimer);
+        revealTimer = null;
+        cover.classList.remove('isstarting', 'ispreviewing');
+        if (frame) frame.classList.remove('isplaying');
+      };
+
+      const load = () => {
+        if (frame) return;
+        frame = document.createElement('iframe');
+        frame.className = 'presspreview';
+        frame.src = `${YT_ORIGIN}/embed/${id}?enablejsapi=1&origin=${encodeURIComponent(location.origin)}` +
+          `&start=${start}&mute=1&controls=0&playsinline=1&rel=0&disablekb=1&fs=0` +
+          `&cc_load_policy=0&iv_load_policy=3`;
+        frame.allow = 'autoplay; encrypted-media';
+        frame.tabIndex = -1;
+        frame.setAttribute('aria-hidden', 'true');
+        frame.addEventListener('load', () => {
+          // ask the player to report its state and time back to us
+          frame.contentWindow.postMessage(JSON.stringify({ event: 'listening', id }), YT_ORIGIN);
+        });
+        cover.appendChild(frame);
+      };
+
+      window.addEventListener('message', (event) => {
+        if (!frame || event.source !== frame.contentWindow) return;
+        let data;
+        try { data = JSON.parse(event.data); } catch (e) { return; }
+
+        if (!ready && (data.event === 'onReady' || data.event === 'initialDelivery')) {
+          ready = true;
+          send('mute');
+          noCaptions();
+          if (onScreen) send('playVideo');
+        }
+
+        const info = data.info || {};
+
+        if (info.playerState === 1) {
+          noCaptions();
+          if (!warm && !warmTimer) {
+            warmTimer = setTimeout(() => {
+              warm = true;
+              send('seekTo', [start, true]);
+              if (hovering) reveal();
+            }, WARM_UP_MS);
+          }
+        }
+
+        // the clip ends at data-end: loop back to the start; during a hover, fade back to the poster
+        if (end && typeof info.currentTime === 'number' && info.currentTime >= end) {
+          send('seekTo', [start, true]);
+          if (hovering && warm && !finished) {
+            finished = true;
+            conceal();
+          }
+        }
+      });
+
+      // load the player a little before the card scrolls in
+      const near = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          load();
+          near.disconnect();
+        }
+      }, { rootMargin: '600px 0px' });
+      near.observe(cover);
+
+      // only keep it playing while the card is actually on screen
+      new IntersectionObserver((entries) => {
+        onScreen = entries.some((e) => e.isIntersecting);
+        if (!ready) return;
+        if (onScreen) {
+          send('playVideo');
+        } else {
+          conceal();
+          send('pauseVideo');
+        }
+      }).observe(cover);
+
+      card.addEventListener('mouseenter', () => {
+        hovering = true;
+        finished = false;
+        load();
+        if (warm) {
+          send('seekTo', [start, true]);
+          reveal();
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        hovering = false;
+        finished = false;
+        conceal();
+      });
+    });
+  }
+
 })();

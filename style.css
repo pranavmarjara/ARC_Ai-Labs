@@ -1637,6 +1637,55 @@ main > section#documentation{
     font-variant-numeric: tabular-nums;
 }
 
+/* the muted hover preview sits over the poster, fades in once it's playing,
+   and lets clicks fall through to the card */
+.presspreview{
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    width: 100%;
+    height: 100%;
+    border: 0;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+
+.presspreview.isplaying{
+    opacity: 1;
+}
+
+/* keep the tag and the length on top of the preview; the play button steps aside while it runs */
+.presskind,
+.pressduration{
+    z-index: 2;
+}
+
+/* starting a preview: the play button is "pressed", grows and fades away, then the video shows */
+/* the "Video" tag and the length step aside while the preview plays (script.js sets .ispreviewing) */
+.presskind,
+.pressduration{
+    transition: opacity 0.25s ease;
+}
+
+.presscover.ispreviewing .presskind,
+.presscover.ispreviewing .pressduration{
+    opacity: 0;
+}
+
+.presscover.isstarting .pressplay{
+    animation: presspress 0.4s ease forwards;
+}
+
+@keyframes presspress{
+    0%   { transform: translate(-50%, -50%) scale(1);    opacity: 1; }
+    25%  { transform: translate(-50%, -50%) scale(0.88); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.6);  opacity: 0; }
+}
+
 /* hidden until hover/focus on devices that can hover; touch screens keep it showing */
 @media (hover: hover){
     .presscover.isvideo .pressplay{
