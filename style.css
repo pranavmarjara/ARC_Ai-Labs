@@ -1554,6 +1554,102 @@ main > section#documentation{
     transform: scale(1.03);
 }
 
+/* video covers get a play badge in the middle so they read as something to watch */
+.presscover.isvideo{
+    position: relative;
+}
+
+/* same badge as .pressclip, but in YouTube red from the start */
+.presscover.isvideo .pressplay{
+    background-color: #f00;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+.presscard:hover .presscover.isvideo .pressplay{
+    background-color: #c4302b;
+    transform: translate(-50%, -50%) scale(1.06);
+}
+
+/* a video card: a bigger poster on top, a duration and a "Video" tag,
+   so it doesn't read as another article */
+.presscard.isvideo{
+    /* poster on top, full width, text underneath, like a video listing */
+    grid-template-columns: 1fr;
+    gap: 18px;
+}
+
+.presscard.isvideo .presstext{
+    -webkit-line-clamp: 3;
+}
+
+.presscard.isvideo .presslink:hover{
+    color: #ff4e45;
+}
+
+.presscard.isvideo .presscover{
+    border-radius: 4px;
+    background-color: #000;
+}
+
+.presscard.isvideo .pressplay{
+    width: 68px;
+    height: 48px;
+    border-radius: 12px;
+}
+
+.presscard.isvideo .pressplay::after{
+    border-top-width: 11px;
+    border-bottom-width: 11px;
+    border-left-width: 18px;
+}
+
+.presskind,
+.pressduration{
+    position: absolute;
+
+    padding: 3px 7px;
+    border-radius: 4px;
+
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.3px;
+
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.78);
+    pointer-events: none;
+}
+
+.presskind{
+    top: 10px;
+    left: 10px;
+
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    background-color: #f00;
+}
+
+.pressduration{
+    right: 10px;
+    bottom: 10px;
+
+    font-variant-numeric: tabular-nums;
+}
+
+/* hidden until hover/focus on devices that can hover; touch screens keep it showing */
+@media (hover: hover){
+    .presscover.isvideo .pressplay{
+        opacity: 0;
+        transition: opacity 0.25s ease, background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .presscard:hover .presscover.isvideo .pressplay,
+    .presscard:focus-visible .presscover.isvideo .pressplay{
+        opacity: 1;
+    }
+}
+
 .presshead{
     margin: 0 0 10px;
 
