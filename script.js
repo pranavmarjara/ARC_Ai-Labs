@@ -410,7 +410,12 @@
           // a card with a real outlet link goes straight to the article; a placeholder opens the excerpt
           const activate = () => {
               if (hasOutlet) {
-                  window.open(outletHref, "_blank", "noopener");
+                  // outside links open in a new tab; our own article pages open in this one
+                  if (outlet.target === "_blank") {
+                      window.open(outletHref, "_blank", "noopener");
+                  } else {
+                      location.href = outletHref;
+                  }
               } else {
                   openPress(card);
               }

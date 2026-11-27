@@ -1604,7 +1604,6 @@ main > section#documentation{
     border-left-width: 18px;
 }
 
-.presskind,
 .pressduration{
     position: absolute;
 
@@ -1619,15 +1618,6 @@ main > section#documentation{
     color: #fff;
     background-color: rgba(0, 0, 0, 0.78);
     pointer-events: none;
-}
-
-.presskind{
-    top: 10px;
-    left: 10px;
-
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    background-color: #f00;
 }
 
 .pressduration{
@@ -1658,20 +1648,17 @@ main > section#documentation{
     opacity: 1;
 }
 
-/* keep the tag and the length on top of the preview; the play button steps aside while it runs */
-.presskind,
+/* keep the length on top of the preview */
 .pressduration{
     z-index: 2;
 }
 
 /* starting a preview: the play button is "pressed", grows and fades away, then the video shows */
-/* the "Video" tag and the length step aside while the preview plays (script.js sets .ispreviewing) */
-.presskind,
+/* the length steps aside while the preview plays (script.js sets .ispreviewing) */
 .pressduration{
     transition: opacity 0.25s ease;
 }
 
-.presscover.ispreviewing .presskind,
 .presscover.ispreviewing .pressduration{
     opacity: 0;
 }
@@ -2108,8 +2095,6 @@ body.is-loading .bar { opacity: 0; }
   main > section#documentation { padding-top: 72px; }
   .press { padding-top: 0; gap: 28px; }
   .presseyebrow { font-size: 11px; }
-  /* only a short, fading peek of the placeholder cards, with "Coming soon" centred on it */
-  .presswrap { max-height: 420px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 60%, transparent); mask-image: linear-gradient(#000 60%, transparent); }
   .presssoon { inset: 0; display: grid; place-items: center; }
   .presssoonmsg { position: static; }
   .presstitle { font-size: clamp(40px, 12vw, 56px); font-weight: 800; letter-spacing: -.045em; line-height: .9; white-space: normal; color: var(--ink); }
@@ -2411,4 +2396,14 @@ main > section#roadmap.is-open { height: 666vh; }   /* the pace of the earlier 7
   #roadmap .rm-photo + .rm-brand { height: 42%; padding-top: 0; }
   #roadmap .rm-photo + .rm-brand .rm-date { font-size: 40px; }
   #roadmap .rm-photo ~ .rm-copy { margin-top: 8px; }
+}
+
+/* a portrait photo: a taller cover so the whole picture fits */
+.presscover.isportrait{
+    aspect-ratio: 3 / 4;
+}
+
+/* a square cover, for pictures whose subject sits in the middle of a wide frame */
+.presscover.issquare{
+    aspect-ratio: 1 / 1;
 }

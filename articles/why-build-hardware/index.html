@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Why Build Hardware | ARC Labs AI</title>
+<meta name="description" content="That is the line we are drawing in speech: the difference between a screening tool and a measurement instrument.">
+<link rel="canonical" href="https://arclabsai.in/articles/why-build-hardware/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ARC Labs AI">
+<meta property="og:url" content="https://arclabsai.in/articles/why-build-hardware/">
+<meta property="og:title" content="Why Build Hardware">
+<meta property="og:description" content="That is the line we are drawing in speech: the difference between a screening tool and a measurement instrument.">
+<meta property="og:image" content="https://arclabsai.in/images/press/arc-hardware-16x9.jpg">
+<meta property="og:image:width" content="768">
+<meta property="og:image:height" content="432">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Why Build Hardware">
+<meta name="twitter:description" content="That is the line we are drawing in speech: the difference between a screening tool and a measurement instrument.">
+<meta name="twitter:image" content="https://arclabsai.in/images/press/arc-hardware-16x9.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Why Build Hardware",
+  "image": "https://arclabsai.in/images/press/arc-hardware-16x9.jpg",
+  "datePublished": "2026-11-27",
+  "author": {"@type": "Organization", "name": "ARC Labs AI", "url": "https://arclabsai.in/"},
+  "publisher": {"@type": "Organization", "name": "ARC Labs AI", "logo": {"@type": "ImageObject", "url": "https://arclabsai.in/images/logo.png"}}
+}
+</script>
+<link rel="icon" href="../../images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="../../images/favicon.png">
+<link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,400&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --paper: #F5F5F5;
+    --card: #FFFFFF;
+    --ink: #4757B3;
+    --ink-soft: #4A97C1;
+    --text: #323232;
+    --muted: #6B6F7B;
+    --rule: rgba(71, 87, 179, .22);
+    --sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --gutter: clamp(16px, 4vw, 48px);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 18px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--ink); }
+  ::selection { background: var(--ink); color: #fff; }
+
+  /* top bar */
+  .bar {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 10px var(--gutter);
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .bar a { text-decoration: none; }
+  .brand { display: flex; align-items: center; }
+  .brand img { display: block; height: 52px; width: auto; }
+  .back {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink);
+  }
+  .back svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* layout: article with a contents list beside it on wide screens */
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(36px, 6vw, 80px) var(--gutter) 96px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+  }
+  @media (min-width: 1040px) {
+    .wrap { grid-template-columns: 220px minmax(0, 720px); justify-content: center; gap: 64px; }
+  }
+
+  .side { display: none; }
+  @media (min-width: 1040px) {
+    /* the column never runs past the window: the contents list keeps its size and the photo
+       shrinks to fit the space left, so its rounded corners are always in view */
+    .side {
+      display: flex; flex-direction: column;
+      position: sticky; top: 84px; align-self: start;
+      max-height: calc(100vh - 110px);
+    }
+    .toc { flex: none; }
+    .toc { font-size: 13.5px; line-height: 1.45; }
+  }
+  .toc p { margin: 0 0 12px; font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .toc ol { list-style: none; margin: 0; padding: 0; }
+  .toc li { margin: 0 0 9px; }
+  .toc a { color: var(--muted); text-decoration: none; transition: color .2s ease; }
+  .toc a:hover, .toc a.on { color: var(--ink); }
+
+  /* article */
+  .eyebrow { margin: 0 0 18px; font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  h1 {
+    margin: 0 0 36px;
+    font-size: clamp(36px, 6vw, 64px); line-height: 1.02; letter-spacing: -.035em; font-weight: 700;
+    color: var(--ink); text-wrap: balance;
+  }
+  /* the photo is portrait, so it sits at a comfortable width rather than spanning the column */
+  .cover { margin: 0 0 48px; max-width: 460px; border-radius: 10px; overflow: hidden; background: #e9e9e9; }
+  .cover img { display: block; width: 100%; height: auto; }
+
+  /* on wide screens the photo sits in the left column under the contents list, and both stay in view;
+     narrower screens keep it above the text */
+  .side .cover { margin: 24px 0 0; max-width: none; flex: 0 1 auto; min-height: 120px; display: flex; }
+  .side .cover img { flex: 1 1 auto; min-height: 0; height: auto; object-fit: cover; object-position: 50% 40%; }
+  @media (min-width: 1040px) {
+    article .cover { display: none; }
+  }
+
+  article h2 {
+    margin: 64px 0 18px; padding-top: 24px; border-top: 1px solid var(--rule);
+    font-size: clamp(26px, 3vw, 34px); line-height: 1.15; letter-spacing: -.025em; font-weight: 700;
+    color: var(--ink); scroll-margin-top: 90px;
+  }
+  article h3 {
+    margin: 40px 0 12px;
+    font-size: 21px; line-height: 1.3; letter-spacing: -.015em; font-weight: 650;
+    color: var(--ink); scroll-margin-top: 90px;
+  }
+  article p { margin: 0 0 20px; }
+  article ul { margin: 0 0 22px; padding-left: 22px; }
+  article li { margin: 0 0 12px; }
+  article strong { color: #1f2340; font-weight: 650; }
+
+  blockquote {
+    margin: 0 0 24px; padding: 4px 0 4px 22px;
+    border-left: 3px solid var(--ink);
+    font-size: 22px; line-height: 1.45; font-style: italic; color: var(--ink);
+  }
+
+  /* equations */
+  .eq {
+    margin: 0 0 22px; padding: 16px 20px;
+    background: var(--card); border: 1px solid var(--rule); border-radius: 8px;
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 19px; line-height: 1.6; color: #1f2340;
+    overflow-x: auto; white-space: nowrap;
+  }
+  .eq small { display: block; font-family: var(--sans); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+  .eq + .eq { margin-top: -10px; }
+
+  .refs { font-size: 15px; line-height: 1.55; padding-left: 26px; }
+  .refs li { margin-bottom: 10px; overflow-wrap: anywhere; }
+
+  .end {
+    margin-top: 64px; padding-top: 28px; border-top: 1px solid var(--rule);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+    font-size: 14px; color: var(--muted);
+  }
+  .end a { font-weight: 600; text-decoration: none; }
+
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="brand" href="../../"><img src="../../images/logo-ink.png" alt="ARC Labs AI" width="465" height="441"></a>
+  <a class="back" href="../../#documentation">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+    Press release
+  </a>
+</header>
+
+<div class="wrap">
+
+  <aside class="side">
+  <nav class="toc" aria-label="Contents">
+    <p>Contents</p>
+    <ol>
+      <li><a href="#question">The question we hear most</a></li>
+      <li><a href="#first-principles">Start from first principles</a></li>
+      <li><a href="#mathematics">The mathematics</a></li>
+      <li><a href="#instrument">What a dedicated instrument changes</a></li>
+      <li><a href="#reasons">The other scientific reasons</a></li>
+      <li><a href="#good-enough">What if phones get good enough?</a></li>
+      <li><a href="#together">Better together, available alone</a></li>
+      <li><a href="#companies">Companies that figured this out</a></li>
+      <li><a href="#not-an-option">Good enough is not an option</a></li>
+      <li><a href="#references">References</a></li>
+    </ol>
+  </nav>
+  <figure class="cover">
+    <img src="../../images/press/arc-hardware.jpg" alt="The ARC Labs head-mounted speech measurement instrument, held up in front of a whiteboard of notes" width="768" height="1024" loading="lazy">
+  </figure>
+  </aside>
+
+  <article>
+    <p class="eyebrow">ARC Labs AI · Essay · November 2026</p>
+    <h1>Why Build Hardware</h1>
+
+    <figure class="cover">
+      <img src="../../images/press/arc-hardware.jpg" alt="The ARC Labs head-mounted speech measurement instrument, held up in front of a whiteboard of notes" width="768" height="1024">
+    </figure>
+
+    <h2 id="question">The question we hear most</h2>
+    <p>After months of conversations with investors and with people outside the speech-language pathology field, one question comes up more than any other:</p>
+    <blockquote>"Why build hardware when you can get similar results with a phone?"</blockquote>
+    <p>Put in the simplest terms, it is like asking why anyone builds an ECG machine when an Apple Watch can run a similar test under perfect conditions.</p>
+    <p>The Apple Watch records a single channel, similar to Lead I, and was cleared by the FDA to classify a rhythm as atrial fibrillation or sinus rhythm. Its own clearance states that it cannot detect a heart attack [1, 2]. A hospital ECG records twelve views of the heart from ten electrodes. Both are useful. They answer different questions at different levels of certainty, and no cardiologist confuses one for the other.</p>
+    <p>That is the line we are drawing in speech: the difference between a screening tool and a measurement instrument.</p>
+
+    <h2 id="first-principles">Start from first principles</h2>
+    <p>Speech is a pressure wave. The wave travels through air, reaches a sensor, and is converted into numbers by an analog-to-digital converter (ADC). Every step on that path changes the signal. How much depends on the sensor, where it sits relative to the mouth, the electronics behind it, and the room around it.</p>
+    <p>A measurement system exists for one reason: to cut those variables down to as few as possible, and to keep the ones that remain fixed and known.</p>
+    <p>The signal we record, S′, is not the patient's speech. It is the patient's speech plus everything the recording chain adds to it:</p>
+    <div class="eq">S′ = S(patient) + S(internal noise) + S(external noise) + S(operator error) + …</div>
+    <p>Our goal as a team is to push every term other than S(patient) as close to zero as physics allows.</p>
+    <p>Not every error sits on top of the speech. Distance, angle, the sensor's frequency response and the room's reflections act as a filter on the speech itself. Written more precisely:</p>
+    <div class="eq">S′(t) = h(t) ∗ S(patient) + N(device) + N(environment)</div>
+    <p>Here h is the transfer function of everything between the lips and the ADC, and ∗ is convolution. Operator error rarely appears as its own noise term. It appears as h changing between sessions: the phone held 10 cm from the mouth on Monday and 30 cm on Thursday.</p>
+    <p>Additive noise can at least be measured and partly filtered. A filter that changes between sessions is worse, because it reshapes the speech itself. From the recording alone, you cannot tell whether the patient changed or the setup did. For a rehabilitation tool that tracks a patient over weeks, that is the one confusion we cannot afford.</p>
+
+    <h2 id="mathematics">The mathematics</h2>
+    <p>We model the whole path from a patient's physiology to the number on a clinician's screen. Each stage is a function, and each stage adds its own error.</p>
+    <div class="eq"><small>Physiology → sound</small>x(t) = K(S(t))</div>
+    <div class="eq"><small>Sound → sensor output</small>m(t) = M[x(t)] + ν<sub>sensor</sub></div>
+    <div class="eq"><small>Sensor output → samples</small>d[n] = A(m(t)) + ν<sub>ADC</sub></div>
+    <div class="eq"><small>Samples → biomarker</small>y[n] = D(d[n]) + ν<sub>DSP</sub></div>
+    <p>S is the physiological state we actually care about: laryngeal tension, subglottal pressure, airflow, vocal fold vibration and articulation. Everything after K is instrument. A biomarker is only as good as the path that carried S to it.</p>
+
+    <h3>Invariance is the goal</h3>
+    <p>A biomarker B depends on the patient's state, but also on the device and the environment that recorded it:</p>
+    <div class="eq">B = f(S, I<sub>device</sub>, I<sub>environment</sub>)</div>
+    <div class="eq"><small>Goal</small>∂B/∂I<sub>device</sub> → 0 &nbsp;and&nbsp; ∂B/∂I<sub>environment</sub> → 0</div>
+    <p>We want B to move when S moves, and only then. Hardware attacks the device term directly. If the instrument is fixed and characterised, it stops varying between sessions, and so does its contribution to B.</p>
+
+    <h3>The error budget</h3>
+    <p>Every input xᵢ to a biomarker θ (distance, sampling rate, quantisation, temperature, filter response) carries its own uncertainty. For independent sources, first-order propagation adds them in quadrature, as the GUM, the international guide to measurement uncertainty, prescribes:</p>
+    <div class="eq">σ²(θ) ≈ ∑ᵢ (∂θ/∂xᵢ)² · σ²(xᵢ)</div>
+    <p>This tells us where engineering effort pays off. The terms that dominate are the ones with both a large sensitivity and a large spread.</p>
+    <p>Take vocal intensity L and mouth-to-sensor distance r. From the inverse square law:</p>
+    <div class="eq">L(r) = L(r₀) − 20·log₁₀(r/r₀)</div>
+    <div class="eq">∂L/∂r = −20 / (r · ln 10) ≈ −8.7 / r &nbsp;dB per unit distance</div>
+    <p>At 15 cm, a hand that drifts by 3 cm moves the reading by about 2 dB, before anything else goes wrong. That is the size of the gap between people with Parkinson's disease and healthy controls [11]. A rigid mount does not shrink the sensitivity. It drives σᵣ towards zero, and the whole budget shrinks with it.</p>
+
+    <h3>Two regimes of error</h3>
+    <p>The acquisition stages are linear and time-invariant, so their transfer functions cascade and their errors degrade smoothly:</p>
+    <div class="eq">H<sub>chain</sub> = H<sub>sensor</sub> · H<sub>ADC</sub> · H<sub>filter</sub></div>
+    <p>The extraction stage is not linear. Pitch trackers, peak detectors and formant trackers make decisions, so the right decomposition is statistical:</p>
+    <div class="eq">MSE(θ̂) = Bias(θ̂)² + Var(θ̂)</div>
+    <p>These estimators hold steady, then fail sharply once a decision boundary is crossed. Our validation sweeps show both signatures: smooth degradation in acquisition, sharp boundary failures in estimation.</p>
+    <p>This is why our acquisition path allows only fixed, known operations: no automatic gain control and no adaptive denoising. A fixed operation has a known transfer function we can account for. An adaptive one changes with the signal, so its effect cannot be separated from the patient's.</p>
+
+    <h3>Combining sensors</h3>
+    <p>When several channels estimate the same quantity, the minimum-variance combination weights each one by its reliability:</p>
+    <div class="eq">θ̂ = (∑ᵢ θ̂ᵢ / σᵢ²) / (∑ᵢ 1 / σᵢ²)</div>
+    <div class="eq">σ²(θ̂) = 1 / (∑ᵢ 1 / σᵢ²)</div>
+    <p>The fused estimate is never less precise than its best channel. It only works if the channels share a clock and each σᵢ is known, which is exactly what a dedicated instrument provides.</p>
+
+    <h3>Recovery as a state to estimate</h3>
+    <p>Over a rehabilitation programme, the patient's state evolves, and each session is a noisy look at it:</p>
+    <div class="eq">dS/dt = g(S, t) + w(t)</div>
+    <div class="eq">B<sub>k</sub> = f(S(t<sub>k</sub>)) + v<sub>k</sub></div>
+    <p>Tracking recovery then becomes a filtering problem, the structure behind the Kalman filter used in navigation and radar tracking. The smaller the measurement noise v, the fewer sessions it takes to say with confidence that a patient is improving.</p>
+    <p>This framework is something we test against our own bench data, not a finished result. It makes specific predictions, and we run the experiments that confirm or correct them.</p>
+
+    <h2 id="instrument">What a dedicated instrument changes</h2>
+    <p>With our hardware, the sensors sit at the same distance and the same angle from the mouth every time a test is run. That one design decision removes most of the session-to-session change in h.</p>
+    <p>Voice science has asked for this for years. The ASHA expert panel's recommended protocol for instrumental voice assessment, and the microphone guidelines it draws on, call for a frequency response flat to within 2 dB across the range of interest, a self-noise at least 15 dB below the softest phonation, and a controlled mouth-to-microphone distance [3, 4]. A phone held in a hand meets none of these by design. It was never asked to.</p>
+    <p>Three things change when the instrument is ours:</p>
+    <ul>
+      <li><strong>Geometry is fixed.</strong> The variance that comes from how the tool is held, and how far it is from the mouth, drops close to zero.</li>
+      <li><strong>Internal noise becomes known instead of hidden.</strong> No instrument has zero self-noise. But we characterise our chain's noise floor and frequency response, and hold every unit to the same specification. A known error can be corrected. An unknown one can only be guessed at.</li>
+      <li><strong>We can add sensors a phone does not have,</strong> or has but does not expose to developers. Which ones stays confidential for now.</li>
+    </ul>
+    <p>The result: for some of the biomarkers in the panel we are studying, the coefficient of agreement is more than three times that of the current state-of-the-art machine.</p>
+
+    <h2 id="reasons">The other scientific reasons</h2>
+
+    <h3>1. A phone processes speech before you ever see it</h3>
+    <p>Phones are tuned for calls and voice assistants, not for measurement. On Android, the audio source an app requests decides whether echo cancellation, noise suppression and automatic gain control are applied; the call-oriented source uses them wherever available [6]. Noise suppression removes the aperiodic energy that signals breathiness. Gain control flattens the loudness changes that signal hypophonia.</p>
+    <p>Even the cleanest standard path, voice recognition, only has to switch those effects off and stay roughly flat (±3 dB) from 100 Hz to 4 kHz [5]. Much of the energy of fricatives like /s/ sits above 4 kHz. A truly unprocessed source exists, but support for it is optional, and where it is missing the app silently gets the default path [6].</p>
+    <p>Then come compression and transmission. In one study, every telepractice video platform tested significantly altered every acoustic voice measure except mean fundamental frequency [7].</p>
+
+    <h3>2. Every phone is a different instrument</h3>
+    <p>There are thousands of handset models, each with its own microphones, placement, converters and firmware. When the same voices are recorded at once on several smartphones and a studio microphone, error varies by phone and by parameter, with significant bias in CPPS across both vowels and reading [8]. Another study found good agreement for f0 and jitter, but a bias for HNR and shimmer [9].</p>
+    <p>The usual defence is correlation. Phone measures often correlate above 0.90 with a reference while still differing significantly in absolute value [10]. Correlation shows the phone follows the trend. It does not show the number is right, and for a biomarker the number is the product. A regression can map one phone onto the reference [10], but that map belongs to one phone, at one distance, in one room.</p>
+
+    <h3>3. Distance is physics</h3>
+    <p>Sound pressure level falls by about 6 dB every time the distance from the mouth doubles. Move a phone from 15 cm to 30 cm and the same voice reads 6 dB quieter. For scale: people with Parkinson's disease speak only 2 to 4 dB SPL quieter than healthy controls at 30 cm [11], and intensive voice treatment raised loudness by about 8 dB, with 6 dB still present six months later [12]. A careless hand can create, or erase, a change the size of the disease or the size of the treatment.</p>
+    <p>Angle matters too. Directional microphones change their low-frequency response with distance, the proximity effect [4], and speech radiates differently in different directions. With natural phone positions, spectral measures shifted with position, and CPP read lower than on a clinical reference recorder [13]. Even researchers who defend smartphone recording recommend adding a headset microphone, precisely to fix distance and position [14].</p>
+
+    <h3>4. The instrument has to stay the same instrument</h3>
+    <p>Rehabilitation is measured over weeks and months. A phone's audio path is defined by firmware and operating-system code that its maker can change in any update, and patients change phones. Either event silently moves the baseline.</p>
+    <p>With our hardware, the measurement chain is ours. If it changes, we know, and we validate again. Regulators think the same way: even the Apple Watch ECG, cleared as software, was cleared for use with Apple Watch hardware [1].</p>
+
+    <h3>5. Instrument error sets the smallest change you can see</h3>
+    <p>This is the reason that matters most in rehabilitation. Errors from independent sources add as variances, and reliability is the share of total variance that is real:</p>
+    <div class="eq">ICC = σ²<sub>true</sub> / (σ²<sub>true</sub> + σ²<sub>error</sub>)</div>
+    <p>From reliability come the standard error of measurement and the minimal detectable change [15]:</p>
+    <div class="eq">SEM = SD × √(1 − ICC)</div>
+    <div class="eq">MDC<sub>95</sub> = 1.96 × √2 × SEM</div>
+    <p>Every source of variance in the recording chain raises σ²<sub>error</sub>, and with it the MDC. If a patient improves by less than the MDC, the tool cannot see the improvement. A noisy instrument does not just give noisy numbers. It hides recovery.</p>
+
+    <h3>6. Several sensors need one clock</h3>
+    <p>When signals from different sensors are combined, they have to line up in time. Inside one device, every channel can be sampled against a single clock. Pair a phone with an external sensor over Bluetooth and the streams arrive with variable latency, which has to be estimated and corrected after the fact.</p>
+
+    <h2 id="good-enough">"What if phones get good enough?"</h2>
+    <p>This is the second pushback we hear. It assumes phones are getting better at the thing we need. They are getting better at something else.</p>
+    <p>A phone is optimised for clear calls, voice assistants, battery life, cost and size. When phone audio "gets better", it usually means more processing: smarter noise suppression, more aggressive voice enhancement. That makes a call clearer. It also strips out more of the breathiness, roughness and loudness change we are trying to measure. For a measurement instrument, a better phone call can mean worse data.</p>
+    <p>Part of the problem does not depend on the phone at all. A perfect microphone, held at a different distance on a different day, still changes h. Geometry and handling are not component problems, and no spec sheet fixes them.</p>
+    <p>And "good enough" is not a fixed bar. Accuracy and precision are the only things we work on. Saying phones will catch up is an argument against the one thing we are building, and it assumes we stand still while they move.</p>
+    <p>Cardiology has already run this experiment. The Apple Watch has recorded ECGs since 2018 [1]. The 12-lead ECG did not disappear. The watch widened who gets screened; the 12-lead is still what runs when the decision matters.</p>
+
+    <h2 id="together">Better together, available alone</h2>
+    <p>None of this means our software should only work with our hardware.</p>
+    <p>What we want is the least possible friction between a patient and the next test, and the one after that. Repeat testing is where rehabilitation data comes from. Cost is part of that friction, for the SLP and for the patient.</p>
+    <p>So our software also stands on its own. When our hardware and software work together, they perform far better than either alone, and that pairing is the instrument we are building towards. But both are available solo. A clinic can start where its budget allows and move up when the data justifies it.</p>
+
+    <h2 id="companies">Companies that figured this out</h2>
+    <p>Medical technology has worked through this tension before. Each of these companies kept a dedicated instrument and still let its core technology travel.</p>
+
+    <h3>Masimo (pulse oximetry)</h3>
+    <ul>
+      <li><strong>What they did:</strong> Masimo built Signal Extraction Technology (SET), signal processing that separates the true arterial signal from the noise caused by motion and low perfusion [18]. It sells its own monitors and sensors, and by 2000 had agreements with more than 30 monitor makers to put SET inside their machines [16]. Masimo-affiliated researchers reported false alarms from motion and low perfusion falling from up to 90% to under 5% [17].</li>
+      <li><strong>Why it works:</strong> the core asset is the signal processing, so it can live inside other companies' monitors and reach far more patients than Masimo's own hardware could. What Masimo kept was the sensor: SET monitors were designed to work only with Masimo's proprietary sensors [16].</li>
+      <li><strong>Where ARC is similar:</strong> our thesis is the same separation of signal from noise. Masimo's decision to keep the sensor is the clearest evidence that the front end is part of the measurement.</li>
+    </ul>
+
+    <h3>Tobii Dynavox and PRC-Saltillo (AAC for people who cannot speak)</h3>
+    <ul>
+      <li><strong>What they did:</strong> both sell dedicated speech-generating devices and the same communication software as an iPad app. Tobii Dynavox's TD Snap ships on its devices and is also sold as a subscription app for a user's own iPad [19]. PRC-Saltillo's LAMP Words for Life runs on its Accent devices and as a standalone iPad app [21].</li>
+      <li><strong>Why it works:</strong> the two paths are funded differently. The dedicated device follows a reimbursement route: an SLP assessment, a physician's prescription, then a funding submission [19]. Some payers will not fund a general-purpose tablet as a speech-generating device at all; Colorado Medicaid requires a dedicated device, requested by name [20]. The app reaches people who cannot wait for that process or do not qualify for it.</li>
+      <li><strong>Where ARC is similar:</strong> this is our clinical world. It is SLP-led, cost-sensitive, and built around patients who use the tool again and again. Dedicated hardware is the fundable, clinical-grade path; software alone lowers the cost of entry.</li>
+    </ul>
+
+    <h3>Siemens Healthineers (imaging)</h3>
+    <ul>
+      <li><strong>What they did:</strong> Siemens builds CT scanners, and its AI-Rad Companion Chest CT software is vendor-neutral: it evaluates CT image data from many manufacturers, not only Siemens [22].</li>
+      <li><strong>Why it works:</strong> the software's market becomes every scanner already installed, not only the ones Siemens sold. Hardware and software each earn on their own.</li>
+      <li><strong>Where ARC is similar:</strong> our software is not locked to our hardware either.</li>
+    </ul>
+
+    <h3>Butterfly Network (ultrasound)</h3>
+    <ul>
+      <li><strong>What they did:</strong> Butterfly put an ultrasound transducer on a semiconductor chip and sells handheld probes with its Compass enterprise software [23]. Through Butterfly Embedded, it now licenses the chip itself to partners, in about a dozen partnerships [23, 24].</li>
+      <li><strong>Why it works:</strong> the hardware is the moat, and opening it to partners carries it into markets Butterfly would not enter alone.</li>
+      <li><strong>Where ARC is similar:</strong> we are hardware-first too, built on a measurement front end. Opening the layers is how a small company reaches beyond its own sales team.</li>
+    </ul>
+    <p>The pattern holds across all of them. The instrument sets the reference. The software, or the core technology, carries it further.</p>
+
+    <h2 id="not-an-option">Good enough is not an option</h2>
+    <p>A phone can tell you something about a voice. A measurement instrument tells you what changed, by how much, and whether the change is real.</p>
+    <p>Patients in rehabilitation deserve the second, and so do the clinicians deciding what comes next.</p>
+    <p>At ARC, good enough is not an option. That is what we are building towards.</p>
+
+    <h2 id="references">References</h2>
+    <ol class="refs">
+      <li>U.S. FDA (2018). De Novo classification request for ECG App, DEN180044. <a href="https://fda.innolitics.com/device/DEN180044" target="_blank" rel="noopener">Decision summary</a></li>
+      <li>Apple. Take an ECG with the ECG app on Apple Watch. <a href="https://support.apple.com/en-us/120278" target="_blank" rel="noopener">Apple Support</a></li>
+      <li>Patel RR, Awan SN, Barkmeier-Kraemer J, et al. (2018). Recommended protocols for instrumental assessment of voice. <em>American Journal of Speech-Language Pathology</em>, 27(3), 887–905. <a href="https://pubs.asha.org/doi/10.1044/2018_AJSLP-17-0009" target="_blank" rel="noopener">Link</a></li>
+      <li>Švec JG, Granqvist S (2010). Guidelines for selecting microphones for human voice production research. <em>American Journal of Speech-Language Pathology</em>, 19(4), 356–368. <a href="https://pubs.asha.org/doi/10.1044/1058-0360%282010/09-0091%29" target="_blank" rel="noopener">Link</a></li>
+      <li>Android Compatibility Definition Document, section 5.4, Audio Recording. <a href="https://android.googlesource.com/platform/compatibility/cdd/+/refs/tags/android-mainline-12.0.0_r98/5_multimedia/5_4_audio-recording.md" target="_blank" rel="noopener">Link</a></li>
+      <li>Android Developers, MediaRecorder.AudioSource reference (<a href="https://developer.android.com/reference/kotlin/android/media/MediaRecorder.AudioSource" target="_blank" rel="noopener">link</a>); Android CDD section 5.11, Capture for Unprocessed (<a href="https://android.googlesource.com/platform/compatibility/cdd/+/refs/tags/android-9.0.0_r9/5_multimedia/5_11_unprocessed-audio.md" target="_blank" rel="noopener">link</a>)</li>
+      <li>Weerathunge HR, Segina RK, Tracy L, Stepp CE (2021). Accuracy of acoustic measures of voice via telepractice videoconferencing platforms. <em>Journal of Speech, Language, and Hearing Research</em>, 64(7), 2586–2599. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8632479" target="_blank" rel="noopener">Link</a></li>
+      <li>Jannetts S, Schaeffler F, Beck J, Cowen S (2019). Assessing voice health using smartphones: bias and random error of acoustic voice parameters captured by different smartphone types. <em>International Journal of Language and Communication Disorders</em>, 54(2), 292–305. <a href="https://eresearch.qmu.ac.uk/items/a5b02fc7-1a6a-4e4f-a1f1-8f5e3d201773" target="_blank" rel="noopener">Link</a></li>
+      <li>Fahed VS, Doheny EP, Busse M, Hoblyn J, Lowery MM. Comparison of acoustic voice features derived from mobile devices and studio microphone recordings. <em>Journal of Voice</em>. <a href="https://orca.cardiff.ac.uk/id/eprint/153682/8/1-s2.0-S0892199722003125-main.pdf" target="_blank" rel="noopener">Link</a></li>
+      <li>Awan SN, Shaikh MA, Awan JA, Abdalla I, Lim K, Misono S (2023). Smartphone recordings are comparable to "gold standard" recordings for acoustic measurements of voice. <em>Journal of Voice</em>. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10545813" target="_blank" rel="noopener">Link</a></li>
+      <li>Fox CM, Ramig LO (1997). Vocal sound pressure level and self-perception of speech and voice in men and women with idiopathic Parkinson disease. <em>American Journal of Speech-Language Pathology</em>, 6, 85–94. <a href="https://academy.pubs.asha.org/2018/08/vocal-sound-pressure-level-and-self-perception-of-speech-and-voice-in-men-and-women-with-idiopathic-parkinson-disease/" target="_blank" rel="noopener">Link</a></li>
+      <li>Ramig LO, Sapir S, Fox C, Countryman S (2001). Changes in vocal loudness following intensive voice treatment (LSVT) in individuals with Parkinson's disease. <em>Movement Disorders</em>, 16(1), 79–83. <a href="https://cris.haifa.ac.il/en/publications/changes-in-vocal-loudness-following-intensive-voice-treatment-lsv/" target="_blank" rel="noopener">Link</a></li>
+      <li>McKenna VS, Roberts RM, Friedman AD, Shanley SN, Llico AF (2023). Impact of naturalistic smartphone positioning on acoustic measures of voice. <em>Journal of the Acoustical Society of America</em>, 154(1), 323–333. <a href="https://www.pubmed.gov/37450331/" target="_blank" rel="noopener">Link</a></li>
+      <li>Awan SN, Bahr R, Watts S, Boyer M, Budinsky R, Bensoussan Y (2024). Validity of acoustic measures obtained using various recording methods including smartphones with and without headset microphones. <em>Journal of Speech, Language, and Hearing Research</em>, 67(6), 1712–1730. <a href="https://pubs.asha.org/doi/10.1044/2024_JSLHR-23-00759" target="_blank" rel="noopener">Link</a></li>
+      <li>Weir JP (2005). Quantifying test-retest reliability using the intraclass correlation coefficient and the SEM. <em>Journal of Strength and Conditioning Research</em>, 19(1), 231–240. <a href="https://doi.org/10.1519/15184.1" target="_blank" rel="noopener">Link</a></li>
+      <li>Masimo Corporation (2000). Form S-1/A registration statement. <a href="https://www.sec.gov/Archives/edgar/data/0000937556/000109581100004730/a60301a1s-1a.txt" target="_blank" rel="noopener">SEC filing</a></li>
+      <li>Graybeal JM, Petterson MT (2004). Adaptive filtering and alternative calculations revolutionizes pulse oximetry sensitivity and specificity during motion and low perfusion. <em>Proceedings of the 26th Annual International Conference of the IEEE EMBS</em>. <a href="https://www.pubmed.gov/17271554/" target="_blank" rel="noopener">Link</a></li>
+      <li>Masimo. Masimo SET. <a href="https://www.masimo.com/set" target="_blank" rel="noopener">Link</a></li>
+      <li>Tobii Dynavox. TD Snap. <a href="https://us.tobiidynavox.com/collections/apps-software/products/td-snap" target="_blank" rel="noopener">Link</a></li>
+      <li>University of Colorado Denver, Center for Inclusive Design and Engineering. AAC tablet-based devices. <a href="https://www.ucdenver.edu/center-for-innovative-design-and-engineering/community-engagement/tech-for-tykes---early-intervention-colorado/ei-resources/tech-tips/tech-tips/aac-tablet-based-devices" target="_blank" rel="noopener">Link</a></li>
+      <li>PRC-Saltillo. LAMP Words for Life language system. <a href="https://www.prentrom.com/lamp-words-for-life-language-system" target="_blank" rel="noopener">Link</a></li>
+      <li>Siemens Healthineers (2019). AI-Rad Companion Chest CT press release. <a href="https://www.siemens-healthineers.com/press/releases/pr-20190726028shs.html" target="_blank" rel="noopener">Link</a></li>
+      <li>Butterfly Network. Press release on Butterfly Embedded and Compass AI. <a href="https://www.barchart.com/story/news/2534947/butterfly-network-provides-commentary-on-midjourney-medicals-full-body-ultrasound-scanner-announcement" target="_blank" rel="noopener">Link</a></li>
+      <li>Hale C (2026). Butterfly Network licensing partnerships. <em>MassDevice</em>, 8 October 2026. <a href="https://www.massdevice.com/butterfly-network-ultrasound-bci-brain-computer-interface-bridge-neurotech/" target="_blank" rel="noopener">Link</a></li>
+    </ol>
+
+    <div class="end">
+      <span>ARC Labs AI · November 2026</span>
+      <a href="../../#documentation">← Back to Press release</a>
+    </div>
+  </article>
+
+</div>
+
+<script>
+  // highlight the section you're reading in the contents list
+  (() => {
+    const links = [...document.querySelectorAll('.toc a')];
+    if (!links.length || !('IntersectionObserver' in window)) return;
+    const byId = new Map(links.map((a) => [a.getAttribute('href').slice(1), a]));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        links.forEach((a) => a.classList.remove('on'));
+        const a = byId.get(e.target.id);
+        if (a) a.classList.add('on');
+      });
+    }, { rootMargin: '0px 0px -70% 0px' });
+    document.querySelectorAll('article h2[id]').forEach((h) => io.observe(h));
+  })();
+</script>
+</body>
+</html>
